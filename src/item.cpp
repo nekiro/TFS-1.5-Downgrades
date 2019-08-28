@@ -596,16 +596,6 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
-		case ATTR_STOREITEM: {
-			uint8_t storeItem;
-			if (!propStream.read<uint8_t>(storeItem)) {
-				return ATTR_READ_ERROR;
-			}
-
-			setIntAttr(ITEM_ATTRIBUTE_STOREITEM, storeItem);
-			break;
-		}
-
 		//these should be handled through derived classes
 		//If these are called then something has changed in the items.xml since the map was saved
 		//just read the values
@@ -821,11 +811,6 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_WRAPID));
 	}
 
-	if (hasAttribute(ITEM_ATTRIBUTE_STOREITEM)) {
-		propWriteStream.write<uint8_t>(ATTR_STOREITEM);
-		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_STOREITEM));
-	}
-
 	if (hasAttribute(ITEM_ATTRIBUTE_CUSTOM)) {
 		const ItemAttributes::CustomAttributeMap* customAttrMap = attributes->getCustomAttributeMap();
 		propWriteStream.write<uint8_t>(ATTR_CUSTOM_ATTRIBUTES);
@@ -1009,21 +994,6 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 				}
 
 				s << getSkillName(i) << ' ' << std::showpos << it.abilities->skills[i] << std::noshowpos;
-			}
-
-			for (uint8_t i = SPECIALSKILL_FIRST; i <= SPECIALSKILL_LAST; i++) {
-				if (!it.abilities->specialSkills[i]) {
-					continue;
-				}
-
-				if (begin) {
-					begin = false;
-					s << " (";
-				} else {
-					s << ", ";
-				}
-
-				s << getSpecialSkillName(i) << ' ' << std::showpos << it.abilities->specialSkills[i] << '%' << std::noshowpos;
 			}
 
 			if (it.abilities->stats[STAT_MAGICPOINTS]) {
@@ -1748,30 +1718,6 @@ ItemAttributes::Attribute& ItemAttributes::getAttr(itemAttrTypes type)
 void Item::startDecaying()
 {
 	g_game.startDecay(this);
-}
-
-bool Item::hasMarketAttributes() const
-{
-	if (attributes == nullptr) {
-		return true;
-	}
-
-	for (const auto& attr : attributes->getList()) {
-		if (attr.type == ITEM_ATTRIBUTE_CHARGES) {
-			uint16_t charges = static_cast<uint16_t>(attr.value.integer);
-			if (charges != items[id].charges) {
-				return false;
-			}
-		} else if (attr.type == ITEM_ATTRIBUTE_DURATION) {
-			uint32_t duration = static_cast<uint32_t>(attr.value.integer);
-			if (duration != getDefaultDuration()) {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
-	return true;
 }
 
 template<>

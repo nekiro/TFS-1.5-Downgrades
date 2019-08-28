@@ -850,7 +850,7 @@ void Combat::doTargetCombat(Creature* caster, Creature* target, CombatDamage& da
 		}
 
 		if (damage.critical) {
-			g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
+			g_game.addMagicEffect(target->getPosition(), CONST_ME_BLOODYSTEPS);
 		}
 
 		if (!damage.leeched && damage.primary.type != COMBAT_HEALING && casterPlayer && damage.origin != ORIGIN_CONDITION) {
@@ -991,7 +991,7 @@ void Combat::doAreaCombat(Creature* caster, const Position& position, const Area
 		if (damageCopy.critical) {
 			damageCopy.primary.value += playerCombatReduced ? criticalPrimary / 2 : criticalPrimary;
 			damageCopy.secondary.value += playerCombatReduced ? criticalSecondary / 2 : criticalSecondary;
-			g_game.addMagicEffect(creature->getPosition(), CONST_ME_CRITICAL_DAMAGE);
+			g_game.addMagicEffect(creature->getPosition(), CONST_ME_BLOODYSTEPS);
 		}
 
 		bool success = false;

@@ -1,0 +1,14 @@
+D:\repos\downgrades\vc14\x64\Release\theforgottenserver.vcxproj.CopyComplete
+D:\repos\downgrades\vc14\x64\Release\theforgottenserver-x64.exe
+D:\repos\downgrades\vc14\x64\Release\boost_filesystem-vc142-mt-x64-1_75.dll
+D:\repos\downgrades\vc14\x64\Release\boost_iostreams-vc142-mt-x64-1_75.dll
+D:\repos\downgrades\vc14\x64\Release\zlib1.dll
+D:\repos\downgrades\vc14\x64\Release\bz2.dll
+D:\repos\downgrades\vc14\x64\Release\lzma.dll
+D:\repos\downgrades\vc14\x64\Release\zstd.dll
+D:\repos\downgrades\vc14\x64\Release\fmt.dll
+D:\repos\downgrades\vc14\x64\Release\libmysql.dll
+D:\repos\downgrades\vc14\x64\Release\libssl-1_1-x64.dll
+D:\repos\downgrades\vc14\x64\Release\libcrypto-1_1-x64.dll
+D:\repos\downgrades\vc14\x64\Release\lua51.dll
+D:\repos\downgrades\vc14\x64\Release\pugixml.dll
