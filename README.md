@@ -16,6 +16,6 @@ Just make sure you are using issue template and english language.
 * empty
 
 ## Donate
-Not needed but very appreciated
+If you like my "wasted" time, you can compensate it by sending me a small tip, very appreciated! (and I like to eat too)
 
-[![image](https://i2.wp.com/dk-plugins.ru/wp-content/uploads/2017/06/donate-paypal-main.png)](https://www.paypal.com/donate/?token=lNsHlqKNlXljtf-2oe0K28-vx9JJ8S9y7aozv6VQG8ZjkchfT3HmrK3S8hJVVgVp_IQn-G&country.x=PL&locale.x=PL)
+[![image](https://i2.wp.com/dk-plugins.ru/wp-content/uploads/2017/06/donate-paypal-main.png)](https://nekiro.best/donate)
