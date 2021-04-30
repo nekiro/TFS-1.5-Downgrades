@@ -16,6 +16,7 @@ Just make sure you are using issue template and english language.
 * empty
 
 ## Donate
-If you like my "wasted" time, you can compensate it by sending me a small tip, very appreciated! (and I like to eat too)
+If you like my work and respect my time, you can consider sending me a small tip, very appreciated! Thanks!
 
-[![image](https://i2.wp.com/dk-plugins.ru/wp-content/uploads/2017/06/donate-paypal-main.png)](https://nekiro.best/donate)
+[![image](https://i2.wp.com/dk-plugins.ru/wp-content/uploads/2017/06/donate-paypal-main.png)](https://www.paypal.com/donate?hosted_button_id=R3PRTU37SEPYJ)
+![image](https://i.imgur.com/R09srNR.png)
