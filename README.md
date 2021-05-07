@@ -13,7 +13,7 @@ Pull requests are welcome.
 Just make sure you are using issue template and english language.
 
 ## Links
-* empty
+* https://github.com/otland/forgottenserver
 
 ## Donate
 If you like my work and respect my time, you can consider sending me a small tip, very appreciated! Thanks!
