@@ -1,8 +1,12 @@
 # TFS 1.4 Nekiro's Downgrades
 
-This repository holds two TFS 1.4 (**not released yet**) downgrades.
+This branch holds TFS 1.3/1.4 8.60 protocol downgrade.
 
-There are two branches 7.72 and 8.60 respectively holding their name protocols.
+This downgrade is not download and run distribution, monsters and spells are probably not 100% correct.
+
+You are welcome to submit a pull request though.
+
+If you are looking for other protocols, switch the branch at the top.
 
 ## How to compile
 [Wiki](https://github.com/otland/forgottenserver/wiki/Compiling)
@@ -11,6 +15,9 @@ There are two branches 7.72 and 8.60 respectively holding their name protocols.
 Pull requests are welcome. 
 
 Just make sure you are using issue template and english language.
+
+## Bugs
+If you find any bug and believe it should be fixed, submit an issue in issues section, just please follow the issue template.
 
 ## Links
 * https://github.com/otland/forgottenserver
