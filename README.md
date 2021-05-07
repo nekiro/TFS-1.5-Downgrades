@@ -18,5 +18,9 @@ Just make sure you are using issue template and english language.
 ## Donate
 If you like my work and respect my time, you can consider sending me a small tip, very appreciated! Thanks!
 
-[![image](https://i2.wp.com/dk-plugins.ru/wp-content/uploads/2017/06/donate-paypal-main.png)](https://www.nekiro.dev/donate)
-![image](https://i.imgur.com/R09srNR.png)
+[![](https://i2.wp.com/dk-plugins.ru/wp-content/uploads/2017/06/donate-paypal-main.png)](https://www.nekiro.dev/donate)
+![](https://i.imgur.com/R09srNR.png)
+
+BTC: 1P7fUUzpUdKxDGectSZvMVvtAK1Mb3bnaV
+
+ETH: 0x9C2Db127A591Ca04970C132d775735Ab1737092D
