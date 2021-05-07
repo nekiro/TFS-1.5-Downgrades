@@ -14,7 +14,7 @@ If you are looking for other protocols, switch the branch at the top.
 ## Contributing
 Pull requests are welcome. 
 
-Just make sure you are using issue template and english language.
+Just make sure you are using english language.
 
 ## Bugs
 If you find any bug and believe it should be fixed, submit an issue in issues section, just please follow the issue template.
