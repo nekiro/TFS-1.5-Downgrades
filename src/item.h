@@ -103,7 +103,6 @@ enum AttrTypes_t {
 	ATTR_SHOOTRANGE = 33,
 	ATTR_CUSTOM_ATTRIBUTES = 34,
 	ATTR_DECAYTO = 35,
-	ATTR_WRAPID = 36,
 };
 
 enum Attr_ReadValue {
