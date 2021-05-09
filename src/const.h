@@ -475,7 +475,7 @@ enum PlayerFlags : uint64_t {
 	PlayerFlag_SetMaxSpeed = 1 << 29,
 	PlayerFlag_SpecialVIP = 1 << 30,
 	PlayerFlag_NotGenerateLoot = static_cast<uint64_t>(1) << 31,
-	// PlayerFlag with exponent 32 existed but was deprecated (feature dropped from client).
+	PlayerFlag_CanTalkRedChannelAnonymous = static_cast<uint64_t>(1) << 32,
 	PlayerFlag_IgnoreProtectionZone = static_cast<uint64_t>(1) << 33,
 	PlayerFlag_IgnoreSpellCheck = static_cast<uint64_t>(1) << 34,
 	PlayerFlag_IgnoreWeaponCheck = static_cast<uint64_t>(1) << 35,
@@ -494,7 +494,6 @@ enum ReloadTypes_t : uint8_t  {
 	RELOAD_TYPE_GLOBALEVENTS,
 	RELOAD_TYPE_ITEMS,
 	RELOAD_TYPE_MONSTERS,
-	RELOAD_TYPE_MOUNTS,
 	RELOAD_TYPE_MOVEMENTS,
 	RELOAD_TYPE_NPCS,
 	RELOAD_TYPE_QUESTS,
