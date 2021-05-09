@@ -57,7 +57,7 @@
 		<item id="1949" chance="31000"/><!-- scroll -->
 		<item id="2260" chance="16000"/><!-- blank rune -->
 		<item id="2401" chance="11500"/><!-- staff -->
-		<item id="2642" chance="135000"/><!-- sandals -->
+		<item id="2642" chance="100000"/><!-- sandals -->
 		<item id="2682" chance="19000"/><!-- melon -->
 		<item id="2689" chance="14000"/><!-- bread -->
 		<item id="2652" chance="7250"/><!-- green tunic -->
