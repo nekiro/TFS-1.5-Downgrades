@@ -667,6 +667,11 @@ bool ConditionAttributes::setParam(ConditionParam_t param, int32_t value)
 			return true;
 		}
 
+		case CONDITION_PARAM_AGGRESSIVE: {
+			aggressive = (value != 0);
+			return true;
+		}
+
 		default:
 			return ret;
 	}
