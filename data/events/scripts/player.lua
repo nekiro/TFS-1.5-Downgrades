@@ -1,10 +1,3 @@
-function Player:onBrowseField(position)
-	if hasEventCallback(EVENT_CALLBACK_ONBROWSEFIELD) then
-		return EventCallback(EVENT_CALLBACK_ONBROWSEFIELD, self, position)
-	end
-	return true
-end
-
 function Player:onLook(thing, position, distance)
 	local description = ""
 	if hasEventCallback(EVENT_CALLBACK_ONLOOK) then
