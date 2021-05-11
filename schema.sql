@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `players` (
   `vocation` int(11) NOT NULL DEFAULT '0',
   `health` int(11) NOT NULL DEFAULT '150',
   `healthmax` int(11) NOT NULL DEFAULT '150',
-  `experience` bigint(20) NOT NULL DEFAULT '0',
+  `experience` bigint(20) unsigned NOT NULL DEFAULT '0',
   `lookbody` int(11) NOT NULL DEFAULT '0',
   `lookfeet` int(11) NOT NULL DEFAULT '0',
   `lookhead` int(11) NOT NULL DEFAULT '0',
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `players` (
   `maglevel` int(11) NOT NULL DEFAULT '0',
   `mana` int(11) NOT NULL DEFAULT '0',
   `manamax` int(11) NOT NULL DEFAULT '0',
-  `manaspent` int(11) unsigned NOT NULL DEFAULT '0',
+  `manaspent` bigint(20) unsigned NOT NULL DEFAULT '0',
   `soul` int(10) unsigned NOT NULL DEFAULT '0',
   `town_id` int(11) NOT NULL DEFAULT '1',
   `posx` int(11) NOT NULL DEFAULT '0',
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `players` (
   `skulltime` bigint(20) NOT NULL DEFAULT '0',
   `lastlogout` bigint(20) unsigned NOT NULL DEFAULT '0',
   `blessings` tinyint(2) NOT NULL DEFAULT '0',
-  `onlinetime` int(11) NOT NULL DEFAULT '0',
+  `onlinetime` bigint(20) NOT NULL DEFAULT '0',
   `deletion` bigint(15) NOT NULL DEFAULT '0',
   `balance` bigint(20) unsigned NOT NULL DEFAULT '0',
   `stamina` smallint(5) unsigned NOT NULL DEFAULT '2520',
@@ -215,6 +215,36 @@ CREATE TABLE IF NOT EXISTS `house_lists` (
   FOREIGN KEY (`house_id`) REFERENCES `houses` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
+CREATE TABLE IF NOT EXISTS `market_history` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `player_id` int(11) NOT NULL,
+  `sale` tinyint(1) NOT NULL DEFAULT '0',
+  `itemtype` smallint(6) unsigned NOT NULL,
+  `amount` smallint(6) unsigned NOT NULL,
+  `price` int(11) unsigned NOT NULL DEFAULT '0',
+  `expires_at` bigint(20) unsigned NOT NULL,
+  `inserted` bigint(20) unsigned NOT NULL,
+  `state` tinyint(1) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `player_id` (`player_id`, `sale`),
+  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
+
+CREATE TABLE IF NOT EXISTS `market_offers` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `player_id` int(11) NOT NULL,
+  `sale` tinyint(1) NOT NULL DEFAULT '0',
+  `itemtype` smallint(6) unsigned NOT NULL,
+  `amount` smallint(6) unsigned NOT NULL,
+  `created` bigint(20) unsigned NOT NULL,
+  `anonymous` tinyint(1) NOT NULL DEFAULT '0',
+  `price` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `sale` (`sale`,`itemtype`),
+  KEY `created` (`created`),
+  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
+
 CREATE TABLE IF NOT EXISTS `players_online` (
   `player_id` int(11) NOT NULL,
   PRIMARY KEY (`player_id`)
@@ -235,6 +265,28 @@ CREATE TABLE IF NOT EXISTS `player_deaths` (
   KEY `mostdamage_by` (`mostdamage_by`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
+CREATE TABLE IF NOT EXISTS `player_inboxitems` (
+  `player_id` int(11) NOT NULL,
+  `sid` int(11) NOT NULL,
+  `pid` int(11) NOT NULL DEFAULT '0',
+  `itemtype` smallint(6) unsigned NOT NULL,
+  `count` smallint(6) NOT NULL DEFAULT '0',
+  `attributes` blob NOT NULL,
+  UNIQUE KEY `player_id_2` (`player_id`, `sid`),
+  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
+
+CREATE TABLE IF NOT EXISTS `player_storeinboxitems` (
+  `player_id` int(11) NOT NULL,
+  `sid` int(11) NOT NULL,
+  `pid` int(11) NOT NULL DEFAULT '0',
+  `itemtype` smallint(6) unsigned NOT NULL,
+  `count` smallint(5) NOT NULL DEFAULT '0',
+  `attributes` blob NOT NULL,
+  UNIQUE KEY `player_id_2` (`player_id`, `sid`),
+  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
+
 CREATE TABLE IF NOT EXISTS `player_depotlockeritems` (
   `player_id` int(11) NOT NULL,
   `sid` int(11) NOT NULL COMMENT 'any given range eg 0-100 will be reserved for depot lockers and all > 100 will be then normal items inside depots',
@@ -250,7 +302,7 @@ CREATE TABLE IF NOT EXISTS `player_depotitems` (
   `player_id` int(11) NOT NULL,
   `sid` int(11) NOT NULL COMMENT 'any given range eg 0-100 will be reserved for depot lockers and all > 100 will be then normal items inside depots',
   `pid` int(11) NOT NULL DEFAULT '0',
-  `itemtype` smallint(6) NOT NULL,
+  `itemtype` smallint(6) unsigned NOT NULL,
   `count` smallint(5) NOT NULL DEFAULT '0',
   `attributes` blob NOT NULL,
   UNIQUE KEY `player_id_2` (`player_id`, `sid`),
@@ -261,7 +313,7 @@ CREATE TABLE IF NOT EXISTS `player_items` (
   `player_id` int(11) NOT NULL DEFAULT '0',
   `pid` int(11) NOT NULL DEFAULT '0',
   `sid` int(11) NOT NULL DEFAULT '0',
-  `itemtype` smallint(6) NOT NULL DEFAULT '0',
+  `itemtype` smallint(6) unsigned NOT NULL,
   `count` smallint(5) NOT NULL DEFAULT '0',
   `attributes` blob NOT NULL,
   FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE,
@@ -304,7 +356,7 @@ CREATE TABLE IF NOT EXISTS `towns` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
-INSERT INTO `server_config` (`config`, `value`) VALUES ('db_version', '24'), ('motd_hash', ''), ('motd_num', '0'), ('players_record', '0');
+INSERT INTO `server_config` (`config`, `value`) VALUES ('db_version', '28'), ('motd_hash', ''), ('motd_num', '0'), ('players_record', '0');
 
 DROP TRIGGER IF EXISTS `ondelete_players`;
 DROP TRIGGER IF EXISTS `oncreate_guilds`;
