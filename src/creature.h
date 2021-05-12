@@ -96,8 +96,6 @@ class Creature : virtual public Thing
 		Creature();
 
 	public:
-		static double speedA, speedB, speedC;
-
 		virtual ~Creature();
 
 		// non-copyable
