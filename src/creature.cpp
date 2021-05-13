@@ -24,6 +24,7 @@
 #include "monster.h"
 #include "configmanager.h"
 #include "scheduler.h"
+#include <fmt/format.h>
 
 extern Game g_game;
 extern ConfigManager g_config;
@@ -1118,9 +1119,18 @@ void Creature::onGainExperience(uint64_t gainExp, Creature* target)
 	gainExp /= 2;
 	master->onGainExperience(gainExp, target);
 
-	std::ostringstream strExp;
-	strExp << ucfirst(getNameDescription()) + " gained " + std::to_string(gainExp) + (gainExp != 1 ? " experience points." : " experience point.");
-	g_game.addAnimatedText(strExp.str(), position, TEXTCOLOR_WHITE);
+	SpectatorVec spectators;
+	g_game.map.getSpectators(spectators, position, false, true);
+	if (spectators.empty()) {
+		return;
+	}
+
+	TextMessage textMessage(MESSAGE_STATUS_DEFAULT, fmt::format("{:s} gained {:d} {:s}.", ucfirst(getNameDescription()), gainExp, gainExp != 1 ? " experience points" : " experience point"));
+	for (Creature* spectator : spectators) {
+		spectator->getPlayer()->sendTextMessage(textMessage);
+	}
+
+	g_game.addAnimatedText(spectators, std::to_string(gainExp), position, TEXTCOLOR_WHITE);
 }
 
 bool Creature::setMaster(Creature* newMaster) {

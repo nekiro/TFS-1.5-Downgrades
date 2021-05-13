@@ -4138,11 +4138,19 @@ void Game::addAnimatedText(const std::string& message, const Position& pos, Text
 {
 	SpectatorVec spectators;
 	map.getSpectators(spectators, pos, true, true);
+	if (spectators.empty()) {
+		return;
+	}
+
 	addAnimatedText(spectators, message, pos, color);
 }
 
 void Game::addAnimatedText(const SpectatorVec& spectators, const std::string& message, const Position& pos, TextColor_t color)
 {
+	if (spectators.empty()) {
+		return;
+	}
+
 	for (Creature* spectator : spectators) {
 		if (Player* tmpPlayer = spectator->getPlayer()) {
 			tmpPlayer->sendAnimatedText(message, pos, color);
