@@ -62,7 +62,7 @@ function onCastSpell(creature, variant)
 	end
 
 	local level = positionDifference.z > 0 and LEVEL_HIGHER or positionDifference.z < 0 and LEVEL_LOWER or LEVEL_SAME
-	local distance = maxPositionDifference < 5 and DISTANCE_BESIDE or maxPositionDifference < 101 and DISTANCE_CLOSE or maxPositionDifference < 275 and DISTANCE_FAR or DISTANCE_VERYFAR
+	local distance = maxPositionDifference < 5 and DISTANCE_BESIDE or maxPositionDifference < 101 and DISTANCE_CLOSE or maxPositionDifference < 250 and DISTANCE_FAR or DISTANCE_VERYFAR
 	local message = messages[distance][level] or messages[distance]
 	if distance ~= DISTANCE_BESIDE then
 		message = message .. " " .. directions[direction]
