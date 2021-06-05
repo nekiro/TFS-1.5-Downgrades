@@ -8,7 +8,7 @@ You are welcome to submit a pull request though.
 
 If you are looking for other protocols, switch the branch at the top.
 
-This downgrade is up to May 11, 2021, commit: https://github.com/otland/forgottenserver/commit/809090df12cf78ed23211e7347d28489d028f96f
+This downgrade is up to June 4th, 2021, commit: https://github.com/otland/forgottenserver/commit/ace6ff683488d60722904731131ed7cfb20abd82
 
 ## How to compile
 [Wiki](https://github.com/otland/forgottenserver/wiki/Compiling)
