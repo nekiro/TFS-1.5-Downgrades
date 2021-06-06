@@ -1936,6 +1936,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnumIn("configKeys", ConfigManager::STAIRHOP_DELAY)
 	registerEnumIn("configKeys", ConfigManager::EXP_FROM_PLAYERS_LEVEL_RANGE)
 	registerEnumIn("configKeys", ConfigManager::MAX_PACKETS_PER_SECOND)
+	registerEnumIn("configKeys", ConfigManager::PLAYER_CONSOLE_LOGS)
 
 	// os
 	registerMethod("os", "mtime", LuaScriptInterface::luaSystemTime);
