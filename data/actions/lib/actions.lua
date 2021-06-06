@@ -198,6 +198,10 @@ function onUseShovel(player, item, fromPosition, target, toPosition, isHotkey)
 		toPosition.z = toPosition.z + 1
 		tile:relocateTo(toPosition)
 		player:addAchievementProgress("The Undertaker", 500)
+	elseif target.itemid == 7932 then -- large hole
+		target:transform(7933)
+		target:decay()
+		player:addAchievementProgress("The Undertaker", 500)
 	elseif table.contains(sandIds, groundId) then
 		local randomValue = math.random(1, 100)
 		if target.actionid == actionIds.sandHole and randomValue <= 20 then
