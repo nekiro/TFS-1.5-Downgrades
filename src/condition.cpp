@@ -196,8 +196,10 @@ Condition* Condition::createCondition(ConditionId_t id, ConditionType_t type, in
 		case CONDITION_ATTRIBUTES:
 			return new ConditionAttributes(id, type, ticks, buff, subId, aggressive);
 
-		case CONDITION_INFIGHT:
 		case CONDITION_DRUNK:
+			return new ConditionDrunk(id, type, ticks, buff, subId, param, aggressive);
+
+		case CONDITION_INFIGHT:
 		case CONDITION_EXHAUST_WEAPON:
 		case CONDITION_EXHAUST_COMBAT:
 		case CONDITION_EXHAUST_HEAL:
@@ -349,10 +351,6 @@ uint32_t ConditionGeneric::getIcons() const
 
 		case CONDITION_INFIGHT:
 			icons |= ICON_SWORDS;
-			break;
-
-		case CONDITION_DRUNK:
-			icons |= ICON_DRUNK;
 			break;
 
 		default:
@@ -1663,4 +1661,57 @@ void ConditionLight::serialize(PropWriteStream& propWriteStream)
 
 	propWriteStream.write<uint8_t>(CONDITIONATTR_LIGHTINTERVAL);
 	propWriteStream.write<uint32_t>(lightChangeInterval);
+}
+
+bool ConditionDrunk::startCondition(Creature* creature)
+{
+	if (!Condition::startCondition(creature)) {
+		return false;
+	}
+
+	creature->setDrunkenness(drunkenness);
+	return true;
+}
+
+bool ConditionDrunk::updateCondition(const Condition* addCondition)
+{
+	const ConditionDrunk* conditionDrunk = static_cast<const ConditionDrunk*>(addCondition);
+	return conditionDrunk->drunkenness > drunkenness;
+}
+
+void ConditionDrunk::addCondition(Creature* creature, const Condition* condition)
+{
+	if (!updateCondition(condition)) {
+		return;
+	}
+
+	const ConditionDrunk* conditionDrunk = static_cast<const ConditionDrunk*>(condition);
+	setTicks(conditionDrunk->getTicks());
+	creature->setDrunkenness(conditionDrunk->drunkenness);
+}
+
+void ConditionDrunk::endCondition(Creature* creature)
+{
+	creature->setDrunkenness(0);
+}
+
+uint32_t ConditionDrunk::getIcons() const
+{
+	return ICON_DRUNK;
+}
+
+bool ConditionDrunk::setParam(ConditionParam_t param, int32_t value)
+{
+	bool ret = Condition::setParam(param, value);
+
+	switch (param) {
+		case CONDITION_PARAM_DRUNKENNESS: {
+			drunkenness = value;
+			return true;
+		}
+
+		default: {
+			return ret;
+		}
+	}
 }
