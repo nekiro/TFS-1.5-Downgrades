@@ -78,7 +78,7 @@ void ProtocolLogin::getCharacterList(const std::string& accountName, const std::
 	if (g_config.getBoolean(ConfigManager::FREE_PREMIUM)) {
 		output->add<uint16_t>(0xFFFF); //client displays free premium
 	} else {
-		output->add<uint16_t>(account.premiumEndsAt - time(nullptr) / 86400);
+		output->add<uint16_t>((account.premiumEndsAt - time(nullptr)) / 86400);
 	}
 
 	send(output);
