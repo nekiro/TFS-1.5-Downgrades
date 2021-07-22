@@ -239,7 +239,7 @@ bool House::transferToDepot(Player* player) const
 	for (HouseTile* tile : houseTiles) {
 		if (const TileItemVector* items = tile->getItemList()) {
 			for (Item* item : *items) {
-				if (item->isPickupable()) {
+				if (item->isPickupable() && !item->isLoadedFromMap()) {
 					moveItemList.push_back(item);
 				} else {
 					Container* container = item->getContainer();
@@ -254,7 +254,9 @@ bool House::transferToDepot(Player* player) const
 	}
 
 	for (Item* item : moveItemList) {
-		g_game.internalMoveItem(item->getParent(), player->getInbox(), INDEX_WHEREEVER, item, item->getItemCount(), nullptr, FLAG_NOLIMIT);
+		if (DepotLocker* depotLocker = player->getDepotLocker(townId)) {
+			g_game.internalMoveItem(item->getParent(), depotLocker, INDEX_WHEREEVER, item, item->getItemCount(), nullptr, FLAG_NOLIMIT);
+		}
 	}
 	return true;
 }
@@ -726,7 +728,7 @@ void Houses::payHouses(RentPeriod_t rentPeriod) const
 				}
 
 				letter->setText(fmt::format("Warning! \nThe {:s} rent of {:d} gold for your house \"{:s}\" is payable. Have it within {:d} days or you will lose this house.", period, house->getRent(), house->getName(), daysLeft));
-				g_game.internalAddItem(player.getInbox(), letter, INDEX_WHEREEVER, FLAG_NOLIMIT);
+				g_game.internalAddItem(player.getDepotLocker(house->getTownId()), letter, INDEX_WHEREEVER, FLAG_NOLIMIT);
 				house->setPayRentWarnings(house->getPayRentWarnings() + 1);
 			} else {
 				house->setOwner(0, true, &player);

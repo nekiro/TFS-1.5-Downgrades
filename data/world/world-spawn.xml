@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<spawns>
+	<spawn centerx="1015" centery="1018" centerz="7" radius="1">
+		<monster name="bug" x="0" y="0" z="7" spawntime="60" />
+		<monster name="bear" x="-1" y="1" z="7" spawntime="60" />
+		<monster name="bug" x="1" y="1" z="7" spawntime="60" />
+	</spawn>
+</spawns>

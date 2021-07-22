@@ -101,7 +101,7 @@ bool IOLoginData::loginserverAuthentication(const std::string& name, const std::
 	return true;
 }
 
-uint32_t IOLoginData::gameworldAuthentication(const std::string& accountName, const std::string& password, std::string& characterName, std::string& token, uint32_t tokenTime)
+uint32_t IOLoginData::gameworldAuthentication(const std::string& accountName, const std::string& password, std::string& characterName, std::string&, uint32_t)
 {
 	Database& db = Database::getInstance();
 
@@ -110,7 +110,7 @@ uint32_t IOLoginData::gameworldAuthentication(const std::string& accountName, co
 		return 0;
 	}
 
-	std::string secret = decodeSecret(result->getString("secret"));
+	/*std::string secret = decodeSecret(result->getString("secret"));
 	if (!secret.empty()) {
 		if (token.empty()) {
 			return 0;
@@ -120,7 +120,7 @@ uint32_t IOLoginData::gameworldAuthentication(const std::string& accountName, co
 		if (!tokenValid) {
 			return 0;
 		}
-	}
+	}*/
 
 	if (transformToSHA1(password) != result->getString("password")) {
 		return 0;
@@ -474,7 +474,7 @@ bool IOLoginData::loadPlayer(Player* player, DBResult_ptr result)
 	}
 
 	//load inbox items
-	itemMap.clear();
+	/*itemMap.clear();
 
 	if ((result = db.storeQuery(fmt::format("SELECT `pid`, `sid`, `itemtype`, `count`, `attributes` FROM `player_inboxitems` WHERE `player_id` = {:d} ORDER BY `sid` DESC", player->getGUID())))) {
 		loadItems(itemMap, result);
@@ -527,7 +527,7 @@ bool IOLoginData::loadPlayer(Player* player, DBResult_ptr result)
 				}
 			}
 		}
-	}
+	}*/
 
 	//load storage map
 	if ((result = db.storeQuery(fmt::format("SELECT `key`, `value` FROM `player_storage` WHERE `player_id` = {:d}", player->getGUID())))) {
@@ -784,7 +784,7 @@ bool IOLoginData::savePlayer(Player* player)
 	}
 
 	//save inbox items
-	if (!db.executeQuery(fmt::format("DELETE FROM `player_inboxitems` WHERE `player_id` = {:d}", player->getGUID()))) {
+	/*if (!db.executeQuery(fmt::format("DELETE FROM `player_inboxitems` WHERE `player_id` = {:d}", player->getGUID()))) {
 		return false;
 	}
 
@@ -813,7 +813,7 @@ bool IOLoginData::savePlayer(Player* player)
 
 	if (!saveItems(player, itemList, storeInboxQuery, propWriteStream)) {
 		return false;
-	}
+	}*/
 
 	if (!db.executeQuery(fmt::format("DELETE FROM `player_storage` WHERE `player_id` = {:d}", player->getGUID()))) {
 		return false;

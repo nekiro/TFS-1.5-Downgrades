@@ -95,7 +95,7 @@ class Protocol : public std::enable_shared_from_this<Protocol>
 		const ConnectionWeak_ptr connection;
 		xtea::round_keys key;
 		bool encryptionEnabled = false;
-		bool checksumEnabled = true;
+		bool checksumEnabled = false;
 		bool rawMessages = false;
 };
 

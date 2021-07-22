@@ -970,6 +970,11 @@ class Player final : public Creature, public Cylinder
 				client->sendTextMessage(message);
 			}
 		}
+		void sendColoredText(const ColoredText& text) const {
+			if (client) {
+				client->sendColoredText(text);
+			}
+		}
 		void sendReLoginWindow(uint8_t unfairFightReduction) const {
 			if (client) {
 				client->sendReLoginWindow(unfairFightReduction);

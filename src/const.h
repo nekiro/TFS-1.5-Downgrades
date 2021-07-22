@@ -176,6 +176,7 @@ enum ShootType_t : uint8_t {
 	CONST_ANI_WEAPONTYPE = 0xFE, // 254
 };
 
+/*
 enum SpeakClasses : uint8_t {
 	TALKTYPE_SAY = 1,
 	TALKTYPE_WHISPER = 2,
@@ -195,16 +196,16 @@ enum SpeakClasses : uint8_t {
 };
 
 enum MessageClasses : uint8_t {
-	MESSAGE_STATUS_CONSOLE_BLUE = 4, /*FIXME Blue message in the console*/
+	MESSAGE_STATUS_CONSOLE_BLUE = 4, //FIXME Blue message in the console
 
-	MESSAGE_STATUS_CONSOLE_RED = 13, /*Red message in the console*/
+	MESSAGE_STATUS_CONSOLE_RED = 13, //Red message in the console
 
-	MESSAGE_STATUS_DEFAULT = 17, /*White message at the bottom of the game window and in the console*/
-	MESSAGE_STATUS_WARNING = 18, /*Red message in game window and in the console*/
-	MESSAGE_EVENT_ADVANCE = 19, /*White message in game window and in the console*/
+	MESSAGE_STATUS_DEFAULT = 17, //White message at the bottom of the game window and in the console
+	MESSAGE_STATUS_WARNING = 18, //Red message in game window and in the console
+	MESSAGE_EVENT_ADVANCE = 19, //White message in game window and in the console
 
-	MESSAGE_STATUS_SMALL = 21, /*White message at the bottom of the game window"*/
-	MESSAGE_INFO_DESCR = 22, /*Green message in game window and in the console*/
+	MESSAGE_STATUS_SMALL = 21, /*White message at the bottom of the game window"
+	MESSAGE_INFO_DESCR = 22, /*Green message in game window and in the console
 	MESSAGE_DAMAGE_DEALT = 23,
 	MESSAGE_DAMAGE_RECEIVED = 24,
 	MESSAGE_HEALED = 25,
@@ -212,14 +213,51 @@ enum MessageClasses : uint8_t {
 	MESSAGE_DAMAGE_OTHERS = 27,
 	MESSAGE_HEALED_OTHERS = 28,
 	MESSAGE_EXPERIENCE_OTHERS = 29,
-	MESSAGE_EVENT_DEFAULT = 30, /*White message at the bottom of the game window and in the console*/
+	MESSAGE_EVENT_DEFAULT = 30, //White message at the bottom of the game window and in the console
 	MESSAGE_LOOT = 31,
 
-	MESSAGE_GUILD = 33, /*White message in channel (+ channelId)*/
-	MESSAGE_PARTY_MANAGEMENT = 34, /*White message in channel (+ channelId)*/
-	MESSAGE_PARTY = 35, /*White message in channel (+ channelId)*/
-	MESSAGE_EVENT_ORANGE = 36, /*Orange message in the console*/
-	MESSAGE_STATUS_CONSOLE_ORANGE = 37,  /*Orange message in the console*/
+	MESSAGE_GUILD = 33, //White message in channel (+ channelId)
+	MESSAGE_PARTY_MANAGEMENT = 34, //White message in channel (+ channelId)
+	MESSAGE_PARTY = 35, //White message in channel (+ channelId)
+	MESSAGE_EVENT_ORANGE = 36, //Orange message in the console
+	MESSAGE_STATUS_CONSOLE_ORANGE = 37,  //Orange message in the console
+};
+*/
+
+enum SpeakClasses : uint8_t {
+	TALKTYPE_SAY = 1,
+	TALKTYPE_WHISPER = 2,
+	TALKTYPE_YELL = 3,
+	TALKTYPE_PRIVATE = 4,
+	TALKTYPE_CHANNEL_Y = 5,
+	TALKTYPE_RVR_CHANNEL = 6,
+	TALKTYPE_RVR_ANSWER = 7,
+	TALKTYPE_RVR_CONTINUE = 8,
+	TALKTYPE_BROADCAST = 9,
+	TALKTYPE_CHANNEL_R1 = 10, //red - #c text
+	TALKTYPE_PRIVATE_RED = 11, //@name@text
+	TALKTYPE_CHANNEL_O = 12, //@name@text
+	TALKTYPE_CHANNEL_R2 = 14, //#d
+	TALKTYPE_MONSTER_SAY = 17,
+	TALKTYPE_MONSTER_YELL = 17,
+};
+
+enum MessageClasses : uint8_t {
+	MESSAGE_STATUS_CONSOLE_YELLOW = 1, /*Yellow message in the console*/
+	MESSAGE_STATUS_CONSOLE_LIGHTBLUE = 4, /*Light blue message in the console*/
+	MESSAGE_STATUS_CONSOLE_ORANGE = 17, /*Orange message in the console*/
+	MESSAGE_STATUS_WARNING = 18, /*Red message in game window and in the console*/
+
+	MESSAGE_EVENT_ADVANCE = 19, /*White message in game window and in the console*/
+	MESSAGE_EVENT_DEFAULT = 20, /*White message at the bottom of the game window and in the console*/
+
+	MESSAGE_STATUS_DEFAULT = 21, /*White message at the bottom of the game window and in the console*/
+
+	MESSAGE_INFO_DESCR = 22, /*Green message in game window and in the console*/
+
+	MESSAGE_STATUS_SMALL = 23, /*White message at the bottom of the game window"*/
+	MESSAGE_STATUS_CONSOLE_BLUE = 24, /*Blue message in the console*/
+	MESSAGE_STATUS_CONSOLE_RED = 25, /*Red message in the console*/
 };
 
 enum FluidColors_t : uint8_t {
@@ -331,7 +369,8 @@ enum TextColor_t : uint8_t {
 	TEXTCOLOR_DARKRED = 108,
 	TEXTCOLOR_LIGHTGREY = 129,
 	TEXTCOLOR_SKYBLUE = 143,
-	TEXTCOLOR_PURPLE = 154,
+	//TEXTCOLOR_PURPLE = 154,
+	TEXTCOLOR_PURPLE = 155,
 	TEXTCOLOR_ELECTRICPURPLE = 155,
 	TEXTCOLOR_RED = 180,
 	TEXTCOLOR_PASTELRED = 194,
@@ -452,16 +491,16 @@ enum item_t : uint16_t {
 
 	ITEM_MAGICWALL = 1497,
 	ITEM_MAGICWALL_PERSISTENT = 1498,
-	ITEM_MAGICWALL_SAFE = 11098,
-	ITEM_MAGICWALL_NOPVP = 20669,
+	ITEM_MAGICWALL_SAFE = 1497,
+	ITEM_MAGICWALL_NOPVP = 1497,
 
 	ITEM_WILDGROWTH = 1499,
 	ITEM_WILDGROWTH_PERSISTENT = 2721,
-	ITEM_WILDGROWTH_SAFE = 11099,
-	ITEM_WILDGROWTH_NOPVP = 20670,
+	ITEM_WILDGROWTH_SAFE = 1499,
+	ITEM_WILDGROWTH_NOPVP = 1499,
 
 	ITEM_BAG = 1987,
-	ITEM_SHOPPING_BAG = 23782,
+	//ITEM_SHOPPING_BAG = 23782,
 
 	ITEM_GOLD_COIN = 2148,
 	ITEM_PLATINUM_COIN = 2152,
@@ -470,7 +509,7 @@ enum item_t : uint16_t {
 
 	ITEM_DEPOT = 2594,
 	ITEM_LOCKER1 = 2589,
-	ITEM_INBOX = 14404,
+	/*ITEM_INBOX = 14404,
 	ITEM_MARKET = 14405,
 	ITEM_STORE_INBOX = 26052,
 	ITEM_DEPOT_BOX_I = 25453,
@@ -489,7 +528,7 @@ enum item_t : uint16_t {
 	ITEM_DEPOT_BOX_XIV = 25466,
 	ITEM_DEPOT_BOX_XV = 25467,
 	ITEM_DEPOT_BOX_XVI = 25468,
-	ITEM_DEPOT_BOX_XVII = 25469,
+	ITEM_DEPOT_BOX_XVII = 25469,*/
 
 	ITEM_MALE_CORPSE = 3058,
 	ITEM_FEMALE_CORPSE = 3065,

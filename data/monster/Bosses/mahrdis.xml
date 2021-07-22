@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<monster name="Mahrdis" nameDescription="Mahrdis" race="undead" experience="3050" speed="300" manacost="0">
+	<health now="3900" max="3900"/>
+	<look type="90" corpse="3016"/>
+	<targetchange interval="1000" chance="3"/>
+	<targetstrategies nearest="80" health="10" damage="10" random="0"/>
+	<flags>
+		<flag summonable="0"/>
+		<flag attackable="1"/>
+		<flag hostile="1"/>
+		<flag illusionable="0"/>
+		<flag convinceable="0"/>
+		<flag pushable="0"/>
+		<flag canpushitems="1"/>
+		<flag canpushcreatures="1"/>
+		<flag targetdistance="1"/>
+		<flag staticattack="80"/>
+		<flag runonhealth="0"/>
+	</flags>
+	<attacks>
+		<attack name="melee" min="-100" max="-400" poison="65"/>
+		<attack name="physical" interval="1600" chance="7" range="1" min="-60" max="-600"/>
+			<attribute key="areaEffect" value="redshimmer"/>	
+		<attack name="fire" chance="7" range="7" min="-60" max="-600">
+			<attribute key="shootEffect" value="fire"/>
+			<attribute key="areaEffect" value="firearea"/>
+		</attack>
+		<attack name="paralyze_mahrdis" chance="13" range="7"/>
+		<attack name="fire" chance="34" radius="3" target="0" min="-80" max="-800">
+			<attribute key="areaEffect" value="explosionarea"/>
+		</attack>
+		<attack name="firefield" chance="12" radius="4" target="0">
+			<attribute key="areaEffect" value="yellowspark"/>
+		</attack>
+		<attack name="firecondition" chance="13" length="8" spread="3" min="-50" max="-500">
+			<attribute key="areaEffect" value="explosion"/>
+		</attack>
+	</attacks>
+	<defenses armor="20" defense="180">
+		<defense name="healing" chance="20" min="20" max="800">
+			<attribute key="areaEffect" value="blueshimmer"/>
+		</defense>
+	</defenses>
+	<summons maxSummons="4">
+		<summon name="fire elemental" chance="3000"/>
+	</summons>
+	<elements>
+		<element firePercent="100"/>
+		<element earthPercent="100"/>
+	</elements>
+	<immunities>
+		<immunity lifedrain="1"/>
+		<immunity paralyze="1"/>
+		<immunity outfit="1"/>
+		<immunity drunk="1"/>
+		<immunity invisible="1"/>
+	</immunities>
+	<voices interval="5000" chance="10">
+		<voice sentence="Ashes to ashes!"/>
+		<voice sentence="Fire, Fire!"/>
+		<voice sentence="The eternal flame demands its due!"/>
+		<voice sentence="Burnnnnnnnnn!"/>
+		<voice sentence="May my flames engulf you!"/>
+	</voices>
+	<loot>
+		<item id="2353" chance="100000"/><!-- 100% burning heart-->
+		<item id="2148" chance="70000" countmax="80"/><!-- 80 70% gold -->
+		<item id="2148" chance="50000" countmax="85"/><!-- 85 50% gold -->
+		<item id="2148" chance="35000" countmax="95"/><!-- 95 35% gold -->
+		<item id="2147" chance1="10000" countmax="3"/><!-- 3 10% small ruby -->
+		<item id="2156" chance="1000"/><!-- 1% red gem -->
+		<item id="2141" chance="100"/><!-- 0.1% holy falcon-->
+		<item id="1987" chance="100000"><!-- bag -->
+			<inside>
+				<item id="2432" chance="200"/><!-- 0.2% fire axe -->
+				<item id="2539" chance="100"/><!-- 0.1% phoenix shield -->
+				<item id="2168" chance="5000"/><!-- 5% life ring -->
+			</inside>
+		</item>	
+	</loot>
+</monster>

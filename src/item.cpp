@@ -73,12 +73,12 @@ Item* Item::CreateItem(const uint16_t type, uint16_t count /*= 0*/)
 			newItem = new Item(type - 2, count);
 		} else if (it.id >= 2202 && it.id <= 2206) { // magic rings
 			newItem = new Item(type - 37, count);
-		} else if (it.id == 2640) { // soft boots
+		/*} else if (it.id == 2640) { // soft boots
 			newItem = new Item(6132, count);
 		} else if (it.id == 6301) { // death ring
 			newItem = new Item(6300, count);
 		} else if (it.id == 18528) { // prismatic ring
-			newItem = new Item(18408, count);
+			newItem = new Item(18408, count);*/
 		} else {
 			newItem = new Item(type, count);
 		}

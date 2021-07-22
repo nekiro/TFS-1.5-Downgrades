@@ -32,9 +32,9 @@ NpcScriptInterface* Npc::scriptInterface = nullptr;
 void Npcs::reload()
 {
 	const std::map<uint32_t, Npc*>& npcs = g_game.getNpcs();
-	for (const auto& it : npcs) {
+	/*for (const auto& it : npcs) {
 		it.second->closeAllShopWindows();
-	}
+	}*/
 
 	delete Npc::scriptInterface;
 	Npc::scriptInterface = nullptr;
@@ -277,7 +277,7 @@ void Npc::onRemoveCreature(Creature* creature, bool isLogout)
 	Creature::onRemoveCreature(creature, isLogout);
 
 	if (creature == this) {
-		closeAllShopWindows();
+		//closeAllShopWindows();
 		if (npcEventHandler) {
 			npcEventHandler->onCreatureDisappear(creature);
 		}
@@ -359,8 +359,10 @@ void Npc::doSay(const std::string& text)
 void Npc::doSayToPlayer(Player* player, const std::string& text)
 {
 	if (player) {
-		player->sendCreatureSay(this, TALKTYPE_PRIVATE_NP, text);
-		player->onCreatureSay(this, TALKTYPE_PRIVATE_NP, text);
+		//player->sendCreatureSay(this, TALKTYPE_PRIVATE_NP, text);
+		//player->onCreatureSay(this, TALKTYPE_PRIVATE_NP, text);
+		player->sendCreatureSay(this, TALKTYPE_SAY, text);
+		player->onCreatureSay(this, TALKTYPE_SAY, text);
 	}
 }
 
@@ -641,13 +643,13 @@ int NpcScriptInterface::luaActionSay(lua_State* L)
 	}
 
 	const std::string& text = getString(L, 1);
-	if (lua_gettop(L) >= 2) {
+	/*if (lua_gettop(L) >= 2) {
 		Player* target = getPlayer(L, 2);
 		if (target) {
 			npc->doSayToPlayer(target, text);
 			return 0;
 		}
-	}
+	}*/
 
 	npc->doSay(text);
 	return 0;

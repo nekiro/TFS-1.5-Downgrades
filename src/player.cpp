@@ -50,12 +50,12 @@ MuteCountMap Player::muteCountMap;
 uint32_t Player::playerAutoID = 0x10000000;
 
 Player::Player(ProtocolGame_ptr p) :
-	Creature(), lastPing(OTSYS_TIME()), lastPong(lastPing), inbox(new Inbox(ITEM_INBOX)), storeInbox(new StoreInbox(ITEM_STORE_INBOX)), client(std::move(p))
+	Creature(), lastPing(OTSYS_TIME()), lastPong(lastPing), /*inbox(new Inbox(ITEM_INBOX)), storeInbox(new StoreInbox(ITEM_STORE_INBOX)),*/ client(std::move(p))
 {
-	inbox->incrementReferenceCounter();
+	/*inbox->incrementReferenceCounter();
 
 	storeInbox->setParent(this);
-	storeInbox->incrementReferenceCounter();
+	storeInbox->incrementReferenceCounter();*/
 }
 
 Player::~Player()
@@ -67,14 +67,14 @@ Player::~Player()
 		}
 	}
 
-	for (const auto& it : depotLockerMap) {
+	/*for (const auto& it : depotLockerMap) {
 		it.second->removeInbox(inbox);
 	}
 
 	inbox->decrementReferenceCounter();
 
 	storeInbox->setParent(nullptr);
-	storeInbox->decrementReferenceCounter();
+	storeInbox->decrementReferenceCounter();*/
 
 	setWriteItem(nullptr);
 	setEditHouse(nullptr);
@@ -405,6 +405,7 @@ uint16_t Player::getClientIcons() const
 		icons |= ICON_REDSWORDS;
 	}
 
+	/*
 	if (tile->hasFlag(TILESTATE_PROTECTIONZONE)) {
 		icons |= ICON_PIGEON;
 
@@ -412,7 +413,7 @@ uint16_t Player::getClientIcons() const
 		if (hasBitSet(ICON_SWORDS, icons)) {
 			icons &= ~ICON_SWORDS;
 		}
-	}
+	}*/
 
 	// Game client debugs with 10 or more icons
 	// so let's prevent that from happening.
@@ -541,17 +542,17 @@ void Player::addContainer(uint8_t cid, Container* container)
 		return;
 	}
 
-	if (container->getID() == ITEM_BROWSEFIELD) {
+	/*if (container->getID() == ITEM_BROWSEFIELD) {
 		container->incrementReferenceCounter();
-	}
+	}*/
 
 	auto it = openContainers.find(cid);
 	if (it != openContainers.end()) {
 		OpenContainer& openContainer = it->second;
-		Container* oldContainer = openContainer.container;
+		/*Container* oldContainer = openContainer.container;
 		if (oldContainer->getID() == ITEM_BROWSEFIELD) {
 			oldContainer->decrementReferenceCounter();
-		}
+		}*/
 
 		openContainer.container = container;
 		openContainer.index = 0;
@@ -570,13 +571,13 @@ void Player::closeContainer(uint8_t cid)
 		return;
 	}
 
-	OpenContainer openContainer = it->second;
-	Container* container = openContainer.container;
+	//OpenContainer openContainer = it->second;
+	//Container* container = openContainer.container;
 	openContainers.erase(it);
 
-	if (container && container->getID() == ITEM_BROWSEFIELD) {
+	/*if (container && container->getID() == ITEM_BROWSEFIELD) {
 		container->decrementReferenceCounter();
-	}
+	}*/
 }
 
 void Player::setContainerIndex(uint8_t cid, uint16_t index)
@@ -803,8 +804,8 @@ DepotLocker* Player::getDepotLocker(uint32_t depotId)
 
 	it = depotLockerMap.emplace(depotId, new DepotLocker(ITEM_LOCKER1)).first;
 	it->second->setDepotId(depotId);
-	it->second->internalAddThing(Item::CreateItem(ITEM_MARKET));
-	it->second->internalAddThing(inbox);
+	//it->second->internalAddThing(Item::CreateItem(ITEM_MARKET));
+	//it->second->internalAddThing(inbox);
 	it->second->internalAddThing(getDepotChest(depotId, true));
 	return it->second.get();
 }
@@ -917,7 +918,7 @@ void Player::sendAddContainerItem(const Container* container, const Item* item)
 		}
 
 		uint16_t slot = openContainer.index;
-		if (container->getID() == ITEM_BROWSEFIELD) {
+		/*if (container->getID() == ITEM_BROWSEFIELD) {
 			uint16_t containerSize = container->size() - 1;
 			uint16_t pageEnd = openContainer.index + container->capacity() - 1;
 			if (containerSize > pageEnd) {
@@ -926,7 +927,7 @@ void Player::sendAddContainerItem(const Container* container, const Item* item)
 			} else {
 				slot = containerSize;
 			}
-		} else if (openContainer.index >= container->capacity()) {
+		} else*/ if (openContainer.index >= container->capacity()) {
 			item = container->getItemByIndex(openContainer.index);
 		}
 
@@ -1021,7 +1022,7 @@ void Player::onCreatureAppear(Creature* creature, bool isLogin)
 	Creature::onCreatureAppear(creature, isLogin);
 
 	if (isLogin && creature == this) {
-		sendItems();
+		//sendItems();
 
 		for (int32_t slot = CONST_SLOT_FIRST; slot <= CONST_SLOT_LAST; ++slot) {
 			Item* item = inventory[slot];
@@ -1097,19 +1098,19 @@ void Player::onChangeZone(ZoneType_t zone)
 			onAttackedCreatureDisappear(false);
 		}
 
-		if (!group->access && isMounted()) {
+		/*if (!group->access && isMounted()) {
 			dismount();
 			g_game.internalCreatureChangeOutfit(this, defaultOutfit);
 			wasMounted = true;
-		}
-	} else {
+		}*/
+	}/*else {
 		if (wasMounted) {
 			toggleMount(true);
 			wasMounted = false;
 		}
-	}
+	}*/
 
-	g_game.updateCreatureWalkthrough(this);
+	//g_game.updateCreatureWalkthrough(this);
 	sendIcons();
 }
 
@@ -1157,7 +1158,7 @@ void Player::onRemoveCreature(Creature* creature, bool isLogout)
 			g_game.internalCloseTrade(this);
 		}
 
-		closeShopWindow();
+		//closeShopWindow();
 
 		clearPartyInvitations();
 
@@ -1459,10 +1460,10 @@ void Player::onThink(uint32_t interval)
 		checkSkullTicks(interval / 1000);
 	}
 
-	addOfflineTrainingTime(interval);
+	/*addOfflineTrainingTime(interval);
 	if (lastStatsTrainingTime != getOfflineTrainingTime() / 60 / 1000) {
 		sendStats();
-	}
+	}*/
 }
 
 uint32_t Player::isMuted() const
@@ -1607,20 +1608,28 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 	if (sendText) {
 		std::string expString = std::to_string(exp) + (exp != 1 ? " experience points." : " experience point.");
 
-		TextMessage message(MESSAGE_EXPERIENCE, "You gained " + expString);
+		/*TextMessage message(MESSAGE_EXPERIENCE, "You gained " + expString);
 		message.position = position;
 		message.primary.value = exp;
 		message.primary.color = TEXTCOLOR_WHITE_EXP;
+		sendTextMessage(message);*/
+
+		TextMessage message(MESSAGE_EVENT_DEFAULT, "You gained " + expString);
 		sendTextMessage(message);
+
+		ColoredText coloredText(std::to_string(exp), position, TEXTCOLOR_WHITE_EXP);
+		sendColoredText(coloredText);
 
 		SpectatorVec spectators;
 		g_game.map.getSpectators(spectators, position, false, true);
 		spectators.erase(this);
 		if (!spectators.empty()) {
-			message.type = MESSAGE_EXPERIENCE_OTHERS;
+			//message.type = MESSAGE_EXPERIENCE_OTHERS;
+			message.type = MESSAGE_STATUS_SMALL;
 			message.text = getName() + " gained " + expString;
 			for (Creature* spectator : spectators) {
 				spectator->getPlayer()->sendTextMessage(message);
+				spectator->getPlayer()->sendColoredText(coloredText);
 			}
 		}
 	}
@@ -1693,20 +1702,28 @@ void Player::removeExperience(uint64_t exp, bool sendText/* = false*/)
 
 		std::string expString = std::to_string(lostExp) + (lostExp != 1 ? " experience points." : " experience point.");
 
-		TextMessage message(MESSAGE_EXPERIENCE, "You lost " + expString);
+		/*TextMessage message(MESSAGE_EXPERIENCE, "You lost " + expString);
 		message.position = position;
 		message.primary.value = lostExp;
 		message.primary.color = TEXTCOLOR_RED;
+		sendTextMessage(message);*/
+
+		TextMessage message(MESSAGE_EVENT_DEFAULT, "You lost " + expString);
 		sendTextMessage(message);
+
+		ColoredText coloredText(std::to_string(lostExp), position, TEXTCOLOR_RED);
+		sendColoredText(ColoredText(std::to_string(lostExp), position, TEXTCOLOR_RED));
 
 		SpectatorVec spectators;
 		g_game.map.getSpectators(spectators, position, false, true);
 		spectators.erase(this);
 		if (!spectators.empty()) {
-			message.type = MESSAGE_EXPERIENCE_OTHERS;
+			//message.type = MESSAGE_EXPERIENCE_OTHERS;
+			message.type = MESSAGE_STATUS_SMALL;
 			message.text = getName() + " lost " + expString;
 			for (Creature* spectator : spectators) {
 				spectator->getPlayer()->sendTextMessage(message);
+				spectator->getPlayer()->sendColoredText(coloredText);
 			}
 		}
 	}
@@ -1901,12 +1918,12 @@ uint32_t Player::getIP() const
 	return 0;
 }
 
-void Player::death(Creature* lastHitCreature)
+void Player::death(Creature*)
 {
 	loginPosition = town->getTemplePosition();
 
 	if (skillLoss) {
-		uint8_t unfairFightReduction = 100;
+		/*uint8_t unfairFightReduction = 100;
 		bool lastHitPlayer = Player::lastHitIsPlayer(lastHitCreature);
 
 		if (lastHitPlayer) {
@@ -1926,7 +1943,7 @@ void Player::death(Creature* lastHitCreature)
 				double reduce = level / static_cast<double>(sumLevels);
 				unfairFightReduction = std::max<uint8_t>(20, std::floor((reduce * 100) + 0.5));
 			}
-		}
+		}*/
 
 		//Magic level loss
 		uint64_t sumMana = 0;
@@ -1939,7 +1956,8 @@ void Player::death(Creature* lastHitCreature)
 
 		sumMana += manaSpent;
 
-		double deathLossPercent = getLostPercent() * (unfairFightReduction / 100.);
+		//double deathLossPercent = getLostPercent() * (unfairFightReduction / 100.);
+		double deathLossPercent = getLostPercent();
 
 		lostMana = static_cast<uint64_t>(sumMana * deathLossPercent);
 
@@ -2017,7 +2035,7 @@ void Player::death(Creature* lastHitCreature)
 			}
 		}
 
-		std::bitset<6> bitset(blessings);
+		/*std::bitset<6> bitset(blessings);
 		if (bitset[5]) {
 			if (lastHitPlayer) {
 				bitset.reset(5);
@@ -2027,19 +2045,22 @@ void Player::death(Creature* lastHitCreature)
 			}
 		} else {
 			blessings = 0;
-		}
+		}*/
 
 		sendStats();
 		sendSkills();
-		sendReLoginWindow(unfairFightReduction);
+		//sendReLoginWindow(unfairFightReduction);
 
-		if (getSkull() == SKULL_BLACK) {
+		/*if (getSkull() == SKULL_BLACK) {
 			health = 40;
 			mana = 0;
 		} else {
 			health = healthMax;
 			mana = manaMax;
-		}
+		}*/
+
+		health = healthMax;
+		mana = manaMax;
 
 		auto it = conditions.begin(), end = conditions.end();
 		while (it != end) {
@@ -2962,7 +2983,7 @@ void Player::postAddNotification(Thing* thing, const Cylinder* oldParent, int32_
 		g_moveEvents->onPlayerEquip(this, thing->getItem(), static_cast<slots_t>(index), false);
 	}
 
-	bool requireListUpdate = false;
+	//bool requireListUpdate = false;
 
 	if (link == LINK_OWNER || link == LINK_TOPPARENT) {
 		const Item* i = (oldParent ? oldParent->getItem() : nullptr);
@@ -2971,11 +2992,11 @@ void Player::postAddNotification(Thing* thing, const Cylinder* oldParent, int32_
 		// as the list was updated in postRemoveNotification
 		assert(i ? i->getContainer() != nullptr : true);
 
-		if (i) {
+		/*if (i) {
 			requireListUpdate = i->getContainer()->getHoldingPlayer() != this;
 		} else {
 			requireListUpdate = oldParent != this;
-		}
+		}*/
 
 		updateInventoryWeight();
 		updateItemsLight();
@@ -2987,9 +3008,9 @@ void Player::postAddNotification(Thing* thing, const Cylinder* oldParent, int32_
 			onSendContainer(container);
 		}
 
-		if (shopOwner && requireListUpdate) {
+		/*if (shopOwner && requireListUpdate) {
 			updateSaleShopList(item);
-		}
+		}*/
 	} else if (const Creature* creature = thing->getCreature()) {
 		if (creature == this) {
 			//check containers
@@ -3016,7 +3037,7 @@ void Player::postRemoveNotification(Thing* thing, const Cylinder* newParent, int
 		g_moveEvents->onPlayerDeEquip(this, thing->getItem(), static_cast<slots_t>(index));
 	}
 
-	bool requireListUpdate = false;
+	//bool requireListUpdate = false;
 
 	if (link == LINK_OWNER || link == LINK_TOPPARENT) {
 		const Item* i = (newParent ? newParent->getItem() : nullptr);
@@ -3025,11 +3046,11 @@ void Player::postRemoveNotification(Thing* thing, const Cylinder* newParent, int
 		// as the list was updated in postRemoveNotification
 		assert(i ? i->getContainer() != nullptr : true);
 
-		if (i) {
+		/*if (i) {
 			requireListUpdate = i->getContainer()->getHoldingPlayer() != this;
 		} else {
 			requireListUpdate = newParent != this;
-		}
+		}*/
 
 		updateInventoryWeight();
 		updateItemsLight();
@@ -3064,9 +3085,9 @@ void Player::postRemoveNotification(Thing* thing, const Cylinder* newParent, int
 			}
 		}
 
-		if (shopOwner && requireListUpdate) {
+		/*if (shopOwner && requireListUpdate) {
 			updateSaleShopList(item);
-		}
+		}*/
 	}
 }
 
@@ -3316,9 +3337,9 @@ void Player::onAddCondition(ConditionType_t type)
 {
 	Creature::onAddCondition(type);
 
-	if (type == CONDITION_OUTFIT && isMounted()) {
+	/*if (type == CONDITION_OUTFIT && isMounted()) {
 		dismount();
-	}
+	}*/
 
 	sendIcons();
 }
@@ -3372,7 +3393,8 @@ void Player::onEndCondition(ConditionType_t type)
 		pzLocked = false;
 		clearAttacked();
 
-		if (getSkull() != SKULL_RED && getSkull() != SKULL_BLACK) {
+		//if (getSkull() != SKULL_RED && getSkull() != SKULL_BLACK) {
+		if (getSkull() != SKULL_RED) {
 			setSkull(SKULL_NONE);
 		}
 	}
@@ -3873,12 +3895,16 @@ void Player::addUnjustifiedDead(const Player* attacked)
 
 	skullTicks += g_config.getNumber(ConfigManager::FRAG_TIME);
 
-	if (getSkull() != SKULL_BLACK) {
+	/*if (getSkull() != SKULL_BLACK) {
 		if (g_config.getNumber(ConfigManager::KILLS_TO_BLACK) != 0 && skullTicks > (g_config.getNumber(ConfigManager::KILLS_TO_BLACK) - 1) * static_cast<int64_t>(g_config.getNumber(ConfigManager::FRAG_TIME))) {
 			setSkull(SKULL_BLACK);
 		} else if (getSkull() != SKULL_RED && g_config.getNumber(ConfigManager::KILLS_TO_RED) != 0 && skullTicks > (g_config.getNumber(ConfigManager::KILLS_TO_RED) - 1) * static_cast<int64_t>(g_config.getNumber(ConfigManager::FRAG_TIME))) {
 			setSkull(SKULL_RED);
 		}
+	}*/
+
+	if (getSkull() != SKULL_RED && g_config.getNumber(ConfigManager::KILLS_TO_RED) != 0 && skullTicks > (g_config.getNumber(ConfigManager::KILLS_TO_RED) - 1) * static_cast<int64_t>(g_config.getNumber(ConfigManager::FRAG_TIME))) {
+		setSkull(SKULL_RED);
 	}
 }
 
@@ -3891,7 +3917,8 @@ void Player::checkSkullTicks(int64_t ticks)
 		skullTicks = newTicks;
 	}
 
-	if ((skull == SKULL_RED || skull == SKULL_BLACK) && skullTicks < 1 && !hasCondition(CONDITION_INFIGHT)) {
+	//if ((skull == SKULL_RED || skull == SKULL_BLACK) && skullTicks < 1 && !hasCondition(CONDITION_INFIGHT)) {
+	if (skull == SKULL_RED && skullTicks < 1 && !hasCondition(CONDITION_INFIGHT)) {
 		setSkull(SKULL_NONE);
 	}
 }
@@ -3993,7 +4020,7 @@ bool Player::isPremium() const
 void Player::setPremiumTime(time_t premiumEndsAt)
 {
 	this->premiumEndsAt = premiumEndsAt;
-	sendBasicData();
+	//sendBasicData();
 }
 
 PartyShields_t Player::getPartyShield(const Player* player) const
@@ -4004,7 +4031,7 @@ PartyShields_t Player::getPartyShield(const Player* player) const
 
 	if (party) {
 		if (party->getLeader() == player) {
-			if (party->isSharedExperienceActive()) {
+			/*if (party->isSharedExperienceActive()) {
 				if (party->isSharedExperienceEnabled()) {
 					return SHIELD_YELLOW_SHAREDEXP;
 				}
@@ -4014,13 +4041,13 @@ PartyShields_t Player::getPartyShield(const Player* player) const
 				}
 
 				return SHIELD_YELLOW_NOSHAREDEXP_BLINK;
-			}
+			}*/
 
 			return SHIELD_YELLOW;
 		}
 
 		if (player->party == party) {
-			if (party->isSharedExperienceActive()) {
+			/*if (party->isSharedExperienceActive()) {
 				if (party->isSharedExperienceEnabled()) {
 					return SHIELD_BLUE_SHAREDEXP;
 				}
@@ -4030,7 +4057,7 @@ PartyShields_t Player::getPartyShield(const Player* player) const
 				}
 
 				return SHIELD_BLUE_NOSHAREDEXP_BLINK;
-			}
+			}*/
 
 			return SHIELD_BLUE;
 		}
@@ -4043,10 +4070,10 @@ PartyShields_t Player::getPartyShield(const Player* player) const
 	if (player->isInviting(this)) {
 		return SHIELD_WHITEYELLOW;
 	}
-
-	if (player->party) {
+	
+	/*if (player->party) {
 		return SHIELD_GRAY;
-	}
+	}*/
 
 	return SHIELD_NONE;
 }

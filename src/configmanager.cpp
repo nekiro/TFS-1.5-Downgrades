@@ -187,6 +187,22 @@ bool ConfigManager::load()
 			string[IP] = getGlobalString(L, "ip", "127.0.0.1");
 		}
 
+		uint32_t ip = inet_addr(string[IP].c_str());
+		if (ip == INADDR_NONE) {
+			hostent* hostname = gethostbyname(string[IP].c_str());
+			if (hostname) {
+				ip = inet_addr(std::string(inet_ntoa(**(in_addr**)hostname->h_addr_list)).c_str());
+			}
+		}
+
+		if (ip == INADDR_NONE) {
+			std::cout << "[Error - ConfigManager::load] cannot resolve given ip address, make sure you typed correct IP or hostname." << std::endl;
+			lua_close(L);
+			return false;
+		}
+
+		integer[IP_NUM] = ip;
+
 		string[MAP_NAME] = getGlobalString(L, "mapName", "forgotten");
 		string[MAP_AUTHOR] = getGlobalString(L, "mapAuthor", "Unknown");
 		string[HOUSE_RENT_PERIOD] = getGlobalString(L, "houseRentPeriod", "never");

@@ -451,6 +451,8 @@ class Game
 		//animation help functions
 		void addCreatureHealth(const Creature* target);
 		static void addCreatureHealth(const SpectatorVec& spectators, const Creature* target);
+		void addColoredText(const ColoredText& coloredText);
+		static void addColoredText(const SpectatorVec& spectators, const ColoredText& coloredText);
 		void addMagicEffect(const Position& pos, uint8_t effect);
 		static void addMagicEffect(const SpectatorVec& spectators, const Position& pos, uint8_t effect);
 		void addDistanceEffect(const Position& fromPos, const Position& toPos, uint8_t effect);

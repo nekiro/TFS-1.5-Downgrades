@@ -53,13 +53,22 @@ struct TextMessage
 	TextMessage(MessageClasses type, std::string text) : type(type), text(std::move(text)) {}
 };
 
+struct ColoredText
+{
+	std::string text;
+	Position position;
+	TextColor_t color;
+	ColoredText() = default;
+	ColoredText(std::string text, Position position, TextColor_t color) : text(std::move(text)), position(std::move(position)), color(color) {}
+};
+
 class ProtocolGame final : public Protocol
 {
 	public:
 		// static protocol information
 		enum {server_sends_first = true};
 		enum {protocol_identifier = 0}; // Not required as we send first
-		enum {use_checksum = true};
+		enum {use_checksum = false};
 		static const char* protocol_name() {
 			return "gameworld protocol";
 		}
@@ -196,6 +205,7 @@ class ProtocolGame final : public Protocol
 		void sendStats();
 		void sendBasicData();
 		void sendTextMessage(const TextMessage& message);
+		void sendColoredText(const ColoredText& coloredText);
 		void sendReLoginWindow(uint8_t unfairFightReduction);
 
 		void sendTutorial(uint8_t tutorialId);

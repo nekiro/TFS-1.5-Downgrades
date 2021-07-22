@@ -1445,20 +1445,20 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(MESSAGE_EVENT_ADVANCE)
 	registerEnum(MESSAGE_STATUS_SMALL)
 	registerEnum(MESSAGE_INFO_DESCR)
-	registerEnum(MESSAGE_DAMAGE_DEALT)
+	/*registerEnum(MESSAGE_DAMAGE_DEALT)
 	registerEnum(MESSAGE_DAMAGE_RECEIVED)
 	registerEnum(MESSAGE_HEALED)
 	registerEnum(MESSAGE_EXPERIENCE)
 	registerEnum(MESSAGE_DAMAGE_OTHERS)
 	registerEnum(MESSAGE_HEALED_OTHERS)
-	registerEnum(MESSAGE_EXPERIENCE_OTHERS)
+	registerEnum(MESSAGE_EXPERIENCE_OTHERS)*/
 	registerEnum(MESSAGE_EVENT_DEFAULT)
-	registerEnum(MESSAGE_GUILD)
+	/*registerEnum(MESSAGE_GUILD)
 	registerEnum(MESSAGE_PARTY_MANAGEMENT)
 	registerEnum(MESSAGE_PARTY)
-	registerEnum(MESSAGE_EVENT_ORANGE)
+	registerEnum(MESSAGE_EVENT_ORANGE)*/
 	registerEnum(MESSAGE_STATUS_CONSOLE_ORANGE)
-	registerEnum(MESSAGE_LOOT)
+	//registerEnum(MESSAGE_LOOT)
 
 	registerEnum(CREATURETYPE_PLAYER)
 	registerEnum(CREATURETYPE_MONSTER)
@@ -1530,7 +1530,7 @@ void LuaScriptInterface::registerFunctions()
 
 	registerEnum(ITEM_BROWSEFIELD)
 	registerEnum(ITEM_BAG)
-	registerEnum(ITEM_SHOPPING_BAG)
+	//registerEnum(ITEM_SHOPPING_BAG)
 	registerEnum(ITEM_GOLD_COIN)
 	registerEnum(ITEM_PLATINUM_COIN)
 	registerEnum(ITEM_CRYSTAL_COIN)
@@ -1657,7 +1657,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(SKULL_BLACK)
 	registerEnum(SKULL_ORANGE)
 
-	registerEnum(TALKTYPE_SAY)
+	/*registerEnum(TALKTYPE_SAY)
 	registerEnum(TALKTYPE_WHISPER)
 	registerEnum(TALKTYPE_YELL)
 	registerEnum(TALKTYPE_PRIVATE_FROM)
@@ -1671,7 +1671,20 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(TALKTYPE_PRIVATE_RED_FROM)
 	registerEnum(TALKTYPE_PRIVATE_RED_TO)
 	registerEnum(TALKTYPE_MONSTER_SAY)
+	registerEnum(TALKTYPE_MONSTER_YELL)*/
+
+	registerEnum(TALKTYPE_SAY)
+	registerEnum(TALKTYPE_WHISPER)
+	registerEnum(TALKTYPE_YELL)
+	registerEnum(TALKTYPE_PRIVATE)
+	registerEnum(TALKTYPE_PRIVATE_RED)
+	registerEnum(TALKTYPE_CHANNEL_Y)
+	registerEnum(TALKTYPE_CHANNEL_O)
+	registerEnum(TALKTYPE_BROADCAST)
+	registerEnum(TALKTYPE_CHANNEL_R1)
+	registerEnum(TALKTYPE_MONSTER_SAY)
 	registerEnum(TALKTYPE_MONSTER_YELL)
+	registerEnum(TALKTYPE_CHANNEL_R2)
 
 	registerEnum(TEXTCOLOR_BLUE)
 	registerEnum(TEXTCOLOR_LIGHTGREEN)
@@ -9358,7 +9371,7 @@ int LuaScriptInterface::luaPlayerSendPrivateMessage(lua_State* L)
 
 	const Player* speaker = getUserdata<const Player>(L, 2);
 	const std::string& text = getString(L, 3);
-	SpeakClasses type = getNumber<SpeakClasses>(L, 4, TALKTYPE_PRIVATE_FROM);
+	SpeakClasses type = getNumber<SpeakClasses>(L, 4, TALKTYPE_PRIVATE);
 	player->sendPrivateMessage(speaker, type, text);
 	pushBoolean(L, true);
 	return 1;

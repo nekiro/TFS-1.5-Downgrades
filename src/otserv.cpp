@@ -301,7 +301,7 @@ void mainLoader(int, char*[], ServiceManager* services)
 	services->add<ProtocolStatus>(static_cast<uint16_t>(g_config.getNumber(ConfigManager::STATUS_PORT)));
 
 	// Legacy login protocol
-	services->add<ProtocolOld>(static_cast<uint16_t>(g_config.getNumber(ConfigManager::LOGIN_PORT)));
+	//services->add<ProtocolOld>(static_cast<uint16_t>(g_config.getNumber(ConfigManager::LOGIN_PORT)));
 
 	RentPeriod_t rentPeriod;
 	std::string strRentPeriod = asLowerCaseString(g_config.getString(ConfigManager::HOUSE_RENT_PERIOD));
@@ -320,8 +320,8 @@ void mainLoader(int, char*[], ServiceManager* services)
 
 	g_game.map.houses.payHouses(rentPeriod);
 
-	IOMarket::checkExpiredOffers();
-	IOMarket::getInstance().updateStatistics();
+	//IOMarket::checkExpiredOffers();
+	//IOMarket::getInstance().updateStatistics();
 
 	std::cout << ">> Loaded all modules, server starting up..." << std::endl;
 

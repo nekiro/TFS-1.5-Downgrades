@@ -56,8 +56,8 @@ timeBetweenExActions = 1000
 
 -- Map
 -- NOTE: set mapName WITHOUT .otbm at the end
-mapName = "forgotten"
-mapAuthor = "Komic"
+mapName = "world"
+mapAuthor = "Nekiro"
 
 -- Market
 marketOfferDuration = 30 * 24 * 60 * 60
@@ -84,7 +84,7 @@ freePremium = false
 kickIdlePlayerAfterMinutes = 15
 maxMessageBuffer = 4
 emoteSpells = false
-classicEquipmentSlots = false
+classicEquipmentSlots = true
 classicAttackSpeed = false
 showScriptsLogInConsole = true
 showOnlineStatusInCharlist = false
