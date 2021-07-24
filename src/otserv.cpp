@@ -140,6 +140,7 @@ void printServerVersion()
 	std::cout << std::endl;
 
 	std::cout << "A server developed by " << STATUS_SERVER_DEVELOPERS << std::endl;
+	std::cout << "A server downgraded by Nekiro" << std::endl;
 	std::cout << "Visit our forum for updates, support, and resources: https://otland.net/." << std::endl;
 	std::cout << std::endl;
 }
