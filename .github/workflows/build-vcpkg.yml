@@ -3,7 +3,7 @@ name: Build with vcpkg
 on:
   push:
     branches:
-      - 8.60
+      - 7.72
       - v*
 
     tags:

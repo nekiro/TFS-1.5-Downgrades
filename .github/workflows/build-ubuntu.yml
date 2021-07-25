@@ -3,7 +3,7 @@ name: Build on Ubuntu
 on:
   push:
     branches:
-      - 8.60
+      - 7.72
       - v*
 
     tags:
