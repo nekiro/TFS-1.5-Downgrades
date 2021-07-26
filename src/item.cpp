@@ -882,56 +882,13 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 	}
 
 	if (it.isRune()) {
-		if (it.runeLevel > 0 || it.runeMagLevel > 0) {
-			if (RuneSpell* rune = g_spells->getRuneSpell(it.id)) {
-				int32_t tmpSubType = subType;
-				if (item) {
-					tmpSubType = item->getSubType();
-				}
-				s << ". " << (it.stackable && tmpSubType > 1 ? "They" : "It") << " can only be used by ";
+		if (g_spells->getRuneSpell(it.id)) {
+			if (it.runeMagLevel > 0) {
+				s << " for magic level " << it.runeMagLevel;
+			}
 
-				const VocSpellMap& vocMap = rune->getVocMap();
-				std::vector<Vocation*> showVocMap;
-
-				// vocations are usually listed with the unpromoted and promoted version, the latter being
-				// hidden from description, so `total / 2` is most likely the amount of vocations to be shown.
-				showVocMap.reserve(vocMap.size() / 2);
-				for (const auto& voc : vocMap) {
-					if (voc.second) {
-						showVocMap.push_back(g_vocations.getVocation(voc.first));
-					}
-				}
-
-				if (!showVocMap.empty()) {
-					auto vocIt = showVocMap.begin(), vocLast = (showVocMap.end() - 1);
-					while (vocIt != vocLast) {
-						s << asLowerCaseString((*vocIt)->getVocName()) << "s";
-						if (++vocIt == vocLast) {
-							s << " and ";
-						} else {
-							s << ", ";
-						}
-					}
-					s << asLowerCaseString((*vocLast)->getVocName()) << "s";
-				} else {
-					s << "players";
-				}
-
-				s << " with";
-
-				if (it.runeLevel > 0) {
-					s << " level " << it.runeLevel;
-				}
-
-				if (it.runeMagLevel > 0) {
-					if (it.runeLevel > 0) {
-						s << " and";
-					}
-
-					s << " magic level " << it.runeMagLevel;
-				}
-
-				s << " or higher";
+			if (!it.runeSpellName.empty()) {
+				s << ". It's an \"" << it.runeSpellName << "\" spell (" << (item ? item->getCharges() : it.charges) << "x)";
 			}
 		}
 	} else if (it.weaponType != WEAPON_NONE) {
