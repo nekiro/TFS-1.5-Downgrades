@@ -1045,7 +1045,7 @@ const char* getReturnMessage(ReturnValue value)
 			return "You do not have the required magic level to use this rune.";
 
 		case RETURNVALUE_YOUAREALREADYTRADING:
-			return "You are already trading.";
+			return "You are already trading. Finish this trade first.";
 
 		case RETURNVALUE_THISPLAYERISALREADYTRADING:
 			return "This player is already trading.";
@@ -1175,6 +1175,9 @@ const char* getReturnMessage(ReturnValue value)
 
 		case RETURNVALUE_ITEMCANNOTBEMOVEDTHERE:
 			return "This item cannot be moved there.";
+			
+		case RETURNVALUE_YOUCANNOTUSETHISBED:
+			return "This bed can't be used, but Premium Account players can rent houses and sleep in beds there to regain health and mana.";
 
 		default: // RETURNVALUE_NOTPOSSIBLE, etc
 			return "Sorry, not possible.";

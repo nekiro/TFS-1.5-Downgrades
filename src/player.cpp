@@ -34,6 +34,8 @@
 #include "scheduler.h"
 #include "weapons.h"
 
+#include <fmt/format.h>
+
 extern ConfigManager g_config;
 extern Game g_game;
 extern Chat* g_chat;
@@ -442,9 +444,7 @@ void Player::addSkillAdvance(skills_t skill, uint64_t count)
 		skills[skill].tries = 0;
 		skills[skill].percent = 0;
 
-		std::ostringstream ss;
-		ss << "You advanced to " << getSkillName(skill) << " level " << skills[skill].level << '.';
-		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
+		sendTextMessage(MESSAGE_EVENT_ADVANCE, fmt::format("You advanced to {:s} level {:d}.", getSkillName(skill), skills[skill].level));
 
 		g_creatureEvents->playerAdvance(this, skill, (skills[skill].level - 1), skills[skill].level);
 
@@ -989,7 +989,9 @@ void Player::onCreatureAppear(Creature* creature, bool isLogin)
 
 		Account account = IOLoginData::loadAccount(accountNumber);
 
-		std::cout << name << " has logged in." << std::endl;
+		if (g_config.getBoolean(ConfigManager::PLAYER_CONSOLE_LOGS)) {
+			std::cout << name << " has logged in." << std::endl;
+		}
 
 		if (guild) {
 			guild->addMember(this);
@@ -1092,7 +1094,9 @@ void Player::onRemoveCreature(Creature* creature, bool isLogout)
 
 		g_chat->removeUserFromAllChannels(*this);
 
-		std::cout << getName() << " has logged out." << std::endl;
+		if (g_config.getBoolean(ConfigManager::PLAYER_CONSOLE_LOGS)) {
+			std::cout << getName() << " has logged out." << std::endl;
+		}
 
 		if (guild) {
 			guild->removeMember(this);
@@ -1357,9 +1361,7 @@ void Player::onThink(uint32_t interval)
 		if (idleTime > (kickAfterMinutes * 60000) + 60000) {
 			kickPlayer(true);
 		} else if (client && idleTime == 60000 * kickAfterMinutes) {
-			std::ostringstream ss;
-			ss << "There was no variation in your behaviour for " << kickAfterMinutes << " minutes. You will be disconnected in one minute if there is no change in your actions until then.";
-			client->sendTextMessage(TextMessage(MESSAGE_STATUS_WARNING, ss.str()));
+			client->sendTextMessage(TextMessage(MESSAGE_STATUS_WARNING, fmt::format("There was no variation in your behaviour for {:d} minutes. You will be disconnected in one minute if there is no change in your actions until then.", kickAfterMinutes)));
 		}
 	}
 
@@ -1410,9 +1412,7 @@ void Player::removeMessageBuffer()
 			Condition* condition = Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_MUTED, muteTime * 1000, 0);
 			addCondition(condition);
 
-			std::ostringstream ss;
-			ss << "You are muted for " << muteTime << " seconds.";
-			sendTextMessage(MESSAGE_STATUS_SMALL, ss.str());
+			sendTextMessage(MESSAGE_STATUS_SMALL, fmt::format("You are muted for {:d} seconds.", muteTime));
 		}
 	}
 }
@@ -1460,9 +1460,7 @@ void Player::addManaSpent(uint64_t amount)
 		magLevel++;
 		manaSpent = 0;
 
-		std::ostringstream ss;
-		ss << "You advanced to magic level " << magLevel << '.';
-		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
+		sendTextMessage(MESSAGE_EVENT_ADVANCE, fmt::format("You advanced to magic level {:d}.", magLevel));
 
 		g_creatureEvents->playerAdvance(this, SKILL_MAGLEVEL, magLevel - 1, magLevel);
 
@@ -1569,9 +1567,7 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 
 		g_creatureEvents->playerAdvance(this, SKILL_LEVEL, prevLevel, level);
 
-		std::ostringstream ss;
-		ss << "You advanced from Level " << prevLevel << " to Level " << level << '.';
-		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
+		sendTextMessage(MESSAGE_EVENT_ADVANCE, fmt::format("You advanced from Level {:d} to Level {:d}.", prevLevel, level));
 	}
 
 	if (nextLevelExp > currLevelExp) {
@@ -1648,9 +1644,7 @@ void Player::removeExperience(uint64_t exp, bool sendText/* = false*/)
 			party->updateSharedExperience();
 		}
 
-		std::ostringstream ss;
-		ss << "You were downgraded from Level " << oldLevel << " to Level " << level << '.';
-		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
+		sendTextMessage(MESSAGE_EVENT_ADVANCE, fmt::format("You were downgraded from Level {:d} to Level {:d}.", oldLevel, level));
 	}
 
 	uint64_t nextLevelExp = Player::getExpForLevel(level + 1);
@@ -1894,9 +1888,7 @@ void Player::death(Creature* lastHitCreature)
 			}
 
 			if (oldLevel != level) {
-				std::ostringstream ss;
-				ss << "You were downgraded from Level " << oldLevel << " to Level " << level << '.';
-				sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
+				sendTextMessage(MESSAGE_EVENT_ADVANCE, fmt::format("You were downgraded from Level {:d} to Level {:d}.", oldLevel, level));
 			}
 
 			uint64_t currLevelExp = Player::getExpForLevel(level);
@@ -1985,14 +1977,28 @@ Item* Player::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature)
 {
 	Item* corpse = Creature::getCorpse(lastHitCreature, mostDamageCreature);
 	if (corpse && corpse->getContainer()) {
-		std::ostringstream ss;
-		if (lastHitCreature) {
-			ss << "You recognize " << getNameDescription() << ". " << (getSex() == PLAYERSEX_FEMALE ? "She" : "He") << " was killed by " << lastHitCreature->getNameDescription() << '.';
-		} else {
-			ss << "You recognize " << getNameDescription() << '.';
+		std::unordered_map<std::string, uint16_t> names;
+		for (const auto& killer : getKillers()) {
+			++names[killer->getName()];
 		}
 
-		corpse->setSpecialDescription(ss.str());
+		if (lastHitCreature) {
+			if (!mostDamageCreature) {
+				corpse->setSpecialDescription(fmt::format("You recognize {:s}. {:s} was killed by {:s}{:s}", getNameDescription(), getSex() == PLAYERSEX_FEMALE ? "She" : "He", lastHitCreature->getNameDescription(), names.size() > 1 ? " and others." : "."));
+			} else if (lastHitCreature != mostDamageCreature && names[lastHitCreature->getName()] == 1) {
+				corpse->setSpecialDescription(fmt::format("You recognize {:s}. {:s} was killed by {:s}, {:s}{:s}", getNameDescription(), getSex() == PLAYERSEX_FEMALE ? "She" : "He", mostDamageCreature->getNameDescription(), lastHitCreature->getNameDescription(), names.size() > 2 ? " and others." : "."));
+			} else {
+				corpse->setSpecialDescription(fmt::format("You recognize {:s}. {:s} was killed by {:s} and others.", getNameDescription(), getSex() == PLAYERSEX_FEMALE ? "She" : "He", mostDamageCreature->getNameDescription()));
+			}
+		} else if (mostDamageCreature) {
+			if (names.size() > 1) {
+				corpse->setSpecialDescription(fmt::format("You recognize {:s}. {:s} was killed by something evil, {:s}, and others", getNameDescription(), getSex() == PLAYERSEX_FEMALE ? "She" : "He", mostDamageCreature->getNameDescription()));
+			} else {
+				corpse->setSpecialDescription(fmt::format("You recognize {:s}. {:s} was killed by something evil and others", getNameDescription(), getSex() == PLAYERSEX_FEMALE ? "She" : "He", mostDamageCreature->getNameDescription()));
+			}
+		} else {
+			corpse->setSpecialDescription(fmt::format("You recognize {:s}. {:s} was killed by something evil {:s}", getNameDescription(), getSex() == PLAYERSEX_FEMALE ? "She" : "He", names.size() ? " and others." : "."));
+		}
 	}
 	return corpse;
 }
@@ -2520,7 +2526,7 @@ Cylinder* Player::queryDestination(int32_t& index, const Thing& thing, Item** de
 			Container* tmpContainer = containers[i++];
 			if (!autoStack || !isStackable) {
 				//we need to find first empty container as fast as we can for non-stackable items
-				uint32_t n = tmpContainer->capacity() - tmpContainer->size();
+				uint32_t n = tmpContainer->capacity() - std::min(tmpContainer->capacity(), static_cast<uint32_t>(tmpContainer->size()));
 				while (n) {
 					if (tmpContainer->queryAdd(tmpContainer->capacity() - n, *item, item->getItemCount(), flags) == RETURNVALUE_NOERROR) {
 						index = tmpContainer->capacity() - n;
@@ -2528,7 +2534,7 @@ Cylinder* Player::queryDestination(int32_t& index, const Thing& thing, Item** de
 						return tmpContainer;
 					}
 
-					n--;
+					--n;
 				}
 
 				for (Item* tmpContainerItem : tmpContainer->getItemList()) {
@@ -4064,19 +4070,16 @@ size_t Player::getMaxVIPEntries() const
 		return group->maxVipEntries;
 	}
 
-	return g_config.getNumber(isPremium() ?
-		ConfigManager::VIP_PREMIUM_LIMIT : ConfigManager::VIP_FREE_LIMIT
-	);
+	return g_config.getNumber(isPremium() ? ConfigManager::VIP_PREMIUM_LIMIT : ConfigManager::VIP_FREE_LIMIT);
 }
 
 size_t Player::getMaxDepotItems() const
 {
 	if (group->maxDepotItems != 0) {
 		return group->maxDepotItems;
-	} else if (isPremium()) {
-		return 2000;
 	}
-	return 1000;
+
+	return g_config.getNumber(isPremium() ? ConfigManager::DEPOT_PREMIUM_LIMIT : ConfigManager::DEPOT_FREE_LIMIT);
 }
 
 std::forward_list<Condition*> Player::getMuteConditions() const
