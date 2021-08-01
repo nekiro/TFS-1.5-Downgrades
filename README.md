@@ -5,7 +5,7 @@ This branch holds TFS 1.4 **8.60** protocol downgrade.
 This downgrade is not download and run distribution, monsters and spells are probably not 100% correct.
 You are welcome to submit a pull request though.
 
-This downgrade is up to June 4th, 2021, commit: https://github.com/otland/forgottenserver/commit/ace6ff683488d60722904731131ed7cfb20abd82
+This downgrade is up to Jul 31, 2021, commit: https://github.com/otland/forgottenserver/commit/7301eaf2b054af553a00957a7d25856d9f6198cc
 
 ## Other distributions:
 #### **[7.72](https://github.com/nekiro/TFS-1.4-Downgrades/tree/7.72)**
