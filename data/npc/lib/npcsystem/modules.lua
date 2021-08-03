@@ -26,7 +26,7 @@ if Modules == nil then
 	SHOPMODULE_MODE_BOTH = 3 -- Both working at one time
 
 	-- Used shop mode
-	SHOPMODULE_MODE = SHOPMODULE_MODE_BOTH
+	SHOPMODULE_MODE = SHOPMODULE_MODE_TALK
 
 	Modules = {
 		parseableModules = {}
@@ -43,6 +43,7 @@ if Modules == nil then
 		if npcHandler == nil then
 			error("StdModule.say called without any npcHandler instance.")
 		end
+
 		local onlyFocus = (parameters.onlyFocus == nil or parameters.onlyFocus == true)
 		if not npcHandler:isFocused(cid) and onlyFocus then
 			return false
