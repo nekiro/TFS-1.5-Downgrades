@@ -14,23 +14,6 @@
 	<action itemid="2120" script="tools/rope.lua" />
 	<action itemid="2553" script="tools/pick.lua" />
 
-	<!-- Transform and decay -->
-	<action fromid="1479" toid="1480" script="other/decayto.lua" />
-	<action fromid="1634" toid="1641" script="other/decayto.lua" />
-	<action fromid="1786" toid="1793" script="other/decayto.lua" />
-	<action fromid="1873" toid="1876" script="other/decayto.lua" />
-	<action fromid="1945" toid="1946" script="other/decayto.lua" />
-	<action fromid="2037" toid="2042" script="other/decayto.lua" />
-	<action fromid="2044" toid="2045" script="other/decayto.lua" />
-	<action fromid="2047" toid="2048" script="other/decayto.lua" />
-	<action fromid="2050" toid="2055" script="other/decayto.lua" />
-	<action fromid="2058" toid="2061" script="other/decayto.lua" />
-	<action fromid="2064" toid="2069" script="other/decayto.lua" />
-	<action fromid="2096" toid="2097" script="other/decayto.lua" />
-	<action fromid="2162" toid="2163" script="other/decayto.lua" />
-	<action itemid="2578" script="other/decayto.lua" />
-	<action fromid="3947" toid="3948" script="other/decayto.lua" />
-
 	<!-- Food -->
 	<action itemid="2362" script="other/food.lua" />
 	<action fromid="2666" toid="2691" script="other/food.lua" />
@@ -43,7 +26,6 @@
 	<action fromid="1728" toid="1731" script="other/watch.lua" />
 	<action itemid="3900" script="other/watch.lua" />
 	<action itemid="2785" script="other/blueberrybush.lua" />
-	<action itemid="2579" script="other/trap.lua" />
 	<action itemid="2148" script="other/changegold.lua" />
 	<action itemid="2152" script="other/changegold.lua" />
 	<action itemid="2160" script="other/changegold.lua" />
@@ -72,18 +54,9 @@
 	<action itemid="2692" script="other/createbread.lua" />
 	<action itemid="2694" script="other/createbread.lua" />
 	<action fromid="5303" toid="5304" script="other/windows.lua" />
-	<action fromid="1209" toid="1214" script="other/doors.lua" />
-	<action fromid="1219" toid="1262" script="other/doors.lua" />
-	<action fromid="1539" toid="1542" script="other/doors.lua" />
-	<action fromid="2086" toid="2092" script="other/doors.lua" />
-	<action fromid="3535" toid="3552" script="other/doors.lua" />
-	<action fromid="4913" toid="4918" script="other/doors.lua" />
-	<action fromid="5082" toid="5085" script="other/doors.lua" />
 	<action fromid="1816" toid="1817" script="other/wallmirror.lua" />
 	<action fromid="1843" toid="1844" script="other/wallmirror.lua" />
 	<action fromid="1846" toid="1847" script="other/wallmirror.lua" />
 	<action fromid="1849" toid="1850" script="other/wallmirror.lua" />
 	<action itemid="486" script="other/snowheap.lua" />
-	<action itemid="3743" script="other/transforms.lua" />
-	<action itemid="4404" script="other/transforms.lua" />
 </actions>
