@@ -21,12 +21,12 @@
 #define FS_DEFINITIONS_H_877452FEC245450C9F96B8FD268D8963
 
 static constexpr auto STATUS_SERVER_NAME = "The Forgotten Server";
-static constexpr auto STATUS_SERVER_VERSION = "1.3 (Nekiro's 7.72 downgrade)";
+static constexpr auto STATUS_SERVER_VERSION = "1.3 (Nekiro's 8.00 downgrade)";
 static constexpr auto STATUS_SERVER_DEVELOPERS = "Mark Samman";
 
-static constexpr auto CLIENT_VERSION_MIN = 760;
-static constexpr auto CLIENT_VERSION_MAX = 772;
-static constexpr auto CLIENT_VERSION_STR = "7.72";
+static constexpr auto CLIENT_VERSION_MIN = 800;
+static constexpr auto CLIENT_VERSION_MAX = 800;
+static constexpr auto CLIENT_VERSION_STR = "8.00";
 
 static constexpr auto AUTHENTICATOR_DIGITS = 6U;
 static constexpr auto AUTHENTICATOR_PERIOD = 30U;
