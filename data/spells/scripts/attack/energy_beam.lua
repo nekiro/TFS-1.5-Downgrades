@@ -1,11 +1,15 @@
 local combat = Combat()
 combat:setParameter(COMBAT_PARAM_TYPE, COMBAT_ENERGYDAMAGE)
-combat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ENERGYHIT)
+combat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_EXPLOSIONHIT)
 combat:setArea(createCombatArea(AREA_BEAM5, AREADIAGONAL_BEAM5))
 
 function onGetFormulaValues(player, level, magicLevel)
-	local min = (level / 5) + (magicLevel * 1.8) + 11
-	local max = (level / 5) + (magicLevel * 3) + 19
+	local base = 60
+	local variation = 20
+
+	local min = math.max((base - variation), ((3 * magicLevel + 2 * level) * (base - variation) / 100))
+	local max = math.max((base + variation), ((3 * magicLevel + 2 * level) * (base + variation) / 100))
+
 	return -min, -max
 end
 

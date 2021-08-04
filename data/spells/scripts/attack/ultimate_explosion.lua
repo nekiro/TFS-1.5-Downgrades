@@ -6,8 +6,12 @@ combat:setParameter(COMBAT_PARAM_BLOCKARMOR, 1)
 combat:setArea(createCombatArea(AREA_CIRCLE5X5))
 
 function onGetFormulaValues(player, level, magicLevel)
-	local min = (level / 5) + (magicLevel * 4) + 75
-	local max = (level / 5) + (magicLevel * 10) + 150
+	local base = 250
+	local variation = 50
+
+	local min = math.max((base - variation), ((3 * magicLevel + 2 * level) * (base - variation) / 100))
+	local max = math.max((base + variation), ((3 * magicLevel + 2 * level) * (base + variation) / 100))
+
 	return -min, -max
 end
 

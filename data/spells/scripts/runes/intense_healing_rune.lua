@@ -6,8 +6,12 @@ combat:setParameter(COMBAT_PARAM_TARGETCASTERORTOPMOST, true)
 combat:setParameter(COMBAT_PARAM_AGGRESSIVE, false)
 
 function onGetFormulaValues(player, level, magicLevel)
-	local min = (level / 5) + (magicLevel * 3.2) + 20
-	local max = (level / 5) + (magicLevel * 5.4) + 40
+	local base = 70
+	local variation = 30
+
+	local min = math.max((base - variation), ((3 * magicLevel + 2 * level) * (base - variation) / 100))
+	local max = math.max((base + variation), ((3 * magicLevel + 2 * level) * (base + variation) / 100))
+
 	return min, max
 end
 

@@ -3,8 +3,12 @@ combat:setParameter(COMBAT_PARAM_TYPE, COMBAT_FIREDAMAGE)
 combat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_FIREAREA)
 
 function onGetFormulaValues(player, level, magicLevel)
-	local min = (level / 5) + (magicLevel * 1.4) + 8
-	local max = (level / 5) + (magicLevel * 2.2) + 14
+	local base = 45
+	local variation = 10
+
+	local min = math.max((base - variation), ((3 * magicLevel + 2 * level) * (base - variation) / 100))
+	local max = math.max((base + variation), ((3 * magicLevel + 2 * level) * (base + variation) / 100))
+
 	return -min, -max
 end
 
