@@ -798,7 +798,7 @@ DepotLocker* Player::getDepotLocker(uint32_t depotId)
 {
 	auto it = depotLockerMap.find(depotId);
 	if (it != depotLockerMap.end()) {
-		inbox->setParent(it->second.get());
+		//inbox->setParent(it->second.get());
 		return it->second.get();
 	}
 
