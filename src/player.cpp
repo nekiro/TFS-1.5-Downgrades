@@ -1918,15 +1918,15 @@ uint32_t Player::getIP() const
 	return 0;
 }
 
-void Player::death(Creature*)
+void Player::death(Creature* lastHitCreature)
 {
 	loginPosition = town->getTemplePosition();
 
 	if (skillLoss) {
-		/*uint8_t unfairFightReduction = 100;
+		//uint8_t unfairFightReduction = 100;
 		bool lastHitPlayer = Player::lastHitIsPlayer(lastHitCreature);
 
-		if (lastHitPlayer) {
+		/*if (lastHitPlayer) {
 			uint32_t sumLevels = 0;
 			uint32_t inFightTicks = g_config.getNumber(ConfigManager::PZ_LOCKED);
 			for (const auto& it : damageMap) {
@@ -2035,7 +2035,7 @@ void Player::death(Creature*)
 			}
 		}
 
-		/*std::bitset<6> bitset(blessings);
+		std::bitset<6> bitset(blessings);
 		if (bitset[5]) {
 			if (lastHitPlayer) {
 				bitset.reset(5);
@@ -2045,11 +2045,11 @@ void Player::death(Creature*)
 			}
 		} else {
 			blessings = 0;
-		}*/
+		}
 
 		sendStats();
 		sendSkills();
-		//sendReLoginWindow(unfairFightReduction);
+		sendReLoginWindow(0);
 
 		/*if (getSkull() == SKULL_BLACK) {
 			health = 40;
