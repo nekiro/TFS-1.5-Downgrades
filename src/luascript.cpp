@@ -7406,7 +7406,7 @@ int LuaScriptInterface::luaCreatureSetMaster(lua_State* L)
 	}
 
 	pushBoolean(L, creature->setMaster(getCreature(L, 2)));
-	g_game.updateCreatureType(creature);
+	//g_game.updateCreatureType(creature);
 	return 1;
 }
 
