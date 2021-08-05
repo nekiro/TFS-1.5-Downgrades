@@ -130,7 +130,7 @@
 		<vocation name="Sorcerer"/> 
 		<vocation name="Master Sorcerer"/>
 	</instant>
-	<instant name="Berserk" words="exori" needlearn="0" lvl="35" levelpercent="400" selftarget="1" script="attack/berserk.lua">
+	<instant name="Berserk" words="exori" needlearn="0" lvl="35" selftarget="1" script="attack/berserk.lua">
 		<vocation name="Knight"/>	 
 		<vocation name="Elite Knight"/>
 	</instant>
