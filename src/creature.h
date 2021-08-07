@@ -185,6 +185,9 @@ class Creature : virtual public Thing
 		virtual bool isInGhostMode() const {
 			return false;
 		}
+		virtual bool canSeeGhostMode(const Creature*) const {
+			return false;
+		}
 
 		int32_t getWalkDelay(Direction dir) const;
 		int32_t getWalkDelay() const;
@@ -341,7 +344,7 @@ class Creature : virtual public Thing
 		void gainHealth(Creature* healer, int32_t healthGain);
 		virtual void drainHealth(Creature* attacker, int32_t damage);
 
-		virtual bool challengeCreature(Creature*) {
+		virtual bool challengeCreature(Creature*, bool) {
 			return false;
 		}
 
