@@ -4,7 +4,6 @@ local jungleGrass = { -- grass destroyable by machete
 	[3985] = 3984,
 	[19433] = 19431
 }
-local groundIds = {354, 355} -- pick usable ground
 local sandIds = {231, 9059} -- desert sand
 local holeId = { -- usable rope holes, for rope spots see global.lua
 	294, 369, 370, 383, 392, 408, 409, 410, 427, 428, 429, 430, 462, 469, 470, 482,
@@ -107,16 +106,6 @@ function onUsePick(player, item, fromPosition, target, toPosition, isHotkey)
 	local ground = tile:getGround()
 	if not ground then
 		return false
-	end
-
-	if table.contains(groundIds, ground.itemid) and ground.actionid == actionIds.pickHole then
-		ground:transform(392)
-		ground:decay()
-		toPosition:sendMagicEffect(CONST_ME_POFF)
-
-		toPosition.z = toPosition.z + 1
-		tile:relocateTo(toPosition)
-		return true
 	end
 
 	-- Ice fishing hole
