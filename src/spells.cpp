@@ -279,19 +279,12 @@ Position Spells::getCasterPosition(Creature* creature, Direction dir)
 	return getNextPosition(dir, creature->getPosition());
 }
 
-CombatSpell::CombatSpell(Combat* combat, bool needTarget, bool needDirection) :
+CombatSpell::CombatSpell(Combat_ptr combat, bool needTarget, bool needDirection) :
 	Event(&g_spells->getScriptInterface()),
 	combat(combat),
 	needDirection(needDirection),
 	needTarget(needTarget)
 {}
-
-CombatSpell::~CombatSpell()
-{
-	if (!scripted) {
-		delete combat;
-	}
-}
 
 bool CombatSpell::loadScriptCombat()
 {
@@ -694,13 +687,6 @@ bool Spell::playerInstantSpellCheck(Player* player, const Position& toPos)
 	if (!tile) {
 		tile = new StaticTile(toPos.x, toPos.y, toPos.z);
 		g_game.map.setTile(toPos, tile);
-	}
-
-	ReturnValue ret = Combat::canDoCombat(player, tile, aggressive);
-	if (ret != RETURNVALUE_NOERROR) {
-		player->sendCancelMessage(ret);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
 	}
 
 	if (blockingCreature && tile->getBottomVisibleCreature(player) != nullptr) {
