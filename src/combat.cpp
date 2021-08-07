@@ -66,8 +66,10 @@ MatrixArea createArea(const std::vector<uint32_t>& vec, uint32_t rows)
 	return area;
 }
 
-std::vector<Tile*> getList(const MatrixArea& area, const Position& targetPos)
+std::vector<Tile*> getList(const MatrixArea& area, const Position& targetPos, const Direction dir)
 {
+	auto casterPos = getNextPosition(dir, targetPos);
+
 	std::vector<Tile*> vec;
 
 	auto center = area.getCenter();
@@ -76,7 +78,7 @@ std::vector<Tile*> getList(const MatrixArea& area, const Position& targetPos)
 	for (uint32_t row = 0; row < area.getRows(); ++row, ++tmpPos.y) {
 		for (uint32_t col = 0; col < area.getCols(); ++col, ++tmpPos.x) {
 			if (area(row, col)) {
-				if (g_game.isSightClear(targetPos, tmpPos, true)) {
+				if (g_game.isSightClear(casterPos, tmpPos, true)) {
 					Tile* tile = g_game.map.getTile(tmpPos);
 					if (!tile) {
 						tile = new StaticTile(tmpPos.x, tmpPos.y, tmpPos.z);
@@ -98,7 +100,7 @@ std::vector<Tile*> getCombatArea(const Position& centerPos, const Position& targ
 	}
 
 	if (area) {
-		return getList(area->getArea(centerPos, targetPos), targetPos);
+		return getList(area->getArea(centerPos, targetPos), targetPos, getDirectionTo(targetPos, centerPos));
 	}
 
 	Tile* tile = g_game.map.getTile(targetPos);
@@ -325,7 +327,7 @@ bool Combat::isProtected(const Player* attacker, const Player* target)
 		return true;
 	}
 
-	if (attacker->getVocationId() == VOCATION_NONE || target->getVocationId() == VOCATION_NONE) {
+	if (!attacker->getVocation()->allowsPvp() || !target->getVocation()->allowsPvp()) {
 		return true;
 	}
 
@@ -845,7 +847,7 @@ void Combat::doTargetCombat(Creature* caster, Creature* target, CombatDamage& da
 
 	bool success = false;
 	if (damage.primary.type != COMBAT_MANADRAIN) {
-		if (g_game.combatBlockHit(damage, caster, target, params.blockedByShield, params.blockedByArmor, params.itemId != 0)) {
+		if (g_game.combatBlockHit(damage, caster, target, params.blockedByShield, params.blockedByArmor, params.itemId != 0, params.ignoreResistances)) {
 			return;
 		}
 
@@ -1034,7 +1036,7 @@ void Combat::doAreaCombat(Creature* caster, const Position& position, const Area
 
 		bool success = false;
 		if (damageCopy.primary.type != COMBAT_MANADRAIN) {
-			if (g_game.combatBlockHit(damageCopy, caster, creature, params.blockedByShield, params.blockedByArmor, params.itemId != 0)) {
+			if (g_game.combatBlockHit(damageCopy, caster, creature, params.blockedByShield, params.blockedByArmor, params.itemId != 0, params.ignoreResistances)) {
 				continue;
 			}
 			success = g_game.combatChangeHealth(caster, creature, damageCopy);

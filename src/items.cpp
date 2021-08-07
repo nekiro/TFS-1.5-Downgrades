@@ -39,6 +39,7 @@ const std::unordered_map<std::string, ItemParseAttributes_t> ItemParseAttributes
 	{"defense", ITEM_PARSE_DEFENSE},
 	{"extradef", ITEM_PARSE_EXTRADEF},
 	{"attack", ITEM_PARSE_ATTACK},
+	{"attackspeed", ITEM_PARSE_ATTACK_SPEED},
 	{"rotateto", ITEM_PARSE_ROTATETO},
 	{"moveable", ITEM_PARSE_MOVEABLE},
 	{"movable", ITEM_PARSE_MOVEABLE},
@@ -332,10 +333,6 @@ bool Items::loadFromOtb(const std::string& file)
 
 					if (!stream.read<uint16_t>(serverId)) {
 						return false;
-					}
-
-					if (serverId > 30000 && serverId < 30100) {
-						serverId -= 30000;
 					}
 					break;
 				}
@@ -640,6 +637,15 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 
 				case ITEM_PARSE_ATTACK: {
 					it.attack = pugi::cast<int32_t>(valueAttribute.value());
+					break;
+				}
+
+				case ITEM_PARSE_ATTACK_SPEED: {
+					it.attackSpeed = pugi::cast<uint32_t>(valueAttribute.value());
+					if (it.attackSpeed > 0 && it.attackSpeed < 100) {
+						std::cout << "[Warning - Items::parseItemNode] AttackSpeed lower than 100 for item: " << it.id << std::endl;
+						it.attackSpeed = 100;
+					}
 					break;
 				}
 
