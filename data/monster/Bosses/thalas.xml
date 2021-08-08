@@ -41,7 +41,7 @@
 		</defense>
 	</defenses>
 	<summons maxSummons="8">
-		<summon name="slime2" chance="3000" max="8"/>
+		<summon name="slime2" chance="30" max="8"/>
 	</summons>
 	<elements>
 		<element earthPercent="100"/>

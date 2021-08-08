@@ -41,7 +41,7 @@
 		</defense>
 	</defenses>
 	<summons maxSummons="4">
-		<summon name="stalkers" chance="1000"/>
+		<summon name="stalker" chance="10" max="4" />
 	</summons>
 	<elements>
 		<element firePercent="100"/>

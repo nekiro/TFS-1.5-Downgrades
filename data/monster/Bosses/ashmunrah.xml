@@ -45,8 +45,8 @@
 		</defense>
 	</defenses>
 	<summons maxSummons="4">
-		<summon name="ancient scarab" chance="2000" max="2"/>
-		<summon name="green djinn" chance="1000" max="2"/>
+		<summon name="ancient scarab" chance="20" max="2"/>
+		<summon name="green djinn" chance="10" max="2"/>
 	</summons>
 	<elements>
 		<element earthPercent="100"/>
