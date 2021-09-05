@@ -552,6 +552,7 @@ class LuaScriptInterface
 		static int luaGameGetPlayerCount(lua_State* L);
 		static int luaGameGetNpcCount(lua_State* L);
 		static int luaGameGetMonsterTypes(lua_State* L);
+		static int luaGameGetCurrencyItems(lua_State* L);
 
 		static int luaGameGetTowns(lua_State* L);
 		static int luaGameGetHouses(lua_State* L);
@@ -723,6 +724,7 @@ class LuaScriptInterface
 		static int luaItemGetCharges(lua_State* L);
 		static int luaItemGetFluidType(lua_State* L);
 		static int luaItemGetWeight(lua_State* L);
+		static int luaItemGetWorth(lua_State* L);
 
 		static int luaItemGetSubType(lua_State* L);
 
@@ -1064,6 +1066,9 @@ class LuaScriptInterface
 		static int luaMonsterSelectTarget(lua_State* L);
 		static int luaMonsterSearchTarget(lua_State* L);
 
+		static int luaMonsterIsWalkingToSpawn(lua_State* L);
+		static int luaMonsterWalkToSpawn(lua_State* L);
+
 		// Npc
 		static int luaNpcCreate(lua_State* L);
 
@@ -1145,7 +1150,15 @@ class LuaScriptInterface
 		static int luaHouseGetName(lua_State* L);
 		static int luaHouseGetTown(lua_State* L);
 		static int luaHouseGetExitPosition(lua_State* L);
+
 		static int luaHouseGetRent(lua_State* L);
+		static int luaHouseSetRent(lua_State* L);
+
+		static int luaHouseGetPaidUntil(lua_State* L);
+		static int luaHouseSetPaidUntil(lua_State* L);
+
+		static int luaHouseGetPayRentWarnings(lua_State* L);
+		static int luaHouseSetPayRentWarnings(lua_State* L);
 
 		static int luaHouseGetOwnerGuid(lua_State* L);
 		static int luaHouseSetOwnerGuid(lua_State* L);
@@ -1202,6 +1215,7 @@ class LuaScriptInterface
 		static int luaItemTypeGetFluidSource(lua_State* L);
 		static int luaItemTypeGetCapacity(lua_State* L);
 		static int luaItemTypeGetWeight(lua_State* L);
+		static int luaItemTypeGetWorth(lua_State* L);
 
 		static int luaItemTypeGetHitChance(lua_State* L);
 		static int luaItemTypeGetShootRange(lua_State* L);
@@ -1231,6 +1245,7 @@ class LuaScriptInterface
 		static int luaItemTypeGetWieldInfo(lua_State* L);
 		static int luaItemTypeGetDuration(lua_State* L);
 		static int luaItemTypeGetLevelDoor(lua_State* L);
+		static int luaItemTypeGetRuneSpellName(lua_State* L);
 		static int luaItemTypeGetVocationString(lua_State* L);
 		static int luaItemTypeGetMinReqLevel(lua_State* L);
 		static int luaItemTypeGetMinReqMagicLevel(lua_State* L);
@@ -1385,6 +1400,7 @@ class LuaScriptInterface
 		static int luaMonsterSpellSetCombatLength(lua_State* L);
 		static int luaMonsterSpellSetCombatSpread(lua_State* L);
 		static int luaMonsterSpellSetCombatRadius(lua_State* L);
+		static int luaMonsterSpellSetCombatRing(lua_State* L);
 		static int luaMonsterSpellSetConditionType(lua_State* L);
 		static int luaMonsterSpellSetConditionDamage(lua_State* L);
 		static int luaMonsterSpellSetConditionSpeedChange(lua_State* L);

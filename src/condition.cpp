@@ -501,6 +501,7 @@ void ConditionAttributes::updateStats(Player* player)
 
 	if (needUpdateStats) {
 		player->sendStats();
+		player->sendSkills();
 	}
 }
 
@@ -579,6 +580,7 @@ void ConditionAttributes::endCondition(Creature* creature)
 
 		if (needUpdateStats) {
 			player->sendStats();
+			player->sendSkills();
 		}
 	}
 
