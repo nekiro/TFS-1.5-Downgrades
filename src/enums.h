@@ -168,7 +168,8 @@ enum AccountType_t : uint8_t {
 	ACCOUNT_TYPE_TUTOR = 2,
 	ACCOUNT_TYPE_SENIORTUTOR = 3,
 	ACCOUNT_TYPE_GAMEMASTER = 4,
-	ACCOUNT_TYPE_GOD = 5
+	ACCOUNT_TYPE_COMMUNITYMANAGER = 5,
+	ACCOUNT_TYPE_GOD = 6
 };
 
 enum RaceType_t : uint8_t {
@@ -518,19 +519,13 @@ struct LightInfo {
 };
 
 struct ShopInfo {
-	uint16_t itemId;
-	int32_t subType;
-	uint32_t buyPrice;
-	uint32_t sellPrice;
-	std::string realName;
+	uint16_t itemId = 0;
+	int32_t subType = 1;
+	uint32_t buyPrice = 0;
+	uint32_t sellPrice = 0;
+	std::string realName = "";
 
-	ShopInfo() {
-		itemId = 0;
-		subType = 1;
-		buyPrice = 0;
-		sellPrice = 0;
-	}
-
+	ShopInfo() = default;
 	ShopInfo(uint16_t itemId, int32_t subType = 0, uint32_t buyPrice = 0, uint32_t sellPrice = 0, std::string realName = "")
 		: itemId(itemId), subType(subType), buyPrice(buyPrice), sellPrice(sellPrice), realName(std::move(realName)) {}
 };
@@ -571,17 +566,10 @@ struct HistoryMarketOffer {
 };
 
 struct MarketStatistics {
-	MarketStatistics() {
-		numTransactions = 0;
-		highestPrice = 0;
-		totalPrice = 0;
-		lowestPrice = 0;
-	}
-
-	uint32_t numTransactions;
-	uint32_t highestPrice;
-	uint64_t totalPrice;
-	uint32_t lowestPrice;
+	uint32_t numTransactions = 0;
+	uint32_t highestPrice = 0;
+	uint64_t totalPrice = 0;
+	uint32_t lowestPrice = 0;
 };
 
 struct ModalWindow
@@ -589,11 +577,10 @@ struct ModalWindow
 	std::list<std::pair<std::string, uint8_t>> buttons, choices;
 	std::string title, message;
 	uint32_t id;
-	uint8_t defaultEnterButton, defaultEscapeButton;
-	bool priority;
+	uint8_t defaultEnterButton = 0xFF, defaultEscapeButton = 0xFF;
+	bool priority = false;
 
-	ModalWindow(uint32_t id, std::string title, std::string message)
-		: title(std::move(title)), message(std::move(message)), id(id), defaultEnterButton(0xFF), defaultEscapeButton(0xFF), priority(false) {}
+	ModalWindow(uint32_t id, std::string title, std::string message): title(std::move(title)), message(std::move(message)), id(id) {}
 };
 
 enum CombatOrigin
@@ -603,28 +590,20 @@ enum CombatOrigin
 	ORIGIN_SPELL,
 	ORIGIN_MELEE,
 	ORIGIN_RANGED,
+	ORIGIN_WAND,
 };
 
 struct CombatDamage
 {
 	struct {
-		CombatType_t type;
-		int32_t value;
-	} primary, secondary;
+		CombatType_t type = COMBAT_NONE;
+		int32_t value = 0;
+	} primary = {}, secondary = {};
 
-	CombatOrigin origin;
-	BlockType_t blockType;
-	bool critical;
-	bool leeched;
-	CombatDamage()
-	{
-		origin = ORIGIN_NONE;
-		blockType = BLOCK_NONE;
-		primary.type = secondary.type = COMBAT_NONE;
-		primary.value = secondary.value = 0;
-		critical = false;
-		leeched = false;
-	}
+	CombatOrigin origin = ORIGIN_NONE;
+	BlockType_t blockType = BLOCK_NONE;
+	bool critical = false;
+	bool leeched = false;
 };
 
 using MarketOfferList = std::list<MarketOffer>;
