@@ -395,7 +395,7 @@ uint16_t Player::getClientIcons() const
 		icons |= ICON_REDSWORDS;
 	}
 
-	if (tile->hasFlag(TILESTATE_PROTECTIONZONE)) {
+	if (tile && tile->hasFlag(TILESTATE_PROTECTIONZONE)) {
 		icons |= ICON_PIGEON;
 
 		// Don't show ICON_SWORDS if player is in protection zone.
@@ -492,8 +492,8 @@ void Player::removeSkillTries(skills_t skill, uint64_t count, bool notify/* = fa
 	while (count > skills[skill].tries) {
 		count -= skills[skill].tries;
 
-		if (skills[skill].level <= 10) {
-			skills[skill].level = 10;
+		if (skills[skill].level <= MINIMUM_SKILL_LEVEL) {
+			skills[skill].level = MINIMUM_SKILL_LEVEL;
 			skills[skill].tries = 0;
 			count = 0;
 			break;
@@ -631,9 +631,8 @@ uint16_t Player::getLookCorpse() const
 {
 	if (sex == PLAYERSEX_FEMALE) {
 		return ITEM_FEMALE_CORPSE;
-	} else {
-		return ITEM_MALE_CORPSE;
 	}
+	return ITEM_MALE_CORPSE;
 }
 
 void Player::addStorageValue(const uint32_t key, const int32_t value, const bool isLogin/* = false*/)
@@ -1048,7 +1047,20 @@ void Player::onCreatureAppear(Creature* creature, bool isLogin)
 			bed->wakeUp(this);
 		}
 
-		Account account = IOLoginData::loadAccount(accountNumber);
+		// load mount speed bonus
+		uint16_t currentMountId = currentOutfit.lookMount;
+		if (currentMountId != 0) {
+			Mount* currentMount = g_game.mounts.getMountByClientID(currentMountId);
+			if (currentMount && hasMount(currentMount)) {
+				g_game.changeSpeed(this, currentMount->speed);
+			} else {
+				defaultOutfit.lookMount = 0;
+				g_game.internalCreatureChangeOutfit(this, defaultOutfit);
+			}
+		}
+
+		// mounted player moved to pz on login, update mount status
+		onChangeZone(getZone());
 
 		if (g_config.getBoolean(ConfigManager::PLAYER_CONSOLE_LOGS)) {
 			std::cout << name << " has logged in." << std::endl;
@@ -1922,7 +1934,7 @@ void Player::death(Creature* lastHitCreature)
 		//Skill loss
 		for (uint8_t i = SKILL_FIRST; i <= SKILL_LAST; ++i) { //for each skill
 			uint64_t sumSkillTries = 0;
-			for (uint16_t c = 11; c <= skills[i].level; ++c) { //sum up all required tries for all skill levels
+			for (uint16_t c = MINIMUM_SKILL_LEVEL + 1; c <= skills[i].level; ++c) { //sum up all required tries for all skill levels
 				sumSkillTries += vocation->getReqSkillTries(i, c);
 			}
 
@@ -2505,9 +2517,8 @@ ReturnValue Player::queryMaxCount(int32_t index, const Thing& thing, uint32_t co
 
 	if (maxQueryCount < count) {
 		return RETURNVALUE_NOTENOUGHROOM;
-	} else {
-		return RETURNVALUE_NOERROR;
 	}
+	return RETURNVALUE_NOERROR;
 }
 
 ReturnValue Player::queryRemove(const Thing& thing, uint32_t count, uint32_t flags, Creature* /*= nullptr*/) const
@@ -2653,9 +2664,8 @@ Cylinder* Player::queryDestination(int32_t& index, const Thing& thing, Item** de
 		index = INDEX_WHEREEVER;
 		*destItem = nullptr;
 		return subCylinder;
-	} else {
-		return this;
 	}
+	return this;
 }
 
 void Player::addThing(int32_t index, Thing* thing)
@@ -3009,7 +3019,15 @@ void Player::postRemoveNotification(Thing* thing, const Cylinder* newParent, int
 bool Player::updateSaleShopList(const Item* item)
 {
 	uint16_t itemId = item->getID();
-	if (itemId != ITEM_GOLD_COIN && itemId != ITEM_PLATINUM_COIN && itemId != ITEM_CRYSTAL_COIN) {
+	bool isCurrency = false;
+	for (const auto& it : Item::items.currencyItems) {
+		if (it.second == itemId) {
+			isCurrency = true;
+			break;
+		}
+	}
+
+	if (!isCurrency) {
 		auto it = std::find_if(shopItemList.begin(), shopItemList.end(), [itemId](const ShopInfo& shopInfo) { return shopInfo.itemId == itemId && shopInfo.sellPrice != 0; });
 		if (it == shopItemList.end()) {
 			const Container* container = item->getContainer();

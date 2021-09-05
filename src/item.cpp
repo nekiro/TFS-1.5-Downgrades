@@ -919,25 +919,31 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 		}
 	} else if (it.weaponType != WEAPON_NONE) {
 		bool begin = true;
-		if (it.weaponType == WEAPON_DISTANCE && it.ammoType != AMMO_NONE) {
-			s << " (Range:" << static_cast<uint16_t>(item ? item->getShootRange() : it.shootRange);
-
-			int32_t attack;
+		if (it.weaponType == WEAPON_DISTANCE) {
+			int32_t attack, defense;
 			int8_t hitChance;
 			if (item) {
 				attack = item->getAttack();
+				defense = item->getDefense();
 				hitChance = item->getHitChance();
 			} else {
 				attack = it.attack;
+				defense = it.defense;
 				hitChance = it.hitChance;
 			}
 
-			if (attack != 0) {
-				s << ", Atk" << std::showpos << attack << std::noshowpos;
-			}
+			if (it.ammoType != AMMO_NONE) {
+				s << " (Range:" << static_cast<uint16_t>(item ? item->getShootRange() : it.shootRange);
 
-			if (hitChance != 0) {
-				s << ", Hit%" << std::showpos << static_cast<int16_t>(hitChance) << std::noshowpos;
+				if (attack != 0) {
+					s << ", Atk" << std::showpos << attack << std::noshowpos;
+				}
+
+				if (hitChance != 0) {
+					s << ", Hit%" << std::showpos << static_cast<int16_t>(hitChance) << std::noshowpos;
+				}
+			} else {
+				s << " (Atk:" << attack << ", Def:" << defense;
 			}
 
 			begin = false;
@@ -1590,19 +1596,7 @@ bool Item::canDecay() const
 
 uint32_t Item::getWorth() const
 {
-	switch (id) {
-		case ITEM_GOLD_COIN:
-			return count;
-
-		case ITEM_PLATINUM_COIN:
-			return count * 100;
-
-		case ITEM_CRYSTAL_COIN:
-			return count * 10000;
-
-		default:
-			return 0;
-	}
+	return items[id].worth * count;
 }
 
 LightInfo Item::getLightInfo() const

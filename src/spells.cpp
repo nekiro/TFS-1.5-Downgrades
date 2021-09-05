@@ -934,7 +934,7 @@ bool InstantSpell::canThrowSpell(const Creature* creature, const Creature* targe
 	const Position& fromPos = creature->getPosition();
 	const Position& toPos = target->getPosition();
 	if (fromPos.z != toPos.z ||
-			(range == -1 && !g_game.canThrowObjectTo(fromPos, toPos, checkLineOfSight, true, 7, 5)) ||
+			(range == -1 && !g_game.canThrowObjectTo(fromPos, toPos, checkLineOfSight, true, Map::maxClientViewportX - 1, Map::maxClientViewportY - 1)) ||
 			(range != -1 && !g_game.canThrowObjectTo(fromPos, toPos, checkLineOfSight, true, range, range))) {
 		return false;
 	}
@@ -976,9 +976,8 @@ bool InstantSpell::castSpell(Creature* creature, Creature* target)
 		var.type = VARIANT_NUMBER;
 		var.number = target->getID();
 		return internalCastSpell(creature, var);
-	} else {
-		return castSpell(creature);
 	}
+	return castSpell(creature);
 }
 
 bool InstantSpell::internalCastSpell(Creature* creature, const LuaVariant& var)

@@ -598,10 +598,14 @@ if Modules == nil then
 				-- invalid item
 				print("[Warning : " .. Npc():getName() .. "] NpcSystem:", "Item id missing (or invalid) for parameter item:", item)
 			else
-				if alreadyParsedIds[itemid] and not it:getFluidSource() then
-					print("[Warning : " .. Npc():getName() .. "] NpcSystem:", "Found duplicated item:", item)
+				if alreadyParsedIds[itemid] then
+					if table.contains(alreadyParsedIds[itemid], subType or -1) then
+						print("[Warning : " .. Npc():getName() .. "] NpcSystem:", "Found duplicated item:", item)
+					else
+						table.insert(alreadyParsedIds[itemid], subType or -1)
+					end
 				else
-					alreadyParsedIds[itemid] = true
+					alreadyParsedIds[itemid] = {subType or -1}
 				end
 			end
 
@@ -669,10 +673,14 @@ if Modules == nil then
 				-- invalid item
 				print("[Warning : " .. Npc():getName() .. "] NpcSystem:", "Item id missing (or invalid) for parameter item:", item)
 			else
-				if alreadyParsedIds[itemid] and not it:getFluidSource() then
-					print("[Warning : " .. Npc():getName() .. "] NpcSystem:", "Found duplicated item:", item)
+				if alreadyParsedIds[itemid] then
+					if table.contains(alreadyParsedIds[itemid], subType or -1) then
+						print("[Warning : " .. Npc():getName() .. "] NpcSystem:", "Found duplicated item:", item)
+					else
+						table.insert(alreadyParsedIds[itemid], subType or -1)
+					end
 				else
-					alreadyParsedIds[itemid] = true
+					alreadyParsedIds[itemid] = {subType or -1}
 				end
 			end
 
@@ -804,15 +812,17 @@ if Modules == nil then
 			if itemSubType == nil then
 				itemSubType = 1
 			end
-
-			local shopItem = self:getShopItem(itemid, itemSubType)
-			if shopItem == nil then
-				self.npcHandler.shopItems[#self.npcHandler.shopItems + 1] = {id = itemid, buy = cost, sell = -1, subType = itemSubType, name = realName or ItemType(itemid):getName()}
-			else
-				if cost < shopItem.sell then
-					print("[Warning : " .. Npc():getName() .. "] NpcSystem: Buy price lower than sell price: (".. shopItem.name ..")")
+			local it = ItemType(itemid)
+			if it:getId() ~= 0 then
+				local shopItem = self:getShopItem(itemid, itemSubType)
+				if shopItem == nil then
+					self.npcHandler.shopItems[#self.npcHandler.shopItems + 1] = {id = itemid, buy = cost, sell = -1, subType = itemSubType, name = realName or it:getName()}
+				else
+					if cost < shopItem.sell then
+						print("[Warning : " .. Npc():getName() .. "] NpcSystem: Buy price lower than sell price: (".. shopItem.name ..")")
+					end
+					shopItem.buy = cost
 				end
-				shopItem.buy = cost
 			end
 		end
 
@@ -902,15 +912,17 @@ if Modules == nil then
 			if itemSubType == nil then
 				itemSubType = 0
 			end
-
-			local shopItem = self:getShopItem(itemid, itemSubType)
-			if shopItem == nil then
-				self.npcHandler.shopItems[#self.npcHandler.shopItems + 1] = {id = itemid, buy = -1, sell = cost, subType = itemSubType, name = realName or ItemType(itemid):getName()}
-			else
-				if cost > shopItem.buy then
-					print("[Warning : " .. Npc():getName() .. "] NpcSystem: Sell price higher than buy price: (".. shopItem.name ..")")
+			local it = ItemType(itemid)
+			if it:getId() ~= 0 then
+				local shopItem = self:getShopItem(itemid, itemSubType)
+				if shopItem == nil then
+					self.npcHandler.shopItems[#self.npcHandler.shopItems + 1] = {id = itemid, buy = -1, sell = cost, subType = itemSubType, name = realName or it:getName()}
+				else
+					if shopItem.buy > -1 and cost > shopItem.buy then
+						print("[Warning : " .. Npc():getName() .. "] NpcSystem: Sell price higher than buy price: (".. shopItem.name ..")")
+					end
+					shopItem.sell = cost
 				end
-				shopItem.sell = cost
 			end
 		end
 

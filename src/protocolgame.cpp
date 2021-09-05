@@ -19,8 +19,6 @@
 
 #include "otpch.h"
 
-#include <boost/range/adaptor/reversed.hpp>
-
 #include "protocolgame.h"
 
 #include "outputmessage.h"
@@ -282,6 +280,7 @@ void ProtocolGame::connect(uint32_t playerId, OperatingSystem_t operatingSystem)
 	sendAddCreature(player, player->getPosition(), 0, false);
 	player->lastIP = player->getIP();
 	player->lastLoginSaved = std::max<time_t>(time(nullptr), player->lastLoginSaved + 1);
+	player->resetIdleTime();
 	acceptPackets = true;
 }
 
@@ -582,7 +581,8 @@ void ProtocolGame::GetTileDescription(const Tile* tile, NetworkMessage& msg)
 
 	const CreatureVector* creatures = tile->getCreatures();
 	if (creatures) {
-		for (const Creature* creature : boost::adaptors::reverse(*creatures)) {
+		for (auto it = creatures->rbegin(), end = creatures->rend(); it != end; ++it) {
+			const Creature* creature = (*it);
 			if (!player->canSeeCreature(creature)) {
 				continue;
 			}
@@ -2222,6 +2222,17 @@ void ProtocolGame::AddPlayerStats(NetworkMessage& msg)
 	msg.addByte(player->getSoul());
 
 	msg.add<uint16_t>(player->getStaminaMinutes());
+
+	/*msg.add<uint16_t>(player->getBaseSpeed() / 2);
+
+	Condition* condition = player->getCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT);
+	msg.add<uint16_t>(condition ? condition->getTicks() / 1000 : 0x00);
+
+	msg.add<uint16_t>(player->getOfflineTrainingTime() / 60 / 1000);
+
+	msg.add<uint16_t>(0); // xp boost time (seconds)
+	msg.addByte(0); // enables exp boost in the store
+	*/
 }
 
 void ProtocolGame::AddPlayerSkills(NetworkMessage& msg)
