@@ -117,7 +117,7 @@ bool Mailbox::sendItem(Item* item) const
 			return false;
 		}
 
-		if (DepotLocker* depotLocker = player->getDepotLocker(depotId)) {
+		if (DepotLocker* depotLocker = tmpPlayer.getDepotLocker(depotId)) {
 			if (g_game.internalMoveItem(item->getParent(), depotLocker, INDEX_WHEREEVER, item, item->getItemCount(), nullptr, FLAG_NOLIMIT) == RETURNVALUE_NOERROR) {
 				g_game.transformItem(item, item->getID() + 1);
 				IOLoginData::savePlayer(&tmpPlayer);
