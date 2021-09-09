@@ -1016,11 +1016,11 @@ class Player final : public Creature, public Cylinder
 				client->sendCloseShop();
 			}
 		}
-		void sendMarketEnter(uint32_t depotId) const {
+		/*void sendMarketEnter(uint32_t depotId) const {
 			if (client) {
 				client->sendMarketEnter(depotId);
 			}
-		}
+		}*/
 		void sendMarketLeave() {
 			inMarket = false;
 			if (client) {

@@ -505,7 +505,7 @@ bool enterMarket(Player* player, Item*, const Position&, Thing*, const Position&
 		return false;
 	}
 
-	player->sendMarketEnter(player->getLastDepotId());
+	//player->sendMarketEnter(player->getLastDepotId());
 	return true;
 }
 

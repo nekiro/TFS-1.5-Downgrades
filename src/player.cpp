@@ -2372,9 +2372,9 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 		return RETURNVALUE_CANNOTPICKUP;
 	}
 
-	if (item->isStoreItem()) {
+	/*if (item->isStoreItem()) {
 		return RETURNVALUE_ITEMCANNOTBEMOVEDTHERE;
-	}
+	}*/
 
 	ReturnValue ret = RETURNVALUE_NOERROR;
 

@@ -2252,8 +2252,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Item", "hasProperty", LuaScriptInterface::luaItemHasProperty);
 	registerMethod("Item", "isLoadedFromMap", LuaScriptInterface::luaItemIsLoadedFromMap);
 
-	registerMethod("Item", "setStoreItem", LuaScriptInterface::luaItemSetStoreItem);
-	registerMethod("Item", "isStoreItem", LuaScriptInterface::luaItemIsStoreItem);
+	//registerMethod("Item", "setStoreItem", LuaScriptInterface::luaItemSetStoreItem);
+	//registerMethod("Item", "isStoreItem", LuaScriptInterface::luaItemIsStoreItem);
 
 	// Container
 	registerClass("Container", "Item", LuaScriptInterface::luaContainerCreate);
@@ -6844,7 +6844,7 @@ int LuaScriptInterface::luaItemIsLoadedFromMap(lua_State* L)
 	}
 	return 1;
 }
-
+/*
 int LuaScriptInterface::luaItemSetStoreItem(lua_State* L)
 {
 	// item:setStoreItem(storeItem)
@@ -6868,7 +6868,7 @@ int LuaScriptInterface::luaItemIsStoreItem(lua_State* L)
 		lua_pushnil(L);
 	}
 	return 1;
-}
+}*/
 
 // Container
 int LuaScriptInterface::luaContainerCreate(lua_State* L)

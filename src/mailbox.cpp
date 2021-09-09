@@ -91,21 +91,21 @@ void Mailbox::postRemoveNotification(Thing* thing, const Cylinder* newParent, in
 bool Mailbox::sendItem(Item* item) const
 {
 	std::string receiver;
-	uint32_t depotId;
+	uint32_t depotId = 0;
 	if (!getReceiver(item, receiver, depotId)) {
 		return false;
 	}
 
 	/**No need to continue if its still empty**/
-	if (receiver.empty()) {
+	if (receiver.empty() || depotId == 0) {
 		return false;
 	}
 
 	Player* player = g_game.getPlayerByName(receiver);
 	if (player) {
-		if (DepotLocker* depotLocker = player->getDepotLocker(depotId)) {
-			if (g_game.internalMoveItem(item->getParent(), depotLocker, INDEX_WHEREEVER,
-				item, item->getItemCount(), nullptr, FLAG_NOLIMIT) == RETURNVALUE_NOERROR) {
+		DepotLocker* depotLocker = player->getDepotLocker(depotId);
+		if (depotLocker) {
+			if (g_game.internalMoveItem(item->getParent(), depotLocker, INDEX_WHEREEVER, item, item->getItemCount(), nullptr) == RETURNVALUE_NOERROR) {
 				g_game.transformItem(item, item->getID() + 1);
 				player->onReceiveMail();
 				return true;
@@ -117,8 +117,9 @@ bool Mailbox::sendItem(Item* item) const
 			return false;
 		}
 
-		if (DepotLocker* depotLocker = tmpPlayer.getDepotLocker(depotId)) {
-			if (g_game.internalMoveItem(item->getParent(), depotLocker, INDEX_WHEREEVER, item, item->getItemCount(), nullptr, FLAG_NOLIMIT) == RETURNVALUE_NOERROR) {
+		DepotLocker* depotLocker = tmpPlayer.getDepotLocker(depotId);
+		if (depotLocker) {
+			if (g_game.internalMoveItem(item->getParent(), depotLocker, INDEX_WHEREEVER, item, item->getItemCount(), nullptr) == RETURNVALUE_NOERROR) {
 				g_game.transformItem(item, item->getID() + 1);
 				IOLoginData::savePlayer(&tmpPlayer);
 				return true;
@@ -152,12 +153,12 @@ bool Mailbox::getReceiver(Item* item, std::string& name, uint32_t& depotId) cons
 
 	trimString(name);
 	Town* town = g_game.map.towns.getTown(townName);
-	if (!town) {
-		return false;
+	if (town) {
+		depotId = town->getID();
+		return true;
 	}
-	depotId = town->getID();
 
-	return true;
+	return false;
 }
 
 bool Mailbox::canSend(const Item* item)

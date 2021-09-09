@@ -628,9 +628,9 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 			return RETURNVALUE_NOERROR;
 		}
 
-		if (item->isStoreItem()) {
+		/*if (item->isStoreItem()) {
 			return RETURNVALUE_ITEMCANNOTBEMOVEDTHERE;
-		}
+		}*/
 
 		bool itemIsHangable = item->isHangable();
 		if (ground == nullptr && !itemIsHangable) {

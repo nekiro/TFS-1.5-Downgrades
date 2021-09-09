@@ -596,7 +596,7 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
-		case ATTR_WRAPID: {
+		/*case ATTR_WRAPID: {
 			uint16_t wrapId;
 			if (!propStream.read<uint16_t>(wrapId)) {
 				return ATTR_READ_ERROR;
@@ -614,7 +614,7 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 
 			setIntAttr(ITEM_ATTRIBUTE_STOREITEM, storeItem);
 			break;
-		}
+		}*/
 
 		//these should be handled through derived classes
 		//If these are called then something has changed in the items.xml since the map was saved
@@ -831,7 +831,7 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 		propWriteStream.write<int32_t>(getIntAttr(ITEM_ATTRIBUTE_DECAYTO));
 	}
 
-	if (hasAttribute(ITEM_ATTRIBUTE_WRAPID)) {
+	/*if (hasAttribute(ITEM_ATTRIBUTE_WRAPID)) {
 		propWriteStream.write<uint8_t>(ATTR_WRAPID);
 		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_WRAPID));
 	}
@@ -839,7 +839,7 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 	if (hasAttribute(ITEM_ATTRIBUTE_STOREITEM)) {
 		propWriteStream.write<uint8_t>(ATTR_STOREITEM);
 		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_STOREITEM));
-	}
+	}*/
 
 	if (hasAttribute(ITEM_ATTRIBUTE_CUSTOM)) {
 		const ItemAttributes::CustomAttributeMap* customAttrMap = attributes->getCustomAttributeMap();
@@ -1733,7 +1733,7 @@ void Item::startDecaying()
 	g_game.startDecay(this);
 }
 
-bool Item::hasMarketAttributes() const
+/*bool Item::hasMarketAttributes() const
 {
 	if (attributes == nullptr) {
 		return true;
@@ -1755,7 +1755,7 @@ bool Item::hasMarketAttributes() const
 		}
 	}
 	return true;
-}
+}*/
 
 template<>
 const std::string& ItemAttributes::CustomAttribute::get<std::string>() {
