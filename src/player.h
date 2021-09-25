@@ -361,13 +361,6 @@ class Player final : public Creature, public Cylinder
 			return inMarket;
 		}
 
-		void setLastDepotId(int16_t newId) {
-			lastDepotId = newId;
-		}
-		int16_t getLastDepotId() const {
-			return lastDepotId;
-		}
-
 		void resetIdleTime() {
 			idleTime = 0;
 		}
@@ -1306,7 +1299,6 @@ class Player final : public Creature, public Cylinder
 		uint16_t lastStatsTrainingTime = 0;
 		uint16_t staminaMinutes = 2520;
 		uint16_t maxWriteLen = 0;
-		int16_t lastDepotId = -1;
 
 		uint8_t soul = 0;
 		uint8_t blessings = 0;

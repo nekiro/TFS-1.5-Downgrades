@@ -3033,7 +3033,7 @@ Thing* Player::getThing(size_t index) const
 	return nullptr;
 }
 
-void Player::postAddNotification(Thing* thing, const Cylinder* oldParent, int32_t index, cylinderlink_t link /*= LINK_OWNER*/)
+void Player::postAddNotification(Thing* thing, const Cylinder*, int32_t index, cylinderlink_t link /*= LINK_OWNER*/)
 {
 	if (link == LINK_OWNER) {
 		//calling movement scripts
@@ -3043,11 +3043,11 @@ void Player::postAddNotification(Thing* thing, const Cylinder* oldParent, int32_
 	//bool requireListUpdate = false;
 
 	if (link == LINK_OWNER || link == LINK_TOPPARENT) {
-		const Item* i = (oldParent ? oldParent->getItem() : nullptr);
+		//const Item* i = (oldParent ? oldParent->getItem() : nullptr);
 
 		// Check if we owned the old container too, so we don't need to do anything,
 		// as the list was updated in postRemoveNotification
-		assert(i ? i->getContainer() != nullptr : true);
+		//assert(i ? i->getContainer() != nullptr : true);
 
 		/*if (i) {
 			requireListUpdate = i->getContainer()->getHoldingPlayer() != this;
@@ -3087,7 +3087,7 @@ void Player::postAddNotification(Thing* thing, const Cylinder* oldParent, int32_
 	}
 }
 
-void Player::postRemoveNotification(Thing* thing, const Cylinder* newParent, int32_t index, cylinderlink_t link /*= LINK_OWNER*/)
+void Player::postRemoveNotification(Thing* thing, const Cylinder*, int32_t index, cylinderlink_t link /*= LINK_OWNER*/)
 {
 	if (link == LINK_OWNER) {
 		//calling movement scripts
@@ -3097,11 +3097,11 @@ void Player::postRemoveNotification(Thing* thing, const Cylinder* newParent, int
 	//bool requireListUpdate = false;
 
 	if (link == LINK_OWNER || link == LINK_TOPPARENT) {
-		const Item* i = (newParent ? newParent->getItem() : nullptr);
+		//const Item* i = (newParent ? newParent->getItem() : nullptr);
 
 		// Check if we owned the old container too, so we don't need to do anything,
 		// as the list was updated in postRemoveNotification
-		assert(i ? i->getContainer() != nullptr : true);
+		//assert(i ? i->getContainer() != nullptr : true);
 
 		/*if (i) {
 			requireListUpdate = i->getContainer()->getHoldingPlayer() != this;
