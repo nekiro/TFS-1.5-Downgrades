@@ -574,7 +574,7 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		case 0xBE: addGameTask(&Game::playerCancelAttackAndFollow, player->getID()); break;
 		case 0xC9: /* update tile */ break;
 		case 0xCA: parseUpdateContainer(msg); break;
-		case 0xCB: parseBrowseField(msg); break;
+		//case 0xCB: parseBrowseField(msg); break;
 		case 0xCC: parseSeekInContainer(msg); break;
 		case 0xD2: addGameTask(&Game::playerRequestOutfit, player->getID()); break;
 		case 0xD3: parseSetOutfit(msg); break;
@@ -589,12 +589,12 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		case 0xF1: parseQuestLine(msg); break;
 		case 0xF2: parseRuleViolationReport(msg); break;
 		case 0xF3: /* get object info */ break;
-		case 0xF4: parseMarketLeave(); break;
+		/*case 0xF4: parseMarketLeave(); break;
 		case 0xF5: parseMarketBrowse(msg); break;
 		case 0xF6: parseMarketCreateOffer(msg); break;
 		case 0xF7: parseMarketCancelOffer(msg); break;
 		case 0xF8: parseMarketAcceptOffer(msg); break;
-		case 0xF9: parseModalWindowAnswer(msg); break;
+		case 0xF9: parseModalWindowAnswer(msg); break;*/
 
 		default:
 			// std::cout << "Player: " << player->getName() << " sent an unknown packet header: 0x" << std::hex << static_cast<uint16_t>(recvbyte) << std::dec << "!" << std::endl;
@@ -1197,6 +1197,7 @@ void ProtocolGame::parseQuestLine(NetworkMessage& msg)
 	addGameTask(&Game::playerShowQuestLine, player->getID(), questId);
 }
 
+/*
 void ProtocolGame::parseMarketLeave()
 {
 	addGameTask(&Game::playerLeaveMarket, player->getID());
@@ -1252,7 +1253,7 @@ void ProtocolGame::parseBrowseField(NetworkMessage& msg)
 {
 	const Position& pos = msg.getPosition();
 	addGameTask(&Game::playerBrowseField, player->getID(), pos);
-}
+}*/
 
 void ProtocolGame::parseSeekInContainer(NetworkMessage& msg)
 {
@@ -1732,6 +1733,7 @@ void ProtocolGame::sendSaleItemList(const std::list<ShopInfo>& shop)
 	writeToOutputBuffer(msg);
 }
 
+/*
 void ProtocolGame::sendMarketEnter(uint32_t depotId)
 {
 	NetworkMessage msg;
@@ -1791,6 +1793,7 @@ void ProtocolGame::sendMarketEnter(uint32_t depotId)
 
 	writeToOutputBuffer(msg);
 }
+*/
 
 void ProtocolGame::sendMarketLeave()
 {

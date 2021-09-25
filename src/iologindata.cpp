@@ -793,40 +793,88 @@ bool IOLoginData::savePlayer(Player* player)
 		return false;
 	}
 
-	if (player->lastDepotId != -1) {
-		//save depot locker items
-		if (!db.executeQuery(fmt::format("DELETE FROM `player_depotlockeritems` WHERE `player_id` = {:d}", player->getGUID()))) {
-			return false;
-		}
+	//save depot locker items
+	static std::vector<DepotLocker_ptr> toSaveLocker;
 
+	toSaveLocker.clear();
+
+	for (const auto& it : player->depotLockerMap) {
+		if (it.second->needsSave()) {
+			toSaveLocker.push_back(it.second);
+		}
+	}
+
+	if (!toSaveLocker.empty()) {
 		DBInsert lockerQuery("INSERT INTO `player_depotlockeritems` (`player_id`, `pid`, `sid`, `itemtype`, `count`, `attributes`) VALUES ");
 		itemList.clear();
 
-		for (const auto& it : player->depotLockerMap) {
-			for (Item* item : it.second->getItemList()) {
+		query.str(std::string());
+		query << "DELETE FROM `player_depotlockeritems` WHERE `player_id` = " << player->getGUID() << " AND (";
+
+		bool first = true;
+
+		for (DepotLocker_ptr locker : toSaveLocker) {
+			uint16_t lockerId = locker->getDepotId();
+
+			query << (first ? "" : " OR ") << "`pid` = " << lockerId;;
+
+			if (first) {
+				first = false;
+			}
+
+			for (Item* item : locker->getItemList()) {
 				if (item->getID() == ITEM_DEPOT) {
 					continue;
 				}
-				itemList.emplace_back(it.first, item);
+				itemList.emplace_back(lockerId, item);
 			}
+		}
+		query << ")";
+
+		if (!db.executeQuery(query.str())) {
+			return false;
 		}
 
 		if (!saveItems(player, itemList, lockerQuery, propWriteStream)) {
 			return false;
 		}
+	}
 
-		//save depot items
-		if (!db.executeQuery(fmt::format("DELETE FROM `player_depotitems` WHERE `player_id` = {:d}", player->getGUID()))) {
-			return false;
+	//save depot items
+	static std::vector<std::pair<uint32_t, DepotChest*>> toSaveDepot;
+
+	toSaveDepot.clear();
+
+	for (const auto& it : player->depotChests) {
+		if (it.second->needsSave()) {
+			toSaveDepot.push_back(it);
 		}
+	}
+
+	if (!toSaveDepot.empty()) {
+		query.str(std::string());
+		query << "DELETE FROM `player_depotitems` WHERE `player_id` = " << player->getGUID() << " AND (";
 
 		DBInsert depotQuery("INSERT INTO `player_depotitems` (`player_id`, `pid`, `sid`, `itemtype`, `count`, `attributes`) VALUES ");
 		itemList.clear();
 
-		for (const auto& it : player->depotChests) {
+		bool first = true;
+
+		for (const auto& it : toSaveDepot) {
+			query << (first ? "" : " OR ") << "`pid` = " << it.first;
+
+			if (first) {
+				first = false;
+			}
+
 			for (Item* item : it.second->getItemList()) {
 				itemList.emplace_back(it.first, item);
 			}
+		}
+		query << ")";
+
+		if (!db.executeQuery(query.str())) {
+			return false;
 		}
 
 		if (!saveItems(player, itemList, depotQuery, propWriteStream)) {
