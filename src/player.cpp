@@ -392,7 +392,6 @@ uint16_t Player::getClientIcons() const
 	}
 
 	if (pzLocked) {
-
 		icons |= ICON_REDSWORDS;
 	}
 
@@ -3372,15 +3371,13 @@ void Player::onAttackedCreature(Creature* target, bool addFightTicks /* = true *
 		if (getSkull() == SKULL_NONE && getSkullClient(targetPlayer) == SKULL_YELLOW) {
 			addAttacked(targetPlayer);
 			targetPlayer->sendCreatureSkull(this);
+		} else {
 
-		}
-		else {
-			if ((!targetPlayer->hasAttacked(this)) || (!g_config.getBoolean(ConfigManager::ALLOW_FIGHT_BACK))) {
+			if (!targetPlayer->hasAttacked(this) || !g_config.getBoolean(ConfigManager::PZLOCK_SKULLED_ATTACKER)) {
 				if (!pzLocked && g_game.getWorldType() != WORLD_TYPE_PVP_ENFORCED) {
 					pzLocked = true;
 					sendIcons();
 				}
-
 
 				if (!Combat::isInPvpZone(this, targetPlayer) && !isInWar(targetPlayer)) {
 					addAttacked(targetPlayer);
