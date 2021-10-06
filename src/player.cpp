@@ -3373,7 +3373,7 @@ void Player::onAttackedCreature(Creature* target, bool addFightTicks /* = true *
 			targetPlayer->sendCreatureSkull(this);
 		} else {
 
-			if (!targetPlayer->hasAttacked(this) || !g_config.getBoolean(ConfigManager::PZLOCK_SKULLED_ATTACKER)) {
+			if (!targetPlayer->hasAttacked(this) || !g_config.getBoolean(ConfigManager::PZLOCK_SKULL_ATTACKER)) {
 				if (!pzLocked && g_game.getWorldType() != WORLD_TYPE_PVP_ENFORCED) {
 					pzLocked = true;
 					sendIcons();
