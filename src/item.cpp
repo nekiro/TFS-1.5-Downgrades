@@ -337,7 +337,7 @@ uint16_t Item::getSubType() const
 		return getFluidType();
 	} else if (it.stackable) {
 		return count;
-	} else if (it.charges != 0) {
+	} else if (it.charges != 0 || it.isRune()) {
 		return getCharges();
 	}
 	return count;
