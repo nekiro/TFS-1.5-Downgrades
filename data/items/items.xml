@@ -2672,7 +2672,6 @@
 		<attribute key="weight" value="980" />
 	</item>
 	<item id="2260" article="a" name="blank rune">
-		<attribute key="type" value="rune" />
 		<attribute key="weight" value="210" />
 	</item>
 	<item id="2261" article="a" name="destroy field rune">
