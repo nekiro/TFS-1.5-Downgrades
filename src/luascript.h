@@ -1018,6 +1018,9 @@ class LuaScriptInterface
 		static int luaMonsterSelectTarget(lua_State* L);
 		static int luaMonsterSearchTarget(lua_State* L);
 
+		static int luaMonsterIsWalkingToSpawn(lua_State* L);
+		static int luaMonsterWalkToSpawn(lua_State* L);
+
 		// Npc
 		static int luaNpcCreate(lua_State* L);
 
@@ -1182,6 +1185,7 @@ class LuaScriptInterface
 		static int luaItemTypeGetWieldInfo(lua_State* L);
 		static int luaItemTypeGetDuration(lua_State* L);
 		static int luaItemTypeGetLevelDoor(lua_State* L);
+		static int luaItemTypeGetRuneSpellName(lua_State* L);
 		static int luaItemTypeGetVocationString(lua_State* L);
 		static int luaItemTypeGetMinReqLevel(lua_State* L);
 		static int luaItemTypeGetMinReqMagicLevel(lua_State* L);
@@ -1334,6 +1338,7 @@ class LuaScriptInterface
 		static int luaMonsterSpellSetCombatLength(lua_State* L);
 		static int luaMonsterSpellSetCombatSpread(lua_State* L);
 		static int luaMonsterSpellSetCombatRadius(lua_State* L);
+		static int luaMonsterSpellSetCombatRing(lua_State* L);
 		static int luaMonsterSpellSetConditionType(lua_State* L);
 		static int luaMonsterSpellSetConditionDamage(lua_State* L);
 		static int luaMonsterSpellSetConditionSpeedChange(lua_State* L);

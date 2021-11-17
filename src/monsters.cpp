@@ -223,6 +223,19 @@ bool Monsters::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 			combat->setArea(area);
 		}
 
+		if ((attr = node.attribute("ring"))) {
+			int32_t ring = pugi::cast<int32_t>(attr.value());
+
+			//target spell
+			if ((attr = node.attribute("target"))) {
+				needTarget = attr.as_bool();
+			}
+
+			AreaCombat* area = new AreaCombat();
+			area->setupAreaRing(ring);
+			combat->setArea(area);
+		}
+
 		std::string tmpName = asLowerCaseString(name);
 
 		if (tmpName == "melee") {
@@ -599,6 +612,12 @@ bool Monsters::deserializeSpell(MonsterSpell* spell, spellBlock_t& sb, const std
 		if (spell->radius > 0) {
 			AreaCombat* area = new AreaCombat();
 			area->setupArea(spell->radius);
+			combat->setArea(area);
+		}
+
+		if (spell->ring > 0) {
+			AreaCombat* area = new AreaCombat();
+			area->setupAreaRing(spell->ring);
 			combat->setArea(area);
 		}
 
@@ -1403,10 +1422,6 @@ bool Monsters::loadLootItem(const pugi::xml_node& node, LootBlock& lootBlock)
 
 	if ((attr = node.attribute("countmax"))) {
 		int32_t lootCountMax = pugi::cast<int32_t>(attr.value());
-		if (lootCountMax > 100) {
-			std::cout << "[Warning - Monsters::loadMonster] Invalid \"countmax\" "<< lootCountMax <<" used for loot, the max allowed value is 100. " << std::endl;
-			return false;
-		}
 		lootBlock.countmax = std::max<int32_t>(1, lootCountMax);
 	} else {
 		lootBlock.countmax = 1;

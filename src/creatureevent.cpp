@@ -82,13 +82,11 @@ bool CreatureEvents::registerEvent(Event_ptr event, const pugi::xml_node&)
 		if (!oldEvent->isLoaded() && oldEvent->getEventType() == creatureEvent->getEventType()) {
 			oldEvent->copyEvent(creatureEvent.get());
 		}
-
 		return false;
-	} else {
-		//if not, register it normally
-		creatureEvents.emplace(creatureEvent->getName(), std::move(*creatureEvent));
-		return true;
 	}
+	//if not, register it normally
+	creatureEvents.emplace(creatureEvent->getName(), std::move(*creatureEvent));
+	return true;
 }
 
 bool CreatureEvents::registerLuaEvent(CreatureEvent* event)
@@ -106,13 +104,11 @@ bool CreatureEvents::registerLuaEvent(CreatureEvent* event)
 		if (!oldEvent->isLoaded() && oldEvent->getEventType() == creatureEvent->getEventType()) {
 			oldEvent->copyEvent(creatureEvent.get());
 		}
-
 		return false;
-	} else {
-		//if not, register it normally
-		creatureEvents.emplace(creatureEvent->getName(), std::move(*creatureEvent));
-		return true;
 	}
+	//if not, register it normally
+	creatureEvents.emplace(creatureEvent->getName(), std::move(*creatureEvent));
+	return true;
 }
 
 CreatureEvent* CreatureEvents::getEventByName(const std::string& name, bool forceLoaded /*= true*/)

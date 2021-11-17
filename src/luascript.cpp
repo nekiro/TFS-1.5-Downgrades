@@ -924,7 +924,7 @@ void LuaScriptInterface::pushCombatDamage(lua_State* L, const CombatDamage& dama
 
 void LuaScriptInterface::pushInstantSpell(lua_State* L, const InstantSpell& spell)
 {
-	lua_createtable(L, 0, 6);
+	lua_createtable(L, 0, 7);
 
 	setField(L, "name", spell.getName());
 	setField(L, "words", spell.getWords());
@@ -932,6 +932,7 @@ void LuaScriptInterface::pushInstantSpell(lua_State* L, const InstantSpell& spel
 	setField(L, "mlevel", spell.getMagicLevel());
 	setField(L, "mana", spell.getMana());
 	setField(L, "manapercent", spell.getManaPercent());
+	setField(L, "params", spell.getHasParam());
 
 	setMetatable(L, -1, "Spell");
 }
@@ -1109,6 +1110,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ACCOUNT_TYPE_TUTOR)
 	registerEnum(ACCOUNT_TYPE_SENIORTUTOR)
 	registerEnum(ACCOUNT_TYPE_GAMEMASTER)
+	registerEnum(ACCOUNT_TYPE_COMMUNITYMANAGER)
 	registerEnum(ACCOUNT_TYPE_GOD)
 
 	registerEnum(AMMO_NONE)
@@ -2461,6 +2463,9 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Monster", "selectTarget", LuaScriptInterface::luaMonsterSelectTarget);
 	registerMethod("Monster", "searchTarget", LuaScriptInterface::luaMonsterSearchTarget);
 
+	registerMethod("Monster", "isWalkingToSpawn", LuaScriptInterface::luaMonsterIsWalkingToSpawn);
+	registerMethod("Monster", "walkToSpawn", LuaScriptInterface::luaMonsterWalkToSpawn);
+
 	// Npc
 	registerClass("Npc", "Creature", LuaScriptInterface::luaNpcCreate);
 	registerMetaMethod("Npc", "__eq", LuaScriptInterface::luaUserdataCompare);
@@ -2635,6 +2640,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("ItemType", "getWieldInfo", LuaScriptInterface::luaItemTypeGetWieldInfo);
 	registerMethod("ItemType", "getDuration", LuaScriptInterface::luaItemTypeGetDuration);
 	registerMethod("ItemType", "getLevelDoor", LuaScriptInterface::luaItemTypeGetLevelDoor);
+	registerMethod("ItemType", "getRuneSpellName", LuaScriptInterface::luaItemTypeGetRuneSpellName);
 	registerMethod("ItemType", "getVocationString", LuaScriptInterface::luaItemTypeGetVocationString);
 	registerMethod("ItemType", "getMinReqLevel", LuaScriptInterface::luaItemTypeGetMinReqLevel);
 	registerMethod("ItemType", "getMinReqMagicLevel", LuaScriptInterface::luaItemTypeGetMinReqMagicLevel);
@@ -2799,6 +2805,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("MonsterSpell", "setCombatLength", LuaScriptInterface::luaMonsterSpellSetCombatLength);
 	registerMethod("MonsterSpell", "setCombatSpread", LuaScriptInterface::luaMonsterSpellSetCombatSpread);
 	registerMethod("MonsterSpell", "setCombatRadius", LuaScriptInterface::luaMonsterSpellSetCombatRadius);
+	registerMethod("MonsterSpell", "setCombatRing", LuaScriptInterface::luaMonsterSpellSetCombatRing);
 	registerMethod("MonsterSpell", "setConditionType", LuaScriptInterface::luaMonsterSpellSetConditionType);
 	registerMethod("MonsterSpell", "setConditionDamage", LuaScriptInterface::luaMonsterSpellSetConditionDamage);
 	registerMethod("MonsterSpell", "setConditionSpeedChange", LuaScriptInterface::luaMonsterSpellSetConditionSpeedChange);
@@ -10097,6 +10104,30 @@ int LuaScriptInterface::luaMonsterSearchTarget(lua_State* L)
 	return 1;
 }
 
+int LuaScriptInterface::luaMonsterIsWalkingToSpawn(lua_State* L)
+{
+	// monster:isWalkingToSpawn()
+	Monster* monster = getUserdata<Monster>(L, 1);
+	if (monster) {
+		pushBoolean(L, monster->isWalkingToSpawn());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaMonsterWalkToSpawn(lua_State* L)
+{
+	// monster:walkToSpawn()
+	Monster* monster = getUserdata<Monster>(L, 1);
+	if (monster) {
+		pushBoolean(L, monster->walkToSpawn());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
 // Npc
 int LuaScriptInterface::luaNpcCreate(lua_State* L)
 {
@@ -11748,6 +11779,18 @@ int LuaScriptInterface::luaItemTypeGetLevelDoor(lua_State* L)
 	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
 	if (itemType) {
 		lua_pushinteger(L, itemType->levelDoor);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaItemTypeGetRuneSpellName(lua_State* L)
+{
+	// itemType:getRuneSpellName()
+	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
+	if (itemType && itemType->isRune()) {
+		pushString(L, itemType->runeSpellName);
 	} else {
 		lua_pushnil(L);
 	}
@@ -13813,6 +13856,19 @@ int LuaScriptInterface::luaMonsterSpellSetCombatRadius(lua_State* L)
 	MonsterSpell* spell = getUserdata<MonsterSpell>(L, 1);
 	if (spell) {
 		spell->radius = getNumber<int32_t>(L, 2);
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaMonsterSpellSetCombatRing(lua_State* L)
+{
+	// monsterSpell:setCombatRing(ring)
+	MonsterSpell* spell = getUserdata<MonsterSpell>(L, 1);
+	if (spell) {
+		spell->ring = getNumber<int32_t>(L, 2);
 		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);
