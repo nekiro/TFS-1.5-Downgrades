@@ -4117,7 +4117,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 				//message.primary.value = manaDamage;
 				//message.primary.color = TEXTCOLOR_BLUE;
 
-				coloredText.text = manaDamage;
+				coloredText.text = std::to_string(manaDamage);
 				coloredText.position = targetPos;
 				coloredText.color = TEXTCOLOR_BLUE;
 
