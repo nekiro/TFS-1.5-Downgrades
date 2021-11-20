@@ -955,8 +955,8 @@ itemAttrTypes stringToItemAttribute(const std::string& str)
 	} else if (str == "decayto") {
 		return ITEM_ATTRIBUTE_DECAYTO;
 	} else if (str == "wrapid") {
-		return ITEM_ATTRIBUTE_WRAPID;
-	} else if (str == "storeitem") {
+	//	return ITEM_ATTRIBUTE_WRAPID;
+	//} else if (str == "storeitem") {
 		return ITEM_ATTRIBUTE_STOREITEM;
 	} else if (str == "attackspeed") {
 		return ITEM_ATTRIBUTE_ATTACK_SPEED;
