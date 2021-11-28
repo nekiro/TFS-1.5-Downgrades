@@ -184,8 +184,8 @@ bool ConfigManager::load()
 		boolean[BIND_ONLY_GLOBAL_ADDRESS] = getGlobalBoolean(L, "bindOnlyGlobalAddress", false);
 		boolean[OPTIMIZE_DATABASE] = getGlobalBoolean(L, "startupDatabaseOptimization", true);
 
-		if (string[IP] == "") {
-			string[IP] = getGlobalString(L, "ip", "127.0.0.1");
+		if (string[IP_STRING] == "") {
+			string[IP_STRING] = getGlobalString(L, "ip", "127.0.0.1");
 		}
 
 		string[MAP_NAME] = getGlobalString(L, "mapName", "forgotten");
