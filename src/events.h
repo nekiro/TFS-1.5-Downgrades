@@ -94,7 +94,7 @@ class Events
 		void eventPlayerOnItemMoved(Player* player, Item* item, uint16_t count, const Position& fromPosition, const Position& toPosition, Cylinder* fromCylinder, Cylinder* toCylinder);
 		bool eventPlayerOnMoveCreature(Player* player, Creature* creature, const Position& fromPosition, const Position& toPosition);
 		void eventPlayerOnReportRuleViolation(Player* player, const std::string& targetName, uint8_t reportType, uint8_t reportReason, const std::string& comment, const std::string& translation);
-		bool eventPlayerOnReportBug(Player* player, const std::string& message, const Position& position, uint8_t category);
+		bool eventPlayerOnReportBug(Player* player, const std::string& message);
 		bool eventPlayerOnTurn(Player* player, Direction direction);
 		bool eventPlayerOnTradeRequest(Player* player, Player* target, Item* item);
 		bool eventPlayerOnTradeAccept(Player* player, Player* target, Item* item, Item* targetItem);

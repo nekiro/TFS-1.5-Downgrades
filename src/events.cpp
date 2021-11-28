@@ -706,9 +706,9 @@ void Events::eventPlayerOnReportRuleViolation(Player* player, const std::string&
 	scriptInterface.callVoidFunction(6);
 }
 
-bool Events::eventPlayerOnReportBug(Player* player, const std::string& message, const Position& position, uint8_t category)
+bool Events::eventPlayerOnReportBug(Player* player, const std::string& message)
 {
-	// Player:onReportBug(message, position, category)
+	// Player:onReportBug(message)
 	if (info.playerOnReportBug == -1) {
 		return true;
 	}
@@ -728,10 +728,8 @@ bool Events::eventPlayerOnReportBug(Player* player, const std::string& message, 
 	LuaScriptInterface::setMetatable(L, -1, "Player");
 
 	LuaScriptInterface::pushString(L, message);
-	LuaScriptInterface::pushPosition(L, position);
-	lua_pushnumber(L, category);
 
-	return scriptInterface.callFunction(4);
+	return scriptInterface.callFunction(2);
 }
 
 bool Events::eventPlayerOnTurn(Player* player, Direction direction)
