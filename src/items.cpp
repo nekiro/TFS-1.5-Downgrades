@@ -52,6 +52,7 @@ const std::unordered_map<std::string, ItemParseAttributes_t> ItemParseAttributes
 	{"corpsetype", ITEM_PARSE_CORPSETYPE},
 	{"containersize", ITEM_PARSE_CONTAINERSIZE},
 	{"fluidsource", ITEM_PARSE_FLUIDSOURCE},
+	{"fluidcontainer", ITEM_PARSE_FLUIDCONTAINER},
 	{"readable", ITEM_PARSE_READABLE},
 	{"writeable", ITEM_PARSE_WRITEABLE},
 	{"maxtextlen", ITEM_PARSE_MAXTEXTLEN},
@@ -705,6 +706,13 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 						it.fluidSource = it2->second;
 					} else {
 						std::cout << "[Warning - Items::parseItemNode] Unknown fluidSource: " << valueAttribute.as_string() << std::endl;
+					}
+					break;
+				}
+
+				case ITEM_PARSE_FLUIDCONTAINER: {
+					if (valueAttribute.as_bool()) {
+						it.group = ITEM_GROUP_FLUID;
 					}
 					break;
 				}

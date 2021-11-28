@@ -1694,6 +1694,7 @@
 	<item id="2014" article="a" name="jug">
 		<attribute key="weight" value="750" />
 		<attribute key="pickupable" value="1" />
+		<attribute key="fluidcontainer" value="1" />
 	</item>
 	<item id="2015" article="a" name="brown flask">
 		<attribute key="weight" value="300" />
