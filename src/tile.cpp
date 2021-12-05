@@ -559,8 +559,8 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 
 			const Tile* playerTile = player->getTile();
 			if (playerTile) {
-				uint32_t height = playerTile->getHeight();
-				if (player->getPosition().z == getPosition().z && height != 3 && height < getHeight() && height + 1 != getHeight()) {
+				int32_t playerTileHeight = playerTile->getHeight();
+				if (player->getPosition().z == getPosition().z && playerTileHeight < 3 && getHeight() - playerTileHeight >= 2) {
 					return RETURNVALUE_NOTPOSSIBLE;
 				}
 			}
@@ -1516,7 +1516,7 @@ void Tile::setTileFlags(const Item* item)
 		setFlag(TILESTATE_SUPPORTS_HANGABLE);
 	}
 
-	if (item->hasProperty(CONST_PROP_HASHEIGHT) && height < 3) {
+	if (item->hasProperty(CONST_PROP_HASHEIGHT)) {
 		height++;
 	}
 }
