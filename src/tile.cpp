@@ -560,7 +560,7 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 			const Tile* playerTile = player->getTile();
 			if (playerTile) {
 				int32_t playerTileHeight = playerTile->getHeight();
-				if (player->getPosition().z == getPosition().z && playerTileHeight < 3 && getHeight() - playerTileHeight >= 2) {
+				if (player->getPosition().z == getPosition().z && playerTileHeight < 3 && static_cast<int32_t>(getHeight()) - playerTileHeight >= 2) {
 					return RETURNVALUE_NOTPOSSIBLE;
 				}
 			}
