@@ -75,10 +75,11 @@ void DepotChest::postRemoveNotification(Thing* thing, const Cylinder* newParent,
 	save = true;
 }
 
-Cylinder* DepotChest::getParent() const
+/*Cylinder* DepotChest::getParent() const
 {
 	if (parent) {
 		return parent->getParent();
 	}
 	return nullptr;
 }
+*/
