@@ -565,64 +565,6 @@ bool IOLoginData::saveItems(const Player* player, const ItemBlockList& itemList,
 	return query_insert.execute();
 }
 
-bool IOLoginData::saveDepotItems(const Player* player, const ItemBlockList& itemList, DBInsert& query_insert, PropWriteStream& propWriteStream)
-{
-	using ContainerDepotBlock = std::tuple<Container*, int32_t, int32_t>;
-	std::list<ContainerDepotBlock> queue;
-
-	int32_t runningId = 100;
-
-	Database& db = Database::getInstance();
-	for (const auto& it : itemList) {
-		int32_t pid = it.first;
-		Item* item = it.second;
-		++runningId;
-
-		propWriteStream.clear();
-		item->serializeAttr(propWriteStream);
-
-		size_t attributesSize;
-		const char* attributes = propWriteStream.getStream(attributesSize);
-
-		if (!query_insert.addRow(fmt::format("{:d}, {:d}, {:d}, {:d}, {:d}, {:s}, {:d}", player->getGUID(), pid, runningId, item->getID(), item->getSubType(), db.escapeBlob(attributes, attributesSize), pid))) {
-			return false;
-		}
-
-		if (Container* container = item->getContainer()) {
-			queue.emplace_back(container, runningId, it.first);
-		}
-	}
-
-	while (!queue.empty()) {
-		const ContainerDepotBlock& cb = queue.front();
-		Container* container = std::get<0>(cb);
-		int32_t parentId = std::get<1>(cb);
-		int32_t topParentId = std::get<2>(cb);
-		queue.pop_front();
-
-		for (Item* item : container->getItemList()) {
-			++runningId;
-
-			Container* subContainer = item->getContainer();
-			if (subContainer) {
-				queue.emplace_back(subContainer, runningId, topParentId);
-			}
-
-			propWriteStream.clear();
-			item->serializeAttr(propWriteStream);
-
-			size_t attributesSize;
-			const char* attributes = propWriteStream.getStream(attributesSize);
-
-			if (!query_insert.addRow(fmt::format("{:d}, {:d}, {:d}, {:d}, {:d}, {:s}, {:d}", player->getGUID(), parentId, runningId, item->getID(), item->getSubType(), db.escapeBlob(attributes, attributesSize), topParentId))) {
-				return false;
-			}
-		}
-	}
-
-	return query_insert.execute();
-}
-
 bool IOLoginData::savePlayer(Player* player)
 {
 	if (player->getHealth() <= 0) {
