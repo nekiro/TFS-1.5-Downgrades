@@ -1508,9 +1508,10 @@ void ProtocolGame::sendCreatePrivateChannel(uint16_t channelId, const std::strin
 	msg.addByte(0xB2);
 	msg.add<uint16_t>(channelId);
 	msg.addString(channelName);
-	msg.add<uint16_t>(0x01);
+	/*msg.add<uint16_t>(0x01);
 	msg.addString(player->getName());
 	msg.add<uint16_t>(0x00);
+	*/
 	writeToOutputBuffer(msg);
 }
 
