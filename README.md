@@ -1,6 +1,4 @@
-# TFS 1.4 Nekiro's Downgrades
-
-This branch holds TFS 1.4 **8.00** protocol downgrade.
+# Nekiro's 8.00 Downgrade
 
 This downgrade is not download and run distribution, monsters and spells are probably not 100% correct.
 You are welcome to submit a pull request though.
