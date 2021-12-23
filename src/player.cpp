@@ -1099,7 +1099,7 @@ void Player::onCreatureAppear(Creature* creature, bool isLogin)
 		}
 
 		// load mount speed bonus
-		uint16_t currentMountId = currentOutfit.lookMount;
+		/*uint16_t currentMountId = currentOutfit.lookMount;
 		if (currentMountId != 0) {
 			Mount* currentMount = g_game.mounts.getMountByClientID(currentMountId);
 			if (currentMount && hasMount(currentMount)) {
@@ -1112,6 +1112,7 @@ void Player::onCreatureAppear(Creature* creature, bool isLogin)
 
 		// mounted player moved to pz on login, update mount status
 		onChangeZone(getZone());
+		*/
 
 		if (g_config.getBoolean(ConfigManager::PLAYER_CONSOLE_LOGS)) {
 			std::cout << name << " has logged in." << std::endl;
