@@ -5564,7 +5564,7 @@ void Game::forceRemoveCondition(uint32_t creatureId, ConditionType_t type)
 	creature->removeCondition(type, true);
 }
 
-void Game::sendOfflineTrainingDialog(Player* player)
+/*void Game::sendOfflineTrainingDialog(Player* player)
 {
 	if (!player) {
 		return;
@@ -5574,6 +5574,7 @@ void Game::sendOfflineTrainingDialog(Player* player)
 		player->sendModalWindow(offlineTrainingWindow);
 	}
 }
+*/
 
 void Game::playerAnswerModalWindow(uint32_t playerId, uint32_t modalWindowId, uint8_t button, uint8_t choice)
 {
@@ -5589,7 +5590,7 @@ void Game::playerAnswerModalWindow(uint32_t playerId, uint32_t modalWindowId, ui
 	player->onModalWindowHandled(modalWindowId);
 
 	// offline training, hard-coded
-	if (modalWindowId == std::numeric_limits<uint32_t>::max()) {
+	/*if (modalWindowId == std::numeric_limits<uint32_t>::max()) {
 		if (button == offlineTrainingWindow.defaultEnterButton) {
 			if (choice == SKILL_SWORD || choice == SKILL_AXE || choice == SKILL_CLUB || choice == SKILL_DISTANCE || choice == SKILL_MAGLEVEL) {
 				BedItem* bedItem = player->getBedItem();
@@ -5607,6 +5608,11 @@ void Game::playerAnswerModalWindow(uint32_t playerId, uint32_t modalWindowId, ui
 		for (auto creatureEvent : player->getCreatureEvents(CREATURE_EVENT_MODALWINDOW)) {
 			creatureEvent->executeModalWindow(player, modalWindowId, button, choice);
 		}
+	}
+	*/
+
+	for (auto creatureEvent : player->getCreatureEvents(CREATURE_EVENT_MODALWINDOW)) {
+		creatureEvent->executeModalWindow(player, modalWindowId, button, choice);
 	}
 }
 

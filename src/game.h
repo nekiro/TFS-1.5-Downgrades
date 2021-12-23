@@ -487,7 +487,7 @@ class Game
 		uint32_t getMotdNum() const { return motdNum; }
 		void incrementMotdNum() { motdNum++; }
 
-		void sendOfflineTrainingDialog(Player* player);
+		//void sendOfflineTrainingDialog(Player* player);
 
 		const std::unordered_map<uint32_t, Player*>& getPlayers() const { return players; }
 		const std::map<uint32_t, Npc*>& getNpcs() const { return npcs; }
