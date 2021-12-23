@@ -362,6 +362,7 @@ class ItemType
 		uint8_t shootRange = 1;
 		int8_t hitChance = 0;
 
+		bool storeItem = false;
 		bool forceUse = false;
 		bool forceSerialize = false;
 		bool hasHeight = false;

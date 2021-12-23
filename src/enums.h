@@ -102,6 +102,20 @@ enum VipStatus_t : uint8_t {
 	VIPSTATUS_ONLINE = 1
 };
 
+enum MarketAction_t {
+	MARKETACTION_BUY = 0,
+	MARKETACTION_SELL = 1,
+};
+
+enum MarketOfferState_t {
+	OFFERSTATE_ACTIVE = 0,
+	OFFERSTATE_CANCELLED = 1,
+	OFFERSTATE_EXPIRED = 2,
+	OFFERSTATE_ACCEPTED = 3,
+
+	OFFERSTATE_ACCEPTEDEX = 255,
+};
+
 enum ChannelEvent_t : uint8_t {
 	CHANNELEVENT_JOIN = 0,
 	CHANNELEVENT_LEAVE = 1,
@@ -524,6 +538,7 @@ struct MarketOfferEx {
 	std::string playerName;
 };
 
+
 struct HistoryMarketOffer {
 	uint32_t timestamp;
 	uint32_t price;
@@ -550,7 +565,6 @@ struct ModalWindow
 	ModalWindow(uint32_t id, std::string title, std::string message): title(std::move(title)), message(std::move(message)), id(id) {}
 };
 
->>>>>>> 663101c6 (Sync with upstream 21 Dec 2021)
 enum CombatOrigin
 {
 	ORIGIN_NONE,
