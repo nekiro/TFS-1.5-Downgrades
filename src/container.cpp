@@ -678,7 +678,7 @@ Thing* Container::getThing(size_t index) const
 void Container::postAddNotification(Thing* thing, const Cylinder* oldParent, int32_t index, cylinderlink_t)
 {
 	Cylinder* topParent = getTopParent();
-	if (topParent->getCreature()) {
+	if (topParent->getCreature() || dynamic_cast<DepotLocker*>(topParent)) {
 		topParent->postAddNotification(thing, oldParent, index, LINK_TOPPARENT);
 	} else if (topParent == this) {
 		//let the tile class notify surrounding players
@@ -693,7 +693,7 @@ void Container::postAddNotification(Thing* thing, const Cylinder* oldParent, int
 void Container::postRemoveNotification(Thing* thing, const Cylinder* newParent, int32_t index, cylinderlink_t)
 {
 	Cylinder* topParent = getTopParent();
-	if (topParent->getCreature()) {
+	if (topParent->getCreature() || dynamic_cast<DepotLocker*>(topParent)) {
 		topParent->postRemoveNotification(thing, newParent, index, LINK_TOPPARENT);
 	} else if (topParent == this) {
 		//let the tile class notify surrounding players
