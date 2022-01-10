@@ -1414,7 +1414,7 @@ void Tile::internalAddThing(uint32_t, Thing* thing)
 		}
 
 		CreatureVector* creatures = makeCreatures();
-		creatures->insert(creatures->begin(), creature);
+		creatures->insert(creatures->end(), creature);
 	} else {
 		Item* item = thing->getItem();
 		if (item == nullptr) {
