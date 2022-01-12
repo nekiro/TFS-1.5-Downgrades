@@ -908,7 +908,7 @@ class Item : virtual public Thing
 			return items[id].moveable;
 		}
 		bool isPickupable() const {
-			return items[id].pickupable;
+			return items[id].isPickupable();
 		}
 		bool isUseable() const {
 			return items[id].useable;
