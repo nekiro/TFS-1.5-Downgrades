@@ -44,6 +44,7 @@ const std::unordered_map<std::string, ItemParseAttributes_t> ItemParseAttributes
 	{"moveable", ITEM_PARSE_MOVEABLE},
 	{"movable", ITEM_PARSE_MOVEABLE},
 	{"blockprojectile", ITEM_PARSE_BLOCKPROJECTILE},
+	{"ignoreblocking", ITEM_PARSE_IGNOREBLOCKING},
 	{"allowpickupable", ITEM_PARSE_PICKUPABLE},
 	{"pickupable", ITEM_PARSE_PICKUPABLE},
 	{"forceserialize", ITEM_PARSE_FORCESERIALIZE},
@@ -670,8 +671,13 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 					break;
 				}
 
+				case ITEM_PARSE_IGNOREBLOCKING: {
+					it.ignoreBlocking = valueAttribute.as_bool();
+					break;
+				}
+
 				case ITEM_PARSE_PICKUPABLE: {
-					it.allowPickupable = valueAttribute.as_bool();
+					it.pickupable = valueAttribute.as_bool();
 					break;
 				}
 

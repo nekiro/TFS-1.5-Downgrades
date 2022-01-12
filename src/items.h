@@ -72,6 +72,7 @@ enum ItemParseAttributes_t {
 	ITEM_PARSE_MOVEABLE,
 	ITEM_PARSE_BLOCKPROJECTILE,
 	ITEM_PARSE_PICKUPABLE,
+	ITEM_PARSE_IGNOREBLOCKING,
 	ITEM_PARSE_FORCESERIALIZE,
 	ITEM_PARSE_FLOORCHANGE,
 	ITEM_PARSE_CORPSETYPE,
@@ -262,7 +263,7 @@ class ItemType
 			return (type == ITEM_TYPE_RUNE);
 		}
 		bool isPickupable() const {
-			return (allowPickupable || pickupable);
+			return pickupable;
 		}
 		bool isUseable() const {
 			return (useable);
@@ -371,7 +372,7 @@ class ItemType
 		bool blockPickupable = false;
 		bool blockProjectile = false;
 		bool blockPathFind = false;
-		bool allowPickupable = false;
+		bool ignoreBlocking = false;
 		bool showDuration = false;
 		bool showCharges = false;
 		bool showAttributes = false;

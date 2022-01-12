@@ -180,16 +180,19 @@
 	</item>
 	<item id="493" name="water">
 		<attribute key="type" value="trashholder" />
+		<attribute key="ignoreblocking" value="true" />
 		<attribute key="effect" value="bluebubble" />
 	</item>
 	<item fromid="598" toid="601" name="lava">
 		<attribute key="type" value="trashholder" />
+		<attribute key="ignoreblocking" value="true" />
 		<attribute key="effect" value="fire" />
 	</item>
 	<item id="670" name="snow" />
 	<item id="671" name="ice" />
 	<item fromid="708" toid="711" name="tar">
 		<attribute key="type" value="trashholder" />
+		<attribute key="ignoreblocking" value="true" />
 		<attribute key="effect" value="poff" />
 	</item>
 	<item id="724" name="cobbled pavement" />
@@ -790,6 +793,7 @@
 	</item>
 	<item id="1509" name="lava">
 		<attribute key="type" value="trashholder" />
+		<attribute key="ignoreblocking" value="true" />
 		<attribute key="effect" value="fire" />
 	</item>
 	<item id="1510" name="slits">
@@ -1289,6 +1293,7 @@
 	</item>
 	<item id="1777" article="a" name="dustbin">
 		<attribute key="type" value="trashholder" />
+		<attribute key="ignoreblocking" value="true" />
 	</item>
 	<item fromid="1778" toid="1785" article="a" name="big wine cask">
 		<attribute key="fluidSource" value="wine" />
@@ -7965,6 +7970,7 @@
 	<item fromid="4608" toid="4616" name="shallow water">
 		<attribute key="description" value="You see the silvery movement of fish." />
 		<attribute key="type" value="trashholder" />
+		<attribute key="ignoreblocking" value="true" />
 		<attribute key="effect" value="bluebubble" />
 		<attribute key="fluidSource" value="water" />
 	</item>
@@ -7972,6 +7978,7 @@
 		<attribute key="decayTo" value="4608" />
 		<attribute key="duration" value="1200" />
 		<attribute key="type" value="trashholder" />
+		<attribute key="ignoreblocking" value="true" />
 		<attribute key="effect" value="bluebubble" />
 		<attribute key="fluidSource" value="water" />
 	</item>
@@ -7979,6 +7986,7 @@
 		<attribute key="decayTo" value="4609" />
 		<attribute key="duration" value="1200" />
 		<attribute key="type" value="trashholder" />
+		<attribute key="ignoreblocking" value="true" />
 		<attribute key="effect" value="bluebubble" />
 		<attribute key="fluidSource" value="water" />
 	</item>
@@ -7986,11 +7994,13 @@
 		<attribute key="decayTo" value="4610" />
 		<attribute key="duration" value="1200" />
 		<attribute key="type" value="trashholder" />
+		<attribute key="ignoreblocking" value="true" />
 		<attribute key="effect" value="bluebubble" />
 		<attribute key="fluidSource" value="water" />
 	</item>
 	<item fromid="4620" toid="4625" name="shallow water">
 		<attribute key="type" value="trashholder" />
+		<attribute key="ignoreblocking" value="true" />
 		<attribute key="effect" value="bluebubble" />
 		<attribute key="fluidSource" value="water" />
 	</item>
@@ -8002,18 +8012,21 @@
 	</item>
 	<item fromid="4664" toid="4666" name="shallow water">
 		<attribute key="type" value="trashholder" />
+		<attribute key="ignoreblocking" value="true" />
 		<attribute key="effect" value="bluebubble" />
 		<attribute key="fluidSource" value="water" />
 	</item>
 	<item fromid="4667" toid="4690" name="dirt" />
 	<item fromid="4691" toid="4712" name="swamp">
 		<attribute key="type" value="trashholder" />
+		<attribute key="ignoreblocking" value="true" />
 		<attribute key="effect" value="greenbubble" />
 	</item>
 	<item fromid="4713" toid="4736" name="swamp" />
 	<item fromid="4737" toid="4748" name="snow" />
 	<item fromid="4749" toid="4755" name="swamp">
 		<attribute key="type" value="trashholder" />
+		<attribute key="ignoreblocking" value="true" />
 		<attribute key="effect" value="greenbubble" />
 	</item>
 	<item fromid="4760" toid="4783" name="sand" />
@@ -8021,6 +8034,7 @@
 	<item fromid="4796" toid="4819" name="dirt" />
 	<item fromid="4820" toid="4825" name="shallow water">
 		<attribute key="effect" value="bluebubble" />
+		<attribute key="ignoreblocking" value="true" />
 		<attribute key="fluidSource" value="water" />
 	</item>
 	<item fromid="4826" toid="4827" article="a" name="mountain" />
@@ -11070,6 +11084,7 @@
 	</item>
 	<item id="6353" name="swamp">
 		<attribute key="type" value="trashholder" />
+		<attribute key="ignoreblocking" value="true" />
 		<attribute key="effect" value="greenbubble" />
 	</item>
 	<item id="6354" article="a" name="slain blightwalker">
@@ -16955,6 +16970,7 @@
 	<item id="9631" article="a" name="metal piece" />
 	<item id="9632" name="swamp">
 		<attribute key="type" value="trashholder" />
+		<attribute key="ignoreblocking" value="true" />
 		<attribute key="effect" value="greenbubble" />
 	</item>
 	<item id="9633" name="the dust of Boreth">
@@ -17409,6 +17425,7 @@
 	</item>
 	<item id="9883" name="lava">
 		<attribute key="type" value="trashholder" />
+		<attribute key="ignoreblocking" value="true" />
 		<attribute key="effect" value="fire" />
 	</item>
 	<item fromid="9884" toid="9885" article="a" name="strange apparatus" />

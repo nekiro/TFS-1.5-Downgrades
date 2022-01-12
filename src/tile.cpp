@@ -640,7 +640,7 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 			if (ground) {
 				const ItemType& iiType = Item::items[ground->getID()];
 				if (iiType.blockSolid) {
-					if (!iiType.allowPickupable || item->isMagicField() || item->isBlocking()) {
+					if (!iiType.ignoreBlocking || item->isMagicField() || item->isBlocking()) {
 						if (!item->isPickupable()) {
 							return RETURNVALUE_NOTENOUGHROOM;
 						}
@@ -659,7 +659,7 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 						continue;
 					}
 
-					if (iiType.allowPickupable && !item->isMagicField() && !item->isBlocking()) {
+					if (iiType.ignoreBlocking && !item->isMagicField() && !item->isBlocking()) {
 						continue;
 					}
 
