@@ -142,7 +142,7 @@
 	<action itemid="3678" script="other/teleport.lua" />
 	<action itemid="3900" script="other/watch.lua" />
 	<action itemid="5543" script="other/teleport.lua" />
-	<action fromid="5792" toid="5797" script="other/die.lua" />
+	<action fromid="5792" toid="5797" script="other/dice.lua" />
 	<action itemid="6092" script="other/watch.lua" />
 	<action itemid="6576" script="other/fireworks_rocket.lua" />
 	<action itemid="6578" script="other/party_hat.lua" />
