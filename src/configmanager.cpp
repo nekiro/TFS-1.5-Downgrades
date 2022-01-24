@@ -120,7 +120,7 @@ ExperienceStages loadLuaStages(lua_State* L)
 	return stages;
 }
 
-ExperienceStages loadXMLStages()
+/*ExperienceStages loadXMLStages()
 {
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file("data/XML/stages.xml");
@@ -128,7 +128,7 @@ ExperienceStages loadXMLStages()
 		printXMLError("Error - loadXMLStages", "data/XML/stages.xml", result);
 		return {};
 	}
-
+	
 	ExperienceStages stages;
 	for (auto stageNode : doc.child("stages").children()) {
 		if (strcasecmp(stageNode.name(), "config") == 0) {
@@ -161,7 +161,7 @@ ExperienceStages loadXMLStages()
 	std::sort(stages.begin(), stages.end());
 	return stages;
 }
-
+*/
 }
 
 bool ConfigManager::load()
@@ -309,7 +309,7 @@ bool ConfigManager::load()
 	integer[DEPOT_FREE_LIMIT] = getGlobalNumber(L, "depotFreeLimit", 2000);
 	integer[DEPOT_PREMIUM_LIMIT] = getGlobalNumber(L, "depotPremiumLimit", 10000);
 
-	expStages = loadXMLStages();
+	/*expStages = loadXMLStages(); */
 	if (expStages.empty()) {
 		expStages = loadLuaStages(L);
 	} else {
@@ -321,7 +321,7 @@ bool ConfigManager::load()
 	lua_close(L);
 
 	return true;
-}
+} 
 
 bool ConfigManager::reload()
 {
