@@ -35,6 +35,8 @@
 #include "groups.h"
 #include "town.h"
 
+#include <bitset>
+
 class House;
 class NetworkMessage;
 class Weapon;
@@ -265,13 +267,13 @@ class Player final : public Creature, public Cylinder
 		}
 
 		void addBlessing(uint8_t blessing) {
-			blessings |= blessing;
+			blessings.set(blessing);
 		}
 		void removeBlessing(uint8_t blessing) {
-			blessings &= ~blessing;
+			blessings.reset(blessing);
 		}
-		bool hasBlessing(uint8_t value) const {
-			return (blessings & (static_cast<uint8_t>(1) << value)) != 0;
+		bool hasBlessing(uint8_t blessing) const {
+			return blessings.test(blessing);
 		}
 
 		bool isOffline() const {
@@ -1155,7 +1157,7 @@ class Player final : public Creature, public Cylinder
 		int16_t lastDepotId = -1;
 
 		uint8_t soul = 0;
-		uint8_t blessings = 0;
+		std::bitset<6> blessings;
 		uint8_t levelPercent = 0;
 		uint8_t magLevelPercent = 0;
 
