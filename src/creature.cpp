@@ -618,9 +618,10 @@ void Creature::onCreatureMove(Creature* creature, const Tile* newTile, const Pos
 	}
 
 	if (creature == followCreature || (creature == this && followCreature)) {
-		if (hasFollowPath) {
-			isUpdatingPath = true;
-		}
+        if (hasFollowPath) {
+            isUpdatingPath = false;
+            g_dispatcher.addTask(createTask(std::bind(&Game::updateCreatureWalk, &g_game, getID())));
+        }
 
 		if (newPos.z != oldPos.z || !canSee(followCreature->getPosition())) {
 			onCreatureDisappear(followCreature, false);
