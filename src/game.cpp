@@ -571,7 +571,9 @@ bool Game::removeCreature(Creature* creature, bool isLogout/* = true*/)
 	size_t i = 0;
 	for (Creature* spectator : spectators) {
 		if (Player* player = spectator->getPlayer()) {
-			player->sendRemoveTileCreature(creature, tilePosition, oldStackPosVector[i++]);
+			if (player->canSeeCreature(creature)) {
+				player->sendRemoveTileCreature(creature, tilePosition, oldStackPosVector[i++]);
+			}
 		}
 	}
 
