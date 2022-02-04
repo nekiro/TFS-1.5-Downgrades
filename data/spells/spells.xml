@@ -557,7 +557,6 @@
 	<instant name="House Kick" words="alana sio" aggressive="0" playernameparam="1" params="1" script="house/kick_guest.lua" />
 	<instant name="House Subowner List" words="aleta som" aggressive="0" script="house/invite_subowners.lua" />
 
-
 	<!-- Monster Spells -->
 	<!-- none -->
 </spells>
