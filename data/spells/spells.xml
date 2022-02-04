@@ -345,7 +345,13 @@
 		<vocation name="Druid" />
 		<vocation name="Elder Druid" />
 	</instant>
-	
+
+	<!-- House Spells -->
+	<instant name="House Door List" words="aleta grav" casterTargetOrDirection="1" aggressive="0" script="house/edit_door.lua" />
+	<instant name="House Guest List" words="aleta sio" aggressive="0" script="house/invite_guests.lua" />
+	<instant name="House Kick" words="alana sio" aggressive="0" playernameparam="1" params="1" script="house/kick_guest.lua" />
+	<instant name="House Subowner List" words="aleta som" aggressive="0" script="house/invite_subowners.lua" />
+
 	<!-- Monster Spells -->
 	<!--
 		<instant name="name" words="###1" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="template.lua"/
