@@ -2308,6 +2308,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMetaMethod("Player", "__eq", LuaScriptInterface::luaUserdataCompare);
 
 	registerMethod("Player", "isPlayer", LuaScriptInterface::luaPlayerIsPlayer);
+	registerMethod("Player", "delete", LuaScriptInterface::luaPlayerDelete);
 
 	registerMethod("Player", "getGuid", LuaScriptInterface::luaPlayerGetGuid);
 	registerMethod("Player", "getIp", LuaScriptInterface::luaPlayerGetIp);
@@ -7982,7 +7983,7 @@ int LuaScriptInterface::luaCreatureGetZone(lua_State* L)
 // Player
 int LuaScriptInterface::luaPlayerCreate(lua_State* L)
 {
-	// Player(id or guid or name or userdata)
+	// Player(id or guid or name or userdata, forceLoad)
 	Player* player;
 	if (isNumber(L, 2)) {
 		uint32_t id = getNumber<uint32_t>(L, 2);
@@ -7991,6 +7992,15 @@ int LuaScriptInterface::luaPlayerCreate(lua_State* L)
 		} else {
 			player = g_game.getPlayerByGUID(id);
 		}
+
+		bool forceLoad = getBoolean(L, 3, false);
+		if (forceLoad && !player) {
+    		player = new Player(nullptr);
+    		if (!IOLoginData::loadPlayerById(player, id)) {
+    			delete player;
+        		return;
+      		}
+    	}
 	} else if (isString(L, 2)) {
 		ReturnValue ret = g_game.getPlayerByNameWildcard(getString(L, 2), player);
 		if (ret != RETURNVALUE_NOERROR) {
@@ -8022,6 +8032,25 @@ int LuaScriptInterface::luaPlayerIsPlayer(lua_State* L)
 	// player:isPlayer()
 	pushBoolean(L, getUserdata<const Player>(L, 1) != nullptr);
 	return 1;
+}
+
+int LuaScriptInterface::luaPlayerDelete(lua_state* L)
+{
+  // player:delete()
+  Player* player = getUserdata<Player>(L, 1);
+  if (!player) {
+    lua_pushnil(L);
+    return;
+  }
+
+  if (!player->isOffline()) {
+    lua_pushnil(L);
+    return;
+  }
+
+	IOLoginData::savePlayer(player);
+  delete player;
+  return 1;
 }
 
 int LuaScriptInterface::luaPlayerGetGuid(lua_State* L)
