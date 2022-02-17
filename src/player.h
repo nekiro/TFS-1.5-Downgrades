@@ -314,6 +314,9 @@ class Player final : public Creature, public Cylinder
 			return lastDepotId;
 		}
 
+		int32_t getIdleTime() const {
+			return idleTime;
+		}
 		void resetIdleTime() {
 			idleTime = 0;
 		}
