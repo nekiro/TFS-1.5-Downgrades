@@ -999,9 +999,6 @@ void LuaScriptInterface::pushLoot(lua_State* L, const std::vector<LootBlock>& lo
 void LuaScriptInterface::registerFunctions()
 {
 
-	//fastRelocate(fromPosition, toPosition)
-	lua_register(luaState, "fastRelocate", LuaScriptInterface::luaFastRelocate);
-
 	//doPlayerAddItem(uid, itemid, <optional: default: 1> count/subtype)
 	//doPlayerAddItem(cid, itemid, <optional: default: 1> count, <optional: default: 1> canDropOnMap, <optional: default: 1>subtype)
 	//Returns uid of the created item
@@ -3170,99 +3167,6 @@ void LuaScriptInterface::registerGlobalBoolean(const std::string& name, bool val
 	// _G[name] = value
 	pushBoolean(luaState, value);
 	lua_setglobal(luaState, name.c_str());
-}
-
-int LuaScriptInterface::luaFastRelocate(lua_State* L)
-{
-	//fastRelocate(fromPosition, toPosition)
-	// Faster variant of relocate function
-	Position fromPos = getPosition(L, 1);
-	Position toPos = getPosition(L, 2);
-
-	Tile* fromTile = g_game.map.getTile(fromPos);
-	if (!fromTile) {
-		reportErrorFunc(getErrorDesc(LUA_ERROR_TILE_NOT_FOUND));
-		pushBoolean(L, false);
-		return 1;
-	}
-
-	Tile* toTile = g_game.map.getTile(toPos);
-	if (!toTile) {
-		reportErrorFunc(getErrorDesc(LUA_ERROR_TILE_NOT_FOUND));
-		pushBoolean(L, false);
-		return 1;
-	}
-
-	TileItemVector* fromItems = fromTile->getItemList();
-	if (fromItems) {
-		TileItemVector* toItems = toTile->makeItemList();
-
-		uint32_t downItemCount = fromItems->getDownItemCount();
-		if (downItemCount > 0) {
-			ItemVector::iterator startIt = fromItems->getBeginDownItem();
-			ItemVector::iterator endIt = fromItems->getEndDownItem();
-			if (downItemCount <= 5) {
-				// For a small amount of items choose default relocate
-				for (ItemVector::iterator it = startIt; it < endIt; ++it) {
-					Item* item = (*it);
-					if (Item::items[item->getID()].moveable) {
-						g_game.internalMoveItem(item->getParent(), toTile, INDEX_WHEREEVER, item, item->getItemCount(), nullptr, FLAG_NOLIMIT | FLAG_IGNOREBLOCKITEM | FLAG_IGNOREBLOCKCREATURE | FLAG_IGNORENOTMOVEABLE);
-					}
-				}
-				pushBoolean(L, true);
-				return 1;
-			}
-
-			Item* firstItem = *(endIt - 1);
-			if (!Item::items[firstItem->getID()].moveable) { // Check if someone maybe make door as DownItem
-				--endIt;
-				--downItemCount;
-			}
-			for (ItemVector::iterator it = startIt; it < endIt; ++it) {
-				(*it)->setParent(toTile);
-			}
-
-			toItems->insert(toItems->getBeginDownItem(), startIt, endIt);
-			fromItems->erase(startIt, endIt);
-
-			fromItems->addDownItemCount(static_cast<int32_t>(downItemCount) * -1);
-			toItems->addDownItemCount(static_cast<int32_t>(downItemCount));
-
-			SpectatorVector spectators;
-			if (Position::areInRange<1, 1, 0>(fromPos, toPos)) {
-				int32_t minRangeX = Map::maxViewportX;
-				int32_t maxRangeX = Map::maxViewportX;
-				int32_t minRangeY = Map::maxViewportY;
-				int32_t maxRangeY = Map::maxViewportY;
-				if (fromPos.y > toPos.y) {
-					++minRangeY;
-				} else if (fromPos.y < toPos.y) {
-					++maxRangeY;
-				}
-
-				if (fromPos.x < toPos.x) {
-					++maxRangeX;
-				} else if (fromPos.x > toPos.x) {
-					++minRangeX;
-				}
-				g_game.map.getSpectators(spectators, fromPos, true, false, minRangeX, maxRangeX, minRangeY, maxRangeY);
-			} else {
-				SpectatorVector newspectators;
-				g_game.map.getSpectators(spectators, fromPos, true);
-				g_game.map.getSpectators(newspectators, toPos, true);
-				spectators.mergeSpectators(newspectators);
-			}
-
-			for (Creature* spectator : spectators) {
-				if (Player* tmpPlayer = spectator->getPlayer()) {
-					tmpPlayer->sendUpdateTile(fromTile, fromPos);
-					tmpPlayer->sendUpdateTile(toTile, toPos);
-				}
-			}
-		}
-	}
-	pushBoolean(L, true);
-	return 1;
 }
 
 int LuaScriptInterface::luaDoPlayerAddItem(lua_State* L)
@@ -7998,7 +7902,7 @@ int LuaScriptInterface::luaPlayerCreate(lua_State* L)
     		player = new Player(nullptr);
     		if (!IOLoginData::loadPlayerById(player, id)) {
     			delete player;
-        		return;
+        		return 1;
       		}
     	}
 	} else if (isString(L, 2)) {
@@ -8034,23 +7938,24 @@ int LuaScriptInterface::luaPlayerIsPlayer(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerDelete(lua_state* L)
+int LuaScriptInterface::luaPlayerDelete(lua_State* L)
 {
-  // player:delete()
-  Player* player = getUserdata<Player>(L, 1);
-  if (!player) {
-    lua_pushnil(L);
-    return;
-  }
+	// player:delete()
+	Player* player = getUserdata<Player>(L, 1);
+	if (!player) {
+		lua_pushnil(L);
+		return 1;
+	}
 
-  if (!player->isOffline()) {
-    lua_pushnil(L);
-    return;
-  }
+	if (!player->isOffline()) {
+		lua_pushnil(L);
+		return 1;
+	}
 
-	IOLoginData::savePlayer(player);
-  delete player;
-  return 1;
+	OLoginData::savePlayer(player);
+	delete player;
+	player = nullptr;
+	return 1;
 }
 
 int LuaScriptInterface::luaPlayerGetGuid(lua_State* L)

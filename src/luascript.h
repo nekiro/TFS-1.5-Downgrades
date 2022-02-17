@@ -453,7 +453,6 @@ class LuaScriptInterface
 		static bool getArea(lua_State* L, std::vector<uint32_t>& vec, uint32_t& rows);
 
 		//lua functions
-		static int luaFastRelocate(lua_State* L);
 		static int luaDoPlayerAddItem(lua_State* L);
 
 		//get item info
