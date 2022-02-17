@@ -1915,6 +1915,9 @@ void LuaScriptInterface::registerFunctions()
 	// configKeys
 	registerTable("configKeys");
 
+	// custom configKeys
+	registerEnumIn("configKeys", ConfigManager::LOTTERY_SYSTEM)
+
 	registerEnumIn("configKeys", ConfigManager::ALLOW_CHANGEOUTFIT)
 	registerEnumIn("configKeys", ConfigManager::ONE_PLAYER_ON_ACCOUNT)
 	registerEnumIn("configKeys", ConfigManager::AIMBOT_HOTKEY_ENABLED)

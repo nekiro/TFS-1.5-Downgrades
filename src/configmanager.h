@@ -69,6 +69,7 @@ class ConfigManager
 			ONLY_INVITED_CAN_MOVE_HOUSE_ITEMS,
 			REMOVE_ON_DESPAWN,
 			PLAYER_CONSOLE_LOGS,
+			LOTTERY_SYSTEM,
 
 			LAST_BOOLEAN_CONFIG /* this must be the last one */
 		};
