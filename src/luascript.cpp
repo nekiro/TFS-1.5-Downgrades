@@ -7952,7 +7952,7 @@ int LuaScriptInterface::luaPlayerDelete(lua_State* L)
 		return 1;
 	}
 
-	OLoginData::savePlayer(player);
+	IOLoginData::savePlayer(player);
 	delete player;
 	player = nullptr;
 	return 1;
