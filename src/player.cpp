@@ -2904,6 +2904,7 @@ void Player::postAddNotification(Thing* thing, const Cylinder* oldParent, int32_
 	if (link == LINK_OWNER) {
 		//calling movement scripts
 		g_moveEvents->onPlayerEquip(this, thing->getItem(), static_cast<slots_t>(index), false);
+		g_events->eventPlayerOnInventoryUpdate(this, thing->getItem(), static_cast<slots_t>(index), true);
 	}
 
 	bool requireListUpdate = false;
@@ -2958,6 +2959,7 @@ void Player::postRemoveNotification(Thing* thing, const Cylinder* newParent, int
 	if (link == LINK_OWNER) {
 		//calling movement scripts
 		g_moveEvents->onPlayerDeEquip(this, thing->getItem(), static_cast<slots_t>(index));
+		g_events->eventPlayerOnInventoryUpdate(this, thing->getItem(), static_cast<slots_t>(index), false);
 	}
 
 	bool requireListUpdate = false;
