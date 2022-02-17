@@ -6590,10 +6590,24 @@ int LuaScriptInterface::luaItemIsLoadedFromMap(lua_State* L)
 // Container
 int LuaScriptInterface::luaContainerCreate(lua_State* L)
 {
-	// Container(uid)
-	uint32_t id = getNumber<uint32_t>(L, 2);
+	// Container(id or userdata)
+	Container* container;
+	if (isNumber(L, 2)) {
+		container = getScriptEnv()->getContainerByUID(getNumber<uint32_t>(L, 2));
+	} else if (isUserdata(L, 2)) {
+		if (getUserdataType(L, 2) == LuaData_Item) {
+			Item* item = getUserdata<Item>(L, 2);
+			container = (item ? item->getContainer() : nullptr);
+		} else if (getUserdataType(L, 2) == LuaData_Container) {
+			container = getUserdata<Container>(L, 2);
+		} else {
+			lua_pushnil(L);
+			return 1;
+		}
+	} else {
+		container = nullptr;
+	}
 
-	Container* container = getScriptEnv()->getContainerByUID(id);
 	if (container) {
 		pushUserdata(L, container);
 		setMetatable(L, -1, "Container");
