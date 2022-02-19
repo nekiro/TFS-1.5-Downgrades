@@ -3853,7 +3853,13 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 			SpectatorVec spectators;
 			map.getSpectators(spectators, targetPos, false, true);
 			for (Creature* spectator : spectators) {
+				if (!spectator) {
+					continue;
+				}
 				Player* tmpPlayer = spectator->getPlayer();
+				if (!tmpPlayer) {
+					continue;
+				}
 				if (tmpPlayer == attackerPlayer && attackerPlayer != targetPlayer) {
 					message.type = MESSAGE_STATUS_DEFAULT;
 					message.text = fmt::format("You heal {:s} for {:s}.", target->getNameDescription(), damageString);
