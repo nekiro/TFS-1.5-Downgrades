@@ -2212,6 +2212,13 @@ void Game::playerMoveUpContainer(uint32_t playerId, uint8_t cid)
 		return;
 	}
 
+	int8_t test_cid = player->getContainerID(parentContainer);
+	if (test_cid != -1) {
+		player->closeContainer(test_cid);
+		player->sendCloseContainer(test_cid);
+		return;
+	}
+
 	bool hasParent = (dynamic_cast<const Container*>(parentContainer->getParent()) != nullptr);
 	player->addContainer(cid, parentContainer);
 	player->sendContainer(cid, parentContainer, hasParent, player->getContainerIndex(cid));

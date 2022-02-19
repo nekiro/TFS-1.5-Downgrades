@@ -15,12 +15,12 @@ local LOTTERY = {
 
 function LOTTERY:start()
 	local candidates = {}
-	local randomReward = math.random(1, LOTTERY.rewards[#LOTTERY.rewards])
+	local randomReward = math.random(1, #LOTTERY.rewards)
 
 	for a, b in ipairs(Game.getPlayers()) do
 		local player = Player(b)
 		if player and not player:getAccess() then
-			candidates[#candidates+1] = player:getId()
+			candidates[#candidates + 1] = player:getId()
 		end
 	end
 
@@ -29,13 +29,13 @@ function LOTTERY:start()
 		local winner = Player(candidates[chooseWinner])
 		local item = ItemType(randomReward.id)
 		if not winner or not item then
-			return false
+			return
 		end
 
 		winner:addItem(randomReward.id, randomReward.count)
 		Game.broadcastMessage('The player '.. winner:getName() ..' won the lottery and won '.. randomReward.count ..'x '.. item:getName(), MESSAGE_STATUS_WARNING)
 	end
-	return true
+	return
 end
 
 function onThink(interval)
