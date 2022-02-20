@@ -201,7 +201,7 @@ class ProtocolGame final : public Protocol
 
 		void sendFightModes();
 
-		void sendAnimatedText(const std::string& message, const Position& pos, TextColor_t color);;
+		void sendAnimatedText(const std::string& message, const Position& pos, TextColor_t color);
 
 		void sendCreatureLight(const Creature* creature);
 		void sendWorldLight(LightInfo lightInfo);
