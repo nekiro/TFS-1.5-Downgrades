@@ -26,9 +26,6 @@
 	<action fromid="1728" toid="1731" script="other/watch.lua" />
 	<action itemid="3900" script="other/watch.lua" />
 	<action itemid="2785" script="other/blueberrybush.lua" />
-	<action itemid="2148" script="other/changegold.lua" />
-	<action itemid="2152" script="other/changegold.lua" />
-	<action itemid="2160" script="other/changegold.lua" />
 	<action fromid="3901" toid="3938" script="other/constructionkits.lua" />
 	<action fromid="5086" toid="5088" script="other/constructionkits.lua" />
 	<action fromid="2070" toid="2085" script="other/music.lua" />
