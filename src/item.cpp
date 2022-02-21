@@ -36,6 +36,7 @@ extern Spells* g_spells;
 extern Vocations g_vocations;
 
 Items Item::items;
+uint32_t Item::mapVersion = 1; //default map version for 7.72
 
 Item* Item::CreateItem(const uint16_t type, uint16_t count /*= 0*/)
 {
@@ -141,7 +142,17 @@ Item* Item::CreateItem(PropStream& propStream)
 			break;
 	}
 
-	return Item::CreateItem(id, 0);
+    const ItemType& iType = items[id];
+    unsigned char count = 0;
+    if(mapVersion == 0) {
+        if(iType.stackable || iType.isSplash() || iType.isFluidContainer()) {
+            if(!propStream.read<uint8_t>(count)){
+                return nullptr;
+            }
+        }
+    }
+
+    return Item::CreateItem(id, count);
 }
 
 Item::Item(const uint16_t type, uint16_t count /*= 0*/) :

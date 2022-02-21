@@ -433,12 +433,19 @@ bool Items::loadFromOtb(const std::string& file)
 				//not used
 				iType.type = ITEM_TYPE_TELEPORT;
 				break;
+            case ITEM_GROUP_CHARGES:
+                iType.type = ITEM_TYPE_RUNE;
+            break;
 			case ITEM_GROUP_NONE:
 			case ITEM_GROUP_GROUND:
 			case ITEM_GROUP_SPLASH:
 			case ITEM_GROUP_FLUID:
-			case ITEM_GROUP_CHARGES:
 			case ITEM_GROUP_DEPRECATED:
+            case ITEM_GROUP_AMMUNITION:
+            case ITEM_GROUP_ARMOR:
+            case ITEM_GROUP_WEAPON:
+            case ITEM_GROUP_WRITEABLE:
+            case ITEM_GROUP_KEY:
 				break;
 			default:
 				return false;
