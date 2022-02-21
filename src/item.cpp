@@ -143,10 +143,10 @@ Item* Item::CreateItem(PropStream& propStream)
 	}
 
     const ItemType& iType = items[id];
-    unsigned char count = 0;
-    if(mapVersion == 0) {
-        if(iType.stackable || iType.isSplash() || iType.isFluidContainer()) {
-            if(!propStream.read<uint8_t>(count)){
+    uint8_t count = 0;
+    if (mapVersion == 0) {
+        if (iType.stackable || iType.isSplash() || iType.isFluidContainer()) {
+            if (!propStream.read<uint8_t>(count)) {
                 return nullptr;
             }
         }

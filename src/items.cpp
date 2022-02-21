@@ -435,7 +435,7 @@ bool Items::loadFromOtb(const std::string& file)
 				break;
             case ITEM_GROUP_CHARGES:
                 iType.type = ITEM_TYPE_RUNE;
-            break;
+                break;
 			case ITEM_GROUP_NONE:
 			case ITEM_GROUP_GROUND:
 			case ITEM_GROUP_SPLASH:
