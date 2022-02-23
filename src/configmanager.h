@@ -70,6 +70,7 @@ class ConfigManager
 			REMOVE_ON_DESPAWN,
 			PLAYER_CONSOLE_LOGS,
 			LOTTERY_SYSTEM,
+			NPCS_USING_BANK_MONEY,
 
 			LAST_BOOLEAN_CONFIG /* this must be the last one */
 		};

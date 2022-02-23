@@ -1,5 +1,6 @@
 -- Custom Configs
 lotterySystem = false
+npcsUsingBankMoney = false
 
 -- Combat settings
 -- NOTE: valid values for worldType are: "pvp", "no-pvp" and "pvp-enforced"

@@ -16,14 +16,14 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-#include <fmt/format.h>
-
+ 
 #include "otpch.h"
 
 #include "guild.h"
 
 #include "game.h"
+
+#include <fmt/format.h>
 
 extern Game g_game;
 
