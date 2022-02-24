@@ -1353,10 +1353,17 @@ void ProtocolGame::sendSaleItemList(const std::list<ShopInfo>& shop)
 {
 	NetworkMessage msg;
 	msg.addByte(0x7B);
+
+	uint16_t moneyType = player->shopOwner ? player->shopOwner->getMoneyType() : 0;
+
 	if (g_config.getBoolean(ConfigManager::NPCS_USING_BANK_MONEY)) {
 		msg.add<uint32_t>(player->getMoney() + player->getBankBalance());
 	} else {
-		msg.add<uint32_t>(player->getMoney());
+		if (moneyType == 0) {
+			msg.add<uint32_t>(player->getMoney());
+		} else {
+			msg.add<uint32_t>(player->getItemTypeCount(moneyType));
+		}
 	}
 
 	std::map<uint16_t, uint32_t> saleMap;

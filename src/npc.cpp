@@ -106,6 +106,8 @@ void Npc::reset()
 	ignoreHeight = false;
 	focusCreature = 0;
 
+	moneyType = 0;
+
 	delete npcEventHandler;
 	npcEventHandler = nullptr;
 
@@ -219,6 +221,10 @@ bool Npc::loadFromXml()
 		}
 
 		currentOutfit = defaultOutfit;
+	}
+
+	if ((attr = npcNode.attribute("money"))) {
+		moneyType = pugi::cast<uint16_t>(attr.value());
 	}
 
 	for (auto parameterNode : npcNode.child("parameters").children()) {
