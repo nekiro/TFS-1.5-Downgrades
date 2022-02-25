@@ -837,6 +837,8 @@ class LuaScriptInterface
 		static int luaPlayerIsPlayer(lua_State* L);
 		static int luaPlayerDelete(lua_State* L);
 
+		static int luaSendCreatureSquare(lua_State* L);
+
 		static int luaPlayerGetGuid(lua_State* L);
 		static int luaPlayerGetIp(lua_State* L);
 		static int luaPlayerGetAccountId(lua_State* L);
