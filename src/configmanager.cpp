@@ -265,6 +265,7 @@ bool ConfigManager::load()
 	boolean[PLAYER_CONSOLE_LOGS] = getGlobalBoolean(L, "showPlayerLogInConsole", true);
 	boolean[LOTTERY_SYSTEM] = getGlobalBoolean(L, "lotterySystem", false);
 	boolean[NPCS_USING_BANK_MONEY] = getGlobalBoolean(L, "npcsUsingBankMoney", false);
+	boolean[BLOCK_LOGIN] = getGlobalBoolean(L, "blockLogin", false);
 
 	string[DEFAULT_PRIORITY] = getGlobalString(L, "defaultPriority", "high");
 	string[SERVER_NAME] = getGlobalString(L, "serverName", "");
@@ -274,6 +275,8 @@ bool ConfigManager::load()
 	string[LOCATION] = getGlobalString(L, "location", "");
 	string[MOTD] = getGlobalString(L, "motd", "");
 	string[WORLD_TYPE] = getGlobalString(L, "worldType", "pvp");
+
+	string[BLOCK_LOGIN_TEXT] = getGlobalString(L, "blockLoginText", "pvp");
 
 	integer[MAX_PLAYERS] = getGlobalNumber(L, "maxPlayers");
 	integer[PZ_LOCKED] = getGlobalNumber(L, "pzLocked", 60000);

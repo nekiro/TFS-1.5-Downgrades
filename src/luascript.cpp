@@ -1918,6 +1918,8 @@ void LuaScriptInterface::registerFunctions()
 	// custom configKeys
 	registerEnumIn("configKeys", ConfigManager::LOTTERY_SYSTEM)
 	registerEnumIn("configKeys", ConfigManager::NPCS_USING_BANK_MONEY)
+	registerEnumIn("configKeys", ConfigManager::BLOCK_LOGIN)
+	registerEnumIn("configKeys", ConfigManager::BLOCK_LOGIN_TEXT)
 
 	registerEnumIn("configKeys", ConfigManager::ALLOW_CHANGEOUTFIT)
 	registerEnumIn("configKeys", ConfigManager::ONE_PLAYER_ON_ACCOUNT)
