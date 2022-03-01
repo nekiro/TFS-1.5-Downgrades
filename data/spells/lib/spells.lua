@@ -274,24 +274,37 @@ function Player:conjureItem(reagentId, conjureId, conjureCount, effect)
 		end
 	end
 
-	if reagentId ~= 0 and not self:removeItem(reagentId, 1, -1) then
-		self:sendCancelMessage(RETURNVALUE_YOUNEEDAMAGICITEMTOCASTSPELL)
-		self:getPosition():sendMagicEffect(CONST_ME_POFF)
-		return false
-	end
+	if reagentId ~= 0 then
+		local left = self:getSlotItem(CONST_SLOT_LEFT)
+		local right = self:getSlotItem(CONST_SLOT_RIGHT)
 
-	local item = self:addItem(conjureId, conjureCount)
-	if not item then
-		self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
-		self:getPosition():sendMagicEffect(CONST_ME_POFF)
-		return false
-	end
+		local canConjure = false
 
-	if item:hasAttribute(ITEM_ATTRIBUTE_DURATION) then
-		item:decay()
-	end
+		if left and left:getId() == reagentId then
+			left:transform(conjureId, conjureCount)
+			canConjure = true
+		end
 
-	self:getPosition():sendMagicEffect(item:getType():isRune() and CONST_ME_MAGIC_RED or effect)
+		if right and right:getId() == reagentId then
+			right:transform(conjureId, conjureCount)
+			canConjure = true
+		end
+
+		if not canConjure then
+			self:sendCancelMessage(RETURNVALUE_YOUNEEDAMAGICITEMTOCASTSPELL)
+			self:getPosition():sendMagicEffect(CONST_ME_POFF)
+			return false
+		end
+	else
+		local item = self:addItem(conjureId, conjureCount)
+		if not item then
+			self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
+			self:getPosition():sendMagicEffect(CONST_ME_POFF)
+			return false
+		end
+	end
+	
+	self:getPosition():sendMagicEffect(effect and effect or CONST_ME_MAGIC_RED)
 	return true
 end
 
