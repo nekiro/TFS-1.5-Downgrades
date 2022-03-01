@@ -132,7 +132,7 @@ void ProtocolLogin::getCharacterList(const std::string& accountName, const std::
 	} else {
 		//output->addByte(account.premiumEndsAt > time(nullptr) ? 1 : 0);
 		//output->add<uint32_t>(account.premiumEndsAt);
-		output->add<uint16_t>((account.premiumEndsAt - time(nullptr)) / 86400);
+		output->add<uint16_t>(std::max<time_t>(0, account.premiumEndsAt - time(nullptr)) / 86400);
 	}
 
 	send(output);
