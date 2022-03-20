@@ -40,6 +40,7 @@
 #include "enums.h"
 #include "position.h"
 #include "outfit.h"
+#include "luavariant.h"
 
 class Thing;
 class Creature;
@@ -59,15 +60,6 @@ enum {
 	EVENT_ID_USER = 1000,
 };
 
-enum LuaVariantType_t {
-	VARIANT_NONE,
-
-	VARIANT_NUMBER,
-	VARIANT_POSITION,
-	VARIANT_TARGETPOSITION,
-	VARIANT_STRING,
-};
-
 enum LuaDataType {
 	LuaData_Unknown,
 
@@ -78,13 +70,6 @@ enum LuaDataType {
 	LuaData_Monster,
 	LuaData_Npc,
 	LuaData_Tile,
-};
-
-struct LuaVariant {
-	LuaVariantType_t type = VARIANT_NONE;
-	std::string text;
-	Position pos;
-	uint32_t number = 0;
 };
 
 struct LuaTimerEventDesc {
@@ -345,7 +330,6 @@ class LuaScriptInterface
 		static Position getPosition(lua_State* L, int32_t arg);
 		static Outfit_t getOutfit(lua_State* L, int32_t arg);
 		static Outfit getOutfitClass(lua_State* L, int32_t arg);
-		static LuaVariant getVariant(lua_State* L, int32_t arg);
 		static InstantSpell* getInstantSpell(lua_State* L, int32_t arg);
 
 		static Thing* getThing(lua_State* L, int32_t arg);
