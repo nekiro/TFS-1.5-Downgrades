@@ -17,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_PROTOCOLLOGIN_H_1238F4B473074DF2ABC595C29E81C46D
-#define FS_PROTOCOLLOGIN_H_1238F4B473074DF2ABC595C29E81C46D
+#ifndef FS_PROTOCOLLOGIN_H
+#define FS_PROTOCOLLOGIN_H
 
 #include "protocol.h"
 
@@ -46,4 +46,4 @@ class ProtocolLogin : public Protocol
 		void getCharacterList(const std::string& accountName, const std::string& password);
 };
 
-#endif
+#endif // FS_PROTOCOLLOGIN_H

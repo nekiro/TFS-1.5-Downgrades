@@ -17,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_PARTY_H_41D4D7CF417C4CC99FAE94D552255044
-#define FS_PARTY_H_41D4D7CF417C4CC99FAE94D552255044
+#ifndef FS_PARTY_H
+#define FS_PARTY_H
 
 #include "player.h"
 #include "monsters.h"
@@ -107,4 +107,4 @@ class Party
 		bool sharedExpEnabled = false;
 };
 
-#endif
+#endif // FS_PARTY_H

@@ -17,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_COMBAT_H_B02CE79230FC43708699EE91FCC8F7CC
-#define FS_COMBAT_H_B02CE79230FC43708699EE91FCC8F7CC
+#ifndef FS_COMBAT_H
+#define FS_COMBAT_H
 
 #include "thing.h"
 #include "condition.h"
@@ -235,4 +235,4 @@ class MagicField final : public Item
 		int64_t createTime;
 };
 
-#endif
+#endif // FS_COMBAT_H

@@ -17,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef TFS_XTEA_H
-#define TFS_XTEA_H
+#ifndef FS_XTEA_H
+#define FS_XTEA_H
 
 namespace xtea {
 
@@ -31,4 +31,4 @@ void decrypt(uint8_t* data, size_t length, const round_keys& k);
 
 } // namespace xtea
 
-#endif // TFS_XTEA_H
+#endif // FS_XTEA_H

@@ -17,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_SCRIPTMANAGER_H_F9428B7803A44FB88EB1A915CFD37F8B
-#define FS_SCRIPTMANAGER_H_F9428B7803A44FB88EB1A915CFD37F8B
+#ifndef FS_SCRIPTMANAGER_H
+#define FS_SCRIPTMANAGER_H
 
 class ScriptingManager
 {
@@ -38,4 +38,4 @@ class ScriptingManager
 		bool loadScriptSystems();
 };
 
-#endif
+#endif // FS_SCRIPTMANAGER_H

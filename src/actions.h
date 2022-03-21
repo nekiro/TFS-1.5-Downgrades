@@ -17,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_ACTIONS_H_87F60C5F587E4B84948F304A6451E6E6
-#define FS_ACTIONS_H_87F60C5F587E4B84948F304A6451E6E6
+#ifndef FS_ACTIONS_H
+#define FS_ACTIONS_H
 
 #include "baseevents.h"
 #include "enums.h"
@@ -140,4 +140,4 @@ class Actions final : public BaseEvents
 		LuaScriptInterface scriptInterface;
 };
 
-#endif
+#endif // FS_ACTIONS_H

@@ -17,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_DEFINITIONS_H_877452FEC245450C9F96B8FD268D8963
-#define FS_DEFINITIONS_H_877452FEC245450C9F96B8FD268D8963
+#ifndef FS_DEFINITIONS_H
+#define FS_DEFINITIONS_H
 
 static constexpr auto STATUS_SERVER_NAME = "The Forgotten Server";
 static constexpr auto STATUS_SERVER_VERSION = "1.5 (Nekiro's 8.60 downgrade & Movie Updates)";
@@ -77,4 +77,4 @@ static constexpr auto AUTHENTICATOR_PERIOD = 30U;
 #endif
 #endif
 
-#endif
+#endif // FS_DEFINITIONS_H

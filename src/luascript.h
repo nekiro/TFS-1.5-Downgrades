@@ -17,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_LUASCRIPT_H_5344B2BC907E46E3943EA78574A212D8
-#define FS_LUASCRIPT_H_5344B2BC907E46E3943EA78574A212D8
+#ifndef FS_LUASCRIPT_H
+#define FS_LUASCRIPT_H
 
 #if __has_include("luajit/lua.hpp")
 #include <luajit/lua.hpp>
@@ -1562,4 +1562,4 @@ class LuaEnvironment : public LuaScriptInterface
 		friend class CombatSpell;
 };
 
-#endif
+#endif // FS_LUASCRIPT_H

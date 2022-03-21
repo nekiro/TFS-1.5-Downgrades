@@ -17,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_PLAYER_H_4083D3D3A05B4EDE891B31BB720CD06F
-#define FS_PLAYER_H_4083D3D3A05B4EDE891B31BB720CD06F
+#ifndef FS_PLAYER_H
+#define FS_PLAYER_H
 
 #include "creature.h"
 #include "container.h"
@@ -1222,4 +1222,4 @@ class Player final : public Creature, public Cylinder
 		friend class ProtocolGame;
 };
 
-#endif
+#endif // FS_PLAYER_H

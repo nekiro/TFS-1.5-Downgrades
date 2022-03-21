@@ -17,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_OUTPUTMESSAGE_H_C06AAED85C7A43939F22D229297C0CC1
-#define FS_OUTPUTMESSAGE_H_C06AAED85C7A43939F22D229297C0CC1
+#ifndef FS_OUTPUTMESSAGE_H
+#define FS_OUTPUTMESSAGE_H
 
 #include "networkmessage.h"
 #include "connection.h"
@@ -101,4 +101,4 @@ class OutputMessagePool
 		std::vector<Protocol_ptr> bufferedProtocols;
 };
 
-#endif
+#endif // FS_OUTPUTMESSAGE_H

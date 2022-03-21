@@ -17,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_PROTOCOLOLD_H_5487B862FE144AE0904D098A3238E161
-#define FS_PROTOCOLOLD_H_5487B862FE144AE0904D098A3238E161
+#ifndef FS_PROTOCOLOLD_H
+#define FS_PROTOCOLOLD_H
 
 #include "protocol.h"
 
@@ -43,4 +43,4 @@ class ProtocolOld final : public Protocol
 		void disconnectClient(const std::string& message);
 };
 
-#endif
+#endif // FS_PROTOCOLOLD_H

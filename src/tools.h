@@ -17,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_TOOLS_H_5F9A9742DA194628830AA1C64909AE43
-#define FS_TOOLS_H_5F9A9742DA194628830AA1C64909AE43
+#ifndef FS_TOOLS_H
+#define FS_TOOLS_H
 
 #include <random>
 
@@ -95,4 +95,4 @@ int64_t OTSYS_TIME();
 
 SpellGroup_t stringToSpellGroup(const std::string& value);
 
-#endif
+#endif // FS_TOOLS_H

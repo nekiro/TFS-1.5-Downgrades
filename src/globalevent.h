@@ -17,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_GLOBALEVENT_H_B3FB9B848EA3474B9AFC326873947E3C
-#define FS_GLOBALEVENT_H_B3FB9B848EA3474B9AFC326873947E3C
+#ifndef FS_GLOBALEVENT_H
+#define FS_GLOBALEVENT_H
 #include "baseevents.h"
 
 #include "const.h"
@@ -123,4 +123,4 @@ class GlobalEvent final : public Event
 		uint32_t interval = 0;
 };
 
-#endif
+#endif // FS_GLOBALEVENT_H

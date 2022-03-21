@@ -17,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_CREATURE_H_5363C04015254E298F84E6D59A139508
-#define FS_CREATURE_H_5363C04015254E298F84E6D59A139508
+#ifndef FS_CREATURE_H
+#define FS_CREATURE_H
 
 #include "map.h"
 #include "position.h"
@@ -574,4 +574,4 @@ class Creature : virtual public Thing
 		friend class LuaScriptInterface;
 };
 
-#endif
+#endif // FS_CREATURE_H

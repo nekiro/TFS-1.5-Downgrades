@@ -17,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_RSA_H_C4E277DA8E884B578DDBF0566F504E91
-#define FS_RSA_H_C4E277DA8E884B578DDBF0566F504E91
+#ifndef FS_RSA_H
+#define FS_RSA_H
 
 #include <cryptopp/rsa.h>
 
@@ -40,4 +40,4 @@ class RSA
 		CryptoPP::RSA::PrivateKey pk;
 };
 
-#endif
+#endif // FS_RSA_H

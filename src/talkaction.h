@@ -17,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_TALKACTION_H_E6AABAC0F89843469526ADF310F3131C
-#define FS_TALKACTION_H_E6AABAC0F89843469526ADF310F3131C
+#ifndef FS_TALKACTION_H
+#define FS_TALKACTION_H
 
 #include "luascript.h"
 #include "baseevents.h"
@@ -112,4 +112,4 @@ class TalkActions final : public BaseEvents
 		LuaScriptInterface scriptInterface;
 };
 
-#endif
+#endif // FS_TALKACTION_H
