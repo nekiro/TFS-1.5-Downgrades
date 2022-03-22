@@ -123,7 +123,7 @@ class Npc final : public Creature
 
 		void setID() override {
 			if (id == 0) {
-				id = npcAutoID++;
+				id = ++npcAutoID;
 			}
 		}
 
