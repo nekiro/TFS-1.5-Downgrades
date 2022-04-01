@@ -16,7 +16,6 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 #include "otpch.h"
 
 #include "protocollogin.h"
@@ -67,9 +66,29 @@ void ProtocolLogin::getCharacterList(const std::string& accountName, const std::
 
 	uint8_t size = std::min<size_t>(std::numeric_limits<uint8_t>::max(), account.characters.size());
 	output->addByte(size);
+
 	for (uint8_t i = 0; i < size; i++) {
+		uint32_t guid;
+		bool isTrue;
+		std::string formattedName = account.characters[i];
+		IOLoginData::getGuidByNameEx(guid, isTrue, formattedName);
+		std::string txt = "";
+
+		Player* player = g_game.getPlayerByGUID(guid);
+		if (!player) {
+			Player tmpPlayer(nullptr);
+			if (!IOLoginData::loadPlayerById(&tmpPlayer, guid)) {
+				txt = player->getPlayerVocName() + ", " + std::to_string(player->getLevel());
+			}
+			else {
+				txt = (&tmpPlayer)->getPlayerVocName() + ", " + std::to_string((&tmpPlayer)->getLevel());
+			}
+		}
+		else {
+			txt = player->getPlayerVocName() + ", " + std::to_string(player->getLevel());
+		}
 		output->addString(account.characters[i]);
-		output->addString(g_config.getString(ConfigManager::SERVER_NAME));
+		output->addString(txt);
 		output->add<uint32_t>(g_config.getNumber(ConfigManager::IP));
 		output->add<uint16_t>(g_config.getNumber(ConfigManager::GAME_PORT));
 	}

@@ -363,6 +363,10 @@ class Player final : public Creature, public Cylinder
 			return vocation->getId();
 		}
 
+		std::string getPlayerVocName() const {
+			return vocation->getVocName();
+		}
+
 		PlayerSex_t getSex() const {
 			return sex;
 		}

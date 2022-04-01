@@ -39,6 +39,7 @@
 	#include "gitmetadata.h"
 #endif
 
+
 DatabaseTasks g_databaseTasks;
 Dispatcher g_dispatcher;
 Scheduler g_scheduler;
@@ -90,10 +91,15 @@ int main(int argc, char* argv[])
 
 	g_loaderSignal.wait(g_loaderUniqueLock);
 
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
 	if (serviceManager.is_running()) {
+		SetConsoleTextAttribute(hConsole, 10);
 		std::cout << ">> " << g_config.getString(ConfigManager::SERVER_NAME) << " Server Online!" << std::endl << std::endl;
+		SetConsoleTextAttribute(hConsole, 15);
 		serviceManager.run();
 	} else {
+		SetConsoleTextAttribute(hConsole, 12);
 		std::cout << ">> No services running. The server is NOT online." << std::endl;
 		g_scheduler.shutdown();
 		g_databaseTasks.shutdown();
