@@ -233,11 +233,10 @@ function Player.removeTotalMoney(self, amount)
 			self:setBankBalance(bankCount - remains)
 			self:sendTextMessage(MESSAGE_INFO_DESCR, ("Paid %d from inventory and %d gold from bank account. Your account balance is now %d gold."):format(moneyCount, amount - moneyCount, self:getBankBalance()))
 			return true
-		else
-			self:setBankBalance(bankCount - amount)
-			self:sendTextMessage(MESSAGE_INFO_DESCR, ("Paid %d gold from bank account. Your account balance is now %d gold."):format(amount, self:getBankBalance()))
-			return true
 		end
+		self:setBankBalance(bankCount - amount)
+		self:sendTextMessage(MESSAGE_INFO_DESCR, ("Paid %d gold from bank account. Your account balance is now %d gold."):format(amount, self:getBankBalance()))
+		return true
 	end
 	return false
 end
@@ -247,9 +246,8 @@ function Player.addLevel(self, amount, round)
 	local level, amount = self:getLevel(), amount or 1
 	if amount > 0 then
 		return self:addExperience(Game.getExperienceForLevel(level + amount) - (round and self:getExperience() or Game.getExperienceForLevel(level)))
-	else
-		return self:removeExperience(((round and self:getExperience() or Game.getExperienceForLevel(level)) - Game.getExperienceForLevel(level + amount)))
 	end
+	return self:removeExperience(((round and self:getExperience() or Game.getExperienceForLevel(level)) - Game.getExperienceForLevel(level + amount)))
 end
 
 function Player.addMagicLevel(self, value)
