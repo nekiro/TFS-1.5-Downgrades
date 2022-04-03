@@ -120,6 +120,8 @@ bool Events::load()
 				info.playerOnGainSkillTries = event;
 			} else if (methodName == "onInventoryUpdate") {
 				info.playerOnInventoryUpdate = event;
+			} else if (methodName == "onStepTile") {
+                info.playerOnStepTile = event;
 			} else {
 				std::cout << "[Warning - Events::load] Unknown player method: " << methodName << std::endl;
 			}
@@ -965,6 +967,33 @@ void Events::eventPlayerOnInventoryUpdate(Player* player, Item* item, slots_t sl
 	LuaScriptInterface::pushBoolean(L, equip);
 
 	scriptInterface.callVoidFunction(4);
+}
+
+bool Events::eventPlayerOnStepTile(Player* player, const Position& fromPosition, const Position& toPosition)
+{
+    // Player:onStepTile(fromPosition, toPosition)
+    if (info.playerOnStepTile == -1) {
+        return true;
+    }
+
+    if (!scriptInterface.reserveScriptEnv()) {
+        std::cout << "[Error - Events::eventPlayerOnStepTile] Call stack overflow" << std::endl;
+        return false;
+    }
+
+    ScriptEnvironment* env = scriptInterface.getScriptEnv();
+    env->setScriptId(info.playerOnStepTile, &scriptInterface);
+
+    lua_State* L = scriptInterface.getLuaState();
+    scriptInterface.pushFunction(info.playerOnStepTile);
+
+    LuaScriptInterface::pushUserdata<Player>(L, player);
+    LuaScriptInterface::setMetatable(L, -1, "Player");
+
+    LuaScriptInterface::pushPosition(L, fromPosition);
+    LuaScriptInterface::pushPosition(L, toPosition);
+
+    return scriptInterface.callFunction(3);
 }
 
 void Events::eventMonsterOnDropLoot(Monster* monster, Container* corpse)

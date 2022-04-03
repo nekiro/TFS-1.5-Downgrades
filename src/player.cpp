@@ -1222,6 +1222,12 @@ bool Player::closeShopWindow(bool sendCloseShopWindow /*= true*/)
 
 void Player::onWalk(Direction& dir)
 {
+	const Position& fromPos = getPosition();
+	const Position& toPos = getNextPosition(dir, fromPos);
+	if (!g_events->eventPlayerOnStepTile(this, fromPos, toPos)) {
+		return;
+	}
+	
 	Creature::onWalk(dir);
 	setNextActionTask(nullptr);
 	setNextAction(OTSYS_TIME() + getStepDuration(dir));
