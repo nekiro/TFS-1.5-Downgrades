@@ -2103,7 +2103,7 @@ void Player::death(Creature*)
 			}
 		}
 
-		/* if (blessings.test(5)) {
+		 if (blessings.test(5)) {
 			if (lastHitPlayer) {
 				blessings.reset(5);
 			} else {
@@ -2112,7 +2112,7 @@ void Player::death(Creature*)
 			}
 		} else {
 			blessings.reset();
-		}*/
+		}
 
 		sendStats();
 		sendSkills();
