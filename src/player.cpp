@@ -2023,15 +2023,15 @@ uint32_t Player::getIP() const
 	return 0;
 }
 
-void Player::death(Creature*)
+void Player::death(Creature* lastHitCreature)
 {
 	loginPosition = town->getTemplePosition();
 
 	if (skillLoss) {
-		/*uint8_t unfairFightReduction = 100;
+		//uint8_t unfairFightReduction = 100;
 		bool lastHitPlayer = Player::lastHitIsPlayer(lastHitCreature);
 
-		if (lastHitPlayer) {
+		/*if (lastHitPlayer) {
 			uint32_t sumLevels = 0;
 			uint32_t inFightTicks = g_config.getNumber(ConfigManager::PZ_LOCKED);
 			for (const auto& it : damageMap) {
