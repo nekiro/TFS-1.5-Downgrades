@@ -1044,8 +1044,9 @@ ReturnValue Game::internalMoveItem(Cylinder* fromCylinder, Cylinder* toCylinder,
 {
 	Player* actorPlayer = actor ? actor->getPlayer() : nullptr;
 	if (actorPlayer && fromPos && toPos) {
-		if (!g_events->eventPlayerOnMoveItem(actorPlayer, item, count, *fromPos, *toPos, fromCylinder, toCylinder)) {
-			return RETURNVALUE_NOTPOSSIBLE;
+		const ReturnValue ret = g_events->eventPlayerOnMoveItem(actorPlayer, item, count, *fromPos, *toPos, fromCylinder, toCylinder);
+		if (ret != RETURNVALUE_NOERROR) {
+			return ret;
 		}
 	}
 
@@ -1075,8 +1076,11 @@ ReturnValue Game::internalMoveItem(Cylinder* fromCylinder, Cylinder* toCylinder,
 		//check if we can add it to source cylinder
 		ret = fromCylinder->queryAdd(fromCylinder->getThingIndex(item), *toItem, toItem->getItemCount(), 0);
 		if (ret == RETURNVALUE_NOERROR) {
-			if (actorPlayer && fromPos && toPos && !g_events->eventPlayerOnMoveItem(actorPlayer, toItem, count, *toPos, *fromPos, toCylinder, fromCylinder)) {
-				return RETURNVALUE_NOTPOSSIBLE;
+			if (actorPlayer && fromPos && toPos) {
+				const ReturnValue eventRet = g_events->eventPlayerOnMoveItem(actorPlayer, toItem, toItem->getItemCount(), *toPos, *fromPos, toCylinder, fromCylinder);
+				if (eventRet != RETURNVALUE_NOERROR) {
+					return eventRet;
+				}
 			}
 
 			//check how much we can move
@@ -1104,7 +1108,7 @@ ReturnValue Game::internalMoveItem(Cylinder* fromCylinder, Cylinder* toCylinder,
 				ret = toCylinder->queryAdd(index, *item, count, flags);
 
 				if (actorPlayer && fromPos && toPos) {
-					g_events->eventPlayerOnItemMoved(actorPlayer, toItem, count, *toPos, *fromPos, toCylinder, fromCylinder);
+					g_events->eventPlayerOnItemMoved(actorPlayer, moveItem, count, *toPos, *fromPos, toCylinder, fromCylinder);
 				}
 
 				toItem = nullptr;
