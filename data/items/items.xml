@@ -1781,7 +1781,7 @@
 	<item id="1423" article="a" name="campfire">
 		<attribute key="replaceable" value="0"/>
 		<attribute key="field" value="fire">
-			<attribute key="damage" value="20"/>
+			<attribute key="initdamage" value="20"/>
 			<attribute key="ticks" value="4000"/>
 			<attribute key="count" value="2"/>
 			<attribute key="damage" value="10"/>
@@ -1790,7 +1790,7 @@
 	<item id="1424" article="a" name="campfire">
 		<attribute key="replaceable" value="0"/>
 		<attribute key="field" value="fire">
-			<attribute key="damage" value="20"/>
+			<attribute key="initdamage" value="20"/>
 			<attribute key="ticks" value="4000"/>
 			<attribute key="count" value="2"/>
 			<attribute key="damage" value="10"/>
@@ -1799,7 +1799,7 @@
 	<item id="1425" article="a" name="campfire">
 		<attribute key="replaceable" value="0"/>
 		<attribute key="field" value="fire">
-			<attribute key="damage" value="20"/>
+			<attribute key="initdamage" value="20"/>
 			<attribute key="ticks" value="4000"/>
 			<attribute key="count" value="2"/>
 			<attribute key="damage" value="10"/>
@@ -1895,7 +1895,7 @@
 		<attribute key="decayTo" value="1488" />
 		<attribute key="duration" value="120" />
 		<attribute key="field" value="fire">
-			<attribute key="damage" value="20" />
+			<attribute key="initdamage" value="20" />
 			<attribute key="ticks" value="10000" />
 			<attribute key="count" value="7" />
 			<attribute key="damage" value="10" />
@@ -1932,7 +1932,7 @@
 		<attribute key="decayTo" value="0" />
 		<attribute key="duration" value="120" />
 		<attribute key="field" value="energy">
-			<attribute key="damage" value="30" />
+			<attribute key="initdamage" value="30" />
 			<attribute key="ticks" value="10000" />
 			<attribute key="damage" value="25" />
 		</attribute>
@@ -1941,7 +1941,7 @@
 		<attribute key="type" value="magicfield" />
 		<attribute key="replaceable" value="0" />
 		<attribute key="field" value="fire">
-			<attribute key="damage" value="20" />
+			<attribute key="initdamage" value="20" />
 			<attribute key="ticks" value="10000" />
 			<attribute key="count" value="7" />
 			<attribute key="damage" value="10" />
@@ -1965,7 +1965,7 @@
 		<attribute key="type" value="magicfield" />
 		<attribute key="replaceable" value="0" />
 		<attribute key="field" value="energy">
-			<attribute key="damage" value="30" />
+			<attribute key="initdamage" value="30" />
 			<attribute key="ticks" value="10000" />
 			<attribute key="damage" value="25" />
 		</attribute>
@@ -1997,7 +1997,7 @@
 		<attribute key="decayTo" value="1501"/>
 		<attribute key="duration" value="120"/>
 		<attribute key="field" value="fire">
-			<attribute key="damage" value="20"/>
+			<attribute key="initdamage" value="20"/>
 			<attribute key="ticks" value="10000"/>
 			<attribute key="count" value="7"/>
 			<attribute key="damage" value="10"/>
@@ -2034,7 +2034,7 @@
 		<attribute key="decayTo" value="0"/>
 		<attribute key="duration" value="120"/>
 		<attribute key="field" value="energy">
-			<attribute key="damage" value="30"/>
+			<attribute key="initdamage" value="30"/>
 			<attribute key="ticks" value="10000"/>
 			<attribute key="damage" value="25"/>
 		</attribute>
@@ -2049,7 +2049,7 @@
 		<attribute key="duration" value="10"/>
 		<attribute key="replaceable" value="0"/>
 		<attribute key="field" value="fire">
-			<attribute key="damage" value="300"/>
+			<attribute key="initdamage" value="300"/>
 		</attribute>
 	</item>
 	<item id="1507" article="a" name="searing fire">
@@ -2058,7 +2058,7 @@
 		<attribute key="duration" value="10"/>
 		<attribute key="replaceable" value="0"/>
 		<attribute key="field" value="fire">
-			<attribute key="damage" value="300"/>
+			<attribute key="initdamage" value="300"/>
 		</attribute>
 	</item>
 	<item id="1508" name="ashes">
