@@ -47,10 +47,8 @@
 	<action itemid="1775" script="other/fluids.lua" />
 	<action fromid="2031" toid="2034" script="other/fluids.lua" />
 	<action fromid="2574" toid="2577" script="other/fluids.lua" />
-	<action fromid="5792" toid="5797" script="other/die.lua" />
 	<action itemid="2692" script="other/createbread.lua" />
 	<action itemid="2694" script="other/createbread.lua" />
-	<action fromid="5303" toid="5304" script="other/windows.lua" />
 	<action fromid="1816" toid="1817" script="other/wallmirror.lua" />
 	<action fromid="1843" toid="1844" script="other/wallmirror.lua" />
 	<action fromid="1846" toid="1847" script="other/wallmirror.lua" />
