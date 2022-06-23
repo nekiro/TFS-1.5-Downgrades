@@ -11814,6 +11814,14 @@ int LuaScriptInterface::luaItemTypeGetAbilities(lua_State* L)
 		}
 		lua_setfield(L, -2, "skills");
 
+		// Special skills
+		lua_createtable(L, 0, SPECIALSKILL_LAST + 1);
+		for (int32_t i = SPECIALSKILL_FIRST; i <= SPECIALSKILL_LAST; i++) {
+			lua_pushnumber(L, abilities.specialSkills[i]);
+			lua_rawseti(L, -2, i + 1);
+		}
+		lua_setfield(L, -2, "specialSkills");
+
 		// Field absorb percent
 		lua_createtable(L, 0, COMBAT_COUNT);
 		for (int32_t i = 0; i < COMBAT_COUNT; i++) {
