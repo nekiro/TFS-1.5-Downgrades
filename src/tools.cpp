@@ -770,6 +770,32 @@ std::string getSkillName(uint8_t skillid)
 	}
 }
 
+std::string getSpecialSkillName(uint8_t skillid)
+{
+    switch (skillid) {
+        case SPECIALSKILL_CRITICALHITCHANCE:
+            return "critical hit chance";
+
+        case SPECIALSKILL_CRITICALHITAMOUNT:
+            return "critical extra damage";
+
+        case SPECIALSKILL_LIFELEECHCHANCE:
+            return "hitpoints leech chance";
+
+        case SPECIALSKILL_LIFELEECHAMOUNT:
+            return "hitpoints leech amount";
+
+        case SPECIALSKILL_MANALEECHCHANCE:
+            return "manapoints leech chance";
+
+        case SPECIALSKILL_MANALEECHAMOUNT:
+            return "mana points leech amount";
+
+        default:
+            return "unknown";
+    }
+}
+
 uint32_t adlerChecksum(const uint8_t* data, size_t length)
 {
 	if (length > NETWORKMESSAGE_MAXSIZE) {
