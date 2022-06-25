@@ -854,20 +854,7 @@ uint32_t Item::getWeight() const
 
 std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
                                  const Item* item /*= nullptr*/, int32_t subType /*= -1*/, bool addArticle /*= true*/)
-{for (uint8_t i = SPECIALSKILL_FIRST; i <= SPECIALSKILL_LAST; i++) {
-                if (!it.abilities->specialSkills[i]) {
-                    continue;
-                }
-
-                if (begin) {
-                    begin = false;
-                    s << " (";
-                } else {
-                    s << ", ";
-                }
-
-                s << getSpecialSkillName(i) << ' ' << std::showpos << it.abilities->specialSkills[i] << '%' << std::noshowpos;
-            }
+{
 	const std::string* text = nullptr;
 
 	std::ostringstream s;
@@ -1023,7 +1010,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 
 				s << getSkillName(i) << ' ' << std::showpos << it.abilities->skills[i] << std::noshowpos;
 			}
-			
+
 			for (uint8_t i = SPECIALSKILL_FIRST; i <= SPECIALSKILL_LAST; i++) {
                 if (!it.abilities->specialSkills[i]) {
                     continue;
