@@ -1,4 +1,5 @@
-# TFS 1.5 Nekiro's Downgrades
+# ~~TFS 1.5 Nekiro's Downgrades~~
+## Due to lack of time, will and funding, project is discontinued.
 
 This repository holds three TFS 1.5 downgrades.
 
